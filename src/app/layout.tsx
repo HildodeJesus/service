@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Inter({
 	variable: "--font-geist-sans",
@@ -37,7 +38,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${geistSans.variable} antialiased`}>{children}</body>
+			<body className={`${geistSans.variable} antialiased`}>
+				{children}
+				<Toaster />
+			</body>
 		</html>
 	);
 }

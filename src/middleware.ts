@@ -1,27 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextApiRequest, NextApiResponse } from "next";
-import { cors } from "@/lib/cors";
-import { rateLimit } from "./lib/rateLimiting";
 import { ApiResponse } from "./utils/ApiResponse";
+import {} from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
 export default async function middleware(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
 	try {
-		await new Promise<void>((resolve, reject) => {
-			cors(req, res, (err: any) => (err ? reject(err) : resolve()));
-		});
-
-		await new Promise<void>((resolve, reject) => {
-			rateLimit(req, res, (err: any) => (err ? reject(err) : resolve()));
-		});
-
-		
 	} catch (error) {
-		return res
-			.status(500)
-			.json(ApiResponse.error("internal server error", 500));
+		if (error instanceof ApiResponse)
+			return NextResponse.json(
+				ApiResponse.error(error.message, error.statusCode),
+				{
+					status: error.statusCode,
+				}
+			);
+
+		return NextResponse.json(ApiResponse.error("internal server error", 500), {
+			status: 500,
+		});
 	}
 }
+
+export const config = {
+	match: ["/dashboard/:path*"],
+};

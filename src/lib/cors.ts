@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 
+import { ApiResponse } from "@/utils/ApiResponse";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const ALLOWED_ORIGINS =
@@ -14,6 +15,7 @@ export function cors(
 	if (!ALLOWED_ORIGINS.length) return next();
 
 	const origin = req.headers.origin as string | undefined;
+	console.log(origin);
 
 	if (origin) {
 		try {
@@ -24,13 +26,15 @@ export function cors(
 			if (ALLOWED_ORIGINS.includes(baseDomain)) {
 				res.setHeader("Access-Control-Allow-Origin", origin);
 			} else {
-				return res.status(403).json({ error: "Origin not allowed" });
+				return res
+					.status(403)
+					.json(ApiResponse.error("Origin not allowed", 403));
 			}
 		} catch (error) {
-			return res.status(403).json({ error: "Invalid origin" });
+			return res.status(403).json(ApiResponse.error("Invalid origin", 403));
 		}
 	} else {
-		return res.status(403).json({ error: "Missing origin" });
+		return res.status(403).json(ApiResponse.error("Missing origin", 403));
 	}
 
 	res.setHeader(

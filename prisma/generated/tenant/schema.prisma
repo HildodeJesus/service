@@ -1,0 +1,211 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+  output        = "./generated/tenant"
+}
+
+datasource db {
+  provider = "postgresql" // ou o seu banco de dados
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  password  String
+  role      Role     @default(waiter)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  name      String?
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+  bills     Bill[]
+}
+
+model Table {
+  id        String   @id @default(uuid())
+  number    Int
+  qrcode    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+  bills     Bill[]
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  dishes    Dish[]
+}
+
+model Dish {
+  id          String      @id @default(uuid())
+  name        String
+  description String?     @db.Text
+  price       Decimal     @db.Decimal
+  cost        Decimal     @db.Decimal
+  categoryId  String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  category    Category    @relation(fields: [categoryId], references: [id])
+  dishItems   DishItem[]
+  orderItems  OrderItem[]
+}
+
+model DishItem {
+  id        String   @id @default(uuid())
+  dishId    String
+  productId String
+  quantity  Decimal  @db.Decimal
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  dish      Dish     @relation(fields: [dishId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Product {
+  id             String          @id @default(uuid())
+  name           String
+  quantity       Decimal         @db.Decimal
+  unit           Unit            @default(unit)
+  price          Decimal         @db.Decimal
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  dishItems      DishItem[]
+  stockMovements StockMovement[]
+}
+
+model Order {
+  id             String          @id @default(uuid())
+  tableId        String?
+  clientId       String?
+  orderType      OrderType       @default(dine_in)
+  status         OrderStatus     @default(pending)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  table          Table?          @relation(fields: [tableId], references: [id])
+  client         Client?         @relation(fields: [clientId], references: [id])
+  orderItems     OrderItem[]
+  stockMovements StockMovement[]
+}
+
+model OrderItem {
+  id        String     @id @default(uuid())
+  orderId   String
+  dishId    String
+  quantity  Int
+  price     Decimal    @db.Decimal
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  order     Order      @relation(fields: [orderId], references: [id])
+  dish      Dish       @relation(fields: [dishId], references: [id])
+  billItems BillItem[]
+}
+
+model Bill {
+  id        String     @id @default(uuid())
+  tableId   String
+  clientId  String?
+  status    BillStatus @default(open)
+  total     Decimal    @db.Decimal
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  table     Table      @relation(fields: [tableId], references: [id])
+  client    Client?    @relation(fields: [clientId], references: [id])
+  billItems BillItem[]
+  payments  Payment[]
+}
+
+model BillItem {
+  id        String    @id @default(uuid())
+  billId    String
+  orderId   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bill      Bill      @relation(fields: [billId], references: [id])
+  orderItem OrderItem @relation(fields: [orderId], references: [id])
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  billId        String
+  amount        Decimal       @db.Decimal
+  paymentMethod PaymentMethod @default(cash)
+  status        PaymentStatus @default(pending)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  bill          Bill          @relation(fields: [billId], references: [id])
+}
+
+model StockMovement {
+  id            String        @id @default(uuid())
+  productId     String
+  quantity      Decimal       @db.Decimal
+  movementType  MovementType  @default(in)
+  referenceId   String
+  referenceType ReferenceType @default(order)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  product       Product       @relation(fields: [productId], references: [id])
+  order         Order?        @relation(fields: [referenceId], references: [id])
+}
+
+enum Role {
+  admin
+  waiter
+  kitchen
+}
+
+enum Unit {
+  unit
+  kg
+  liter
+}
+
+enum OrderType {
+  dine_in
+  takeout
+  delivery
+}
+
+enum OrderStatus {
+  pending
+  preparing
+  delivered
+  canceled
+}
+
+enum BillStatus {
+  open
+  closed
+}
+
+enum PaymentMethod {
+  cash
+  card
+  pix
+}
+
+enum PaymentStatus {
+  pending
+  paid
+}
+
+enum MovementType {
+  in
+  out
+}
+
+enum ReferenceType {
+  order
+  manual_adjustment
+}

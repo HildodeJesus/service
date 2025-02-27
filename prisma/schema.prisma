@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+  output   = "./generated/main"
+}
+
+datasource db {
+  provider = "postgresql" // ou o seu banco de dados
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id                 String             @id @default(uuid())
+  name               String
+  email              String
+  password           String
+  stripeCustomerId   String?
+  subscriptionStatus SubscriptionStatus @default(inactive)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  tenants            Tenant[]
+}
+
+model Tenant {
+  id          String   @id @default(uuid())
+  companyId   String
+  databaseUrl String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  company     Company  @relation(fields: [companyId], references: [id])
+}
+
+enum SubscriptionStatus {
+  active
+  inactive
+  trial
+  canceled
+}
