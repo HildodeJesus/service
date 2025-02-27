@@ -32,7 +32,7 @@ export class GetPrismaClient {
 			prismaClients[database] = new TenantClient({
 				datasources: {
 					db: {
-						url: `postgresql://${process.env.DATABASE_USER}:${process.env.DATABASE_PASS}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${database}?connection_limit=5`,
+						url: `postgresql://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${database}?connection_limit=5`,
 					},
 				},
 			});

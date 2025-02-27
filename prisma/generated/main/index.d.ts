@@ -2128,7 +2128,9 @@ export namespace Prisma {
   export type TenantMinAggregateOutputType = {
     id: string | null
     companyId: string | null
-    databaseUrl: string | null
+    databaseName: string | null
+    databaseUser: string | null
+    databasePassword: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2136,7 +2138,9 @@ export namespace Prisma {
   export type TenantMaxAggregateOutputType = {
     id: string | null
     companyId: string | null
-    databaseUrl: string | null
+    databaseName: string | null
+    databaseUser: string | null
+    databasePassword: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2144,7 +2148,9 @@ export namespace Prisma {
   export type TenantCountAggregateOutputType = {
     id: number
     companyId: number
-    databaseUrl: number
+    databaseName: number
+    databaseUser: number
+    databasePassword: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2154,7 +2160,9 @@ export namespace Prisma {
   export type TenantMinAggregateInputType = {
     id?: true
     companyId?: true
-    databaseUrl?: true
+    databaseName?: true
+    databaseUser?: true
+    databasePassword?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2162,7 +2170,9 @@ export namespace Prisma {
   export type TenantMaxAggregateInputType = {
     id?: true
     companyId?: true
-    databaseUrl?: true
+    databaseName?: true
+    databaseUser?: true
+    databasePassword?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2170,7 +2180,9 @@ export namespace Prisma {
   export type TenantCountAggregateInputType = {
     id?: true
     companyId?: true
-    databaseUrl?: true
+    databaseName?: true
+    databaseUser?: true
+    databasePassword?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2251,7 +2263,9 @@ export namespace Prisma {
   export type TenantGroupByOutputType = {
     id: string
     companyId: string
-    databaseUrl: string
+    databaseName: string
+    databaseUser: string
+    databasePassword: string
     createdAt: Date
     updatedAt: Date
     _count: TenantCountAggregateOutputType | null
@@ -2276,7 +2290,9 @@ export namespace Prisma {
   export type TenantSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     companyId?: boolean
-    databaseUrl?: boolean
+    databaseName?: boolean
+    databaseUser?: boolean
+    databasePassword?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -2285,7 +2301,9 @@ export namespace Prisma {
   export type TenantSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     companyId?: boolean
-    databaseUrl?: boolean
+    databaseName?: boolean
+    databaseUser?: boolean
+    databasePassword?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -2294,7 +2312,9 @@ export namespace Prisma {
   export type TenantSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     companyId?: boolean
-    databaseUrl?: boolean
+    databaseName?: boolean
+    databaseUser?: boolean
+    databasePassword?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -2303,12 +2323,14 @@ export namespace Prisma {
   export type TenantSelectScalar = {
     id?: boolean
     companyId?: boolean
-    databaseUrl?: boolean
+    databaseName?: boolean
+    databaseUser?: boolean
+    databasePassword?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TenantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "databaseUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
+  export type TenantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "databaseName" | "databaseUser" | "databasePassword" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
   export type TenantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
   }
@@ -2327,7 +2349,9 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       companyId: string
-      databaseUrl: string
+      databaseName: string
+      databaseUser: string
+      databasePassword: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["tenant"]>
@@ -2756,7 +2780,9 @@ export namespace Prisma {
   interface TenantFieldRefs {
     readonly id: FieldRef<"Tenant", 'String'>
     readonly companyId: FieldRef<"Tenant", 'String'>
-    readonly databaseUrl: FieldRef<"Tenant", 'String'>
+    readonly databaseName: FieldRef<"Tenant", 'String'>
+    readonly databaseUser: FieldRef<"Tenant", 'String'>
+    readonly databasePassword: FieldRef<"Tenant", 'String'>
     readonly createdAt: FieldRef<"Tenant", 'DateTime'>
     readonly updatedAt: FieldRef<"Tenant", 'DateTime'>
   }
@@ -3204,7 +3230,9 @@ export namespace Prisma {
   export const TenantScalarFieldEnum: {
     id: 'id',
     companyId: 'companyId',
-    databaseUrl: 'databaseUrl',
+    databaseName: 'databaseName',
+    databaseUser: 'databaseUser',
+    databasePassword: 'databasePassword',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -3329,18 +3357,18 @@ export namespace Prisma {
 
   export type CompanyWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    email?: string
     AND?: CompanyWhereInput | CompanyWhereInput[]
     OR?: CompanyWhereInput[]
     NOT?: CompanyWhereInput | CompanyWhereInput[]
     name?: StringFilter<"Company"> | string
-    email?: StringFilter<"Company"> | string
     password?: StringFilter<"Company"> | string
     stripeCustomerId?: StringNullableFilter<"Company"> | string | null
     subscriptionStatus?: EnumSubscriptionStatusFilter<"Company"> | $Enums.SubscriptionStatus
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
     tenants?: TenantListRelationFilter
-  }, "id">
+  }, "id" | "email">
 
   export type CompanyOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3376,7 +3404,9 @@ export namespace Prisma {
     NOT?: TenantWhereInput | TenantWhereInput[]
     id?: StringFilter<"Tenant"> | string
     companyId?: StringFilter<"Tenant"> | string
-    databaseUrl?: StringFilter<"Tenant"> | string
+    databaseName?: StringFilter<"Tenant"> | string
+    databaseUser?: StringFilter<"Tenant"> | string
+    databasePassword?: StringFilter<"Tenant"> | string
     createdAt?: DateTimeFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeFilter<"Tenant"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
@@ -3385,7 +3415,9 @@ export namespace Prisma {
   export type TenantOrderByWithRelationInput = {
     id?: SortOrder
     companyId?: SortOrder
-    databaseUrl?: SortOrder
+    databaseName?: SortOrder
+    databaseUser?: SortOrder
+    databasePassword?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     company?: CompanyOrderByWithRelationInput
@@ -3397,7 +3429,9 @@ export namespace Prisma {
     OR?: TenantWhereInput[]
     NOT?: TenantWhereInput | TenantWhereInput[]
     companyId?: StringFilter<"Tenant"> | string
-    databaseUrl?: StringFilter<"Tenant"> | string
+    databaseName?: StringFilter<"Tenant"> | string
+    databaseUser?: StringFilter<"Tenant"> | string
+    databasePassword?: StringFilter<"Tenant"> | string
     createdAt?: DateTimeFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeFilter<"Tenant"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
@@ -3406,7 +3440,9 @@ export namespace Prisma {
   export type TenantOrderByWithAggregationInput = {
     id?: SortOrder
     companyId?: SortOrder
-    databaseUrl?: SortOrder
+    databaseName?: SortOrder
+    databaseUser?: SortOrder
+    databasePassword?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TenantCountOrderByAggregateInput
@@ -3420,7 +3456,9 @@ export namespace Prisma {
     NOT?: TenantScalarWhereWithAggregatesInput | TenantScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Tenant"> | string
     companyId?: StringWithAggregatesFilter<"Tenant"> | string
-    databaseUrl?: StringWithAggregatesFilter<"Tenant"> | string
+    databaseName?: StringWithAggregatesFilter<"Tenant"> | string
+    databaseUser?: StringWithAggregatesFilter<"Tenant"> | string
+    databasePassword?: StringWithAggregatesFilter<"Tenant"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Tenant"> | Date | string
   }
@@ -3508,7 +3546,9 @@ export namespace Prisma {
 
   export type TenantCreateInput = {
     id?: string
-    databaseUrl: string
+    databaseName: string
+    databaseUser: string
+    databasePassword: string
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutTenantsInput
@@ -3517,14 +3557,18 @@ export namespace Prisma {
   export type TenantUncheckedCreateInput = {
     id?: string
     companyId: string
-    databaseUrl: string
+    databaseName: string
+    databaseUser: string
+    databasePassword: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TenantUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    databaseUrl?: StringFieldUpdateOperationsInput | string
+    databaseName?: StringFieldUpdateOperationsInput | string
+    databaseUser?: StringFieldUpdateOperationsInput | string
+    databasePassword?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutTenantsNestedInput
@@ -3533,7 +3577,9 @@ export namespace Prisma {
   export type TenantUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     companyId?: StringFieldUpdateOperationsInput | string
-    databaseUrl?: StringFieldUpdateOperationsInput | string
+    databaseName?: StringFieldUpdateOperationsInput | string
+    databaseUser?: StringFieldUpdateOperationsInput | string
+    databasePassword?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3541,14 +3587,18 @@ export namespace Prisma {
   export type TenantCreateManyInput = {
     id?: string
     companyId: string
-    databaseUrl: string
+    databaseName: string
+    databaseUser: string
+    databasePassword: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TenantUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    databaseUrl?: StringFieldUpdateOperationsInput | string
+    databaseName?: StringFieldUpdateOperationsInput | string
+    databaseUser?: StringFieldUpdateOperationsInput | string
+    databasePassword?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3556,7 +3606,9 @@ export namespace Prisma {
   export type TenantUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     companyId?: StringFieldUpdateOperationsInput | string
-    databaseUrl?: StringFieldUpdateOperationsInput | string
+    databaseName?: StringFieldUpdateOperationsInput | string
+    databaseUser?: StringFieldUpdateOperationsInput | string
+    databasePassword?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3725,7 +3777,9 @@ export namespace Prisma {
   export type TenantCountOrderByAggregateInput = {
     id?: SortOrder
     companyId?: SortOrder
-    databaseUrl?: SortOrder
+    databaseName?: SortOrder
+    databaseUser?: SortOrder
+    databasePassword?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3733,7 +3787,9 @@ export namespace Prisma {
   export type TenantMaxOrderByAggregateInput = {
     id?: SortOrder
     companyId?: SortOrder
-    databaseUrl?: SortOrder
+    databaseName?: SortOrder
+    databaseUser?: SortOrder
+    databasePassword?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3741,7 +3797,9 @@ export namespace Prisma {
   export type TenantMinOrderByAggregateInput = {
     id?: SortOrder
     companyId?: SortOrder
-    databaseUrl?: SortOrder
+    databaseName?: SortOrder
+    databaseUser?: SortOrder
+    databasePassword?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3946,14 +4004,18 @@ export namespace Prisma {
 
   export type TenantCreateWithoutCompanyInput = {
     id?: string
-    databaseUrl: string
+    databaseName: string
+    databaseUser: string
+    databasePassword: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TenantUncheckedCreateWithoutCompanyInput = {
     id?: string
-    databaseUrl: string
+    databaseName: string
+    databaseUser: string
+    databasePassword: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3990,7 +4052,9 @@ export namespace Prisma {
     NOT?: TenantScalarWhereInput | TenantScalarWhereInput[]
     id?: StringFilter<"Tenant"> | string
     companyId?: StringFilter<"Tenant"> | string
-    databaseUrl?: StringFilter<"Tenant"> | string
+    databaseName?: StringFilter<"Tenant"> | string
+    databaseUser?: StringFilter<"Tenant"> | string
+    databasePassword?: StringFilter<"Tenant"> | string
     createdAt?: DateTimeFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeFilter<"Tenant"> | Date | string
   }
@@ -4057,28 +4121,36 @@ export namespace Prisma {
 
   export type TenantCreateManyCompanyInput = {
     id?: string
-    databaseUrl: string
+    databaseName: string
+    databaseUser: string
+    databasePassword: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TenantUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    databaseUrl?: StringFieldUpdateOperationsInput | string
+    databaseName?: StringFieldUpdateOperationsInput | string
+    databaseUser?: StringFieldUpdateOperationsInput | string
+    databasePassword?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TenantUncheckedUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    databaseUrl?: StringFieldUpdateOperationsInput | string
+    databaseName?: StringFieldUpdateOperationsInput | string
+    databaseUser?: StringFieldUpdateOperationsInput | string
+    databasePassword?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TenantUncheckedUpdateManyWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    databaseUrl?: StringFieldUpdateOperationsInput | string
+    databaseName?: StringFieldUpdateOperationsInput | string
+    databaseUser?: StringFieldUpdateOperationsInput | string
+    databasePassword?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

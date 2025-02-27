@@ -7,7 +7,8 @@ export const createCompanySchema = z.object({
 	stripeCustomerId: z.string().optional(),
 	subscriptionStatus: z
 		.enum(["active", "inactive", "trial", "canceled"])
-		.default("inactive"),
+		.default("inactive")
+		.optional(),
 });
 
 export const loginCompanySchema = z.object({

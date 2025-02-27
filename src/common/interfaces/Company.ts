@@ -5,7 +5,7 @@ export interface ICompany {
 	name: string;
 	email: string;
 	password: string;
-	stripeCustomerId: string;
+	stripeCustomerId: string | null;
 	subscriptionStatus: SubscriptionStatus;
 	createdAt: Date;
 	updatedAt: Date;

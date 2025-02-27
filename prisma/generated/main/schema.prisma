@@ -12,7 +12,7 @@ datasource db {
 model Company {
   id                 String             @id @default(uuid())
   name               String
-  email              String
+  email              String             @unique
   password           String
   stripeCustomerId   String?
   subscriptionStatus SubscriptionStatus @default(inactive)
@@ -22,12 +22,14 @@ model Company {
 }
 
 model Tenant {
-  id          String   @id @default(uuid())
-  companyId   String
-  databaseUrl String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  company     Company  @relation(fields: [companyId], references: [id])
+  id               String   @id @default(uuid())
+  companyId        String
+  databaseName     String
+  databaseUser     String
+  databasePassword String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  company          Company  @relation(fields: [companyId], references: [id])
 }
 
 enum SubscriptionStatus {

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { CompanyService } from "@/services/company.service";
 import { ApiResponse } from "@/utils/ApiResponse";
 import { GetPrismaClient } from "@/utils/getPrismaClient";
 import bcrypt from "bcryptjs";
@@ -9,32 +10,17 @@ export async function POST(request: NextRequest) {
 	const { name, email, password } = body;
 
 	try {
-		const prisma = GetPrismaClient.main();
-		const alredyExists = await prisma.company.findFirst({
-			where: { email: email },
-		});
+		const res = await new CompanyService().create({ name, email, password });
 
-		if (alredyExists)
-			return NextResponse.json(
-				ApiResponse.error("Email já usado anteriormente", 400),
-				{ status: 400 }
-			);
-
-		const hashedPassword = await bcrypt.hash(password, 8);
-
-		await prisma.company.create({
-			data: {
-				name,
-				email,
-				password: hashedPassword,
-			},
-		});
-
-		return NextResponse.json(ApiResponse.error("Criado com sucesso!", 200), {
-			status: 200,
+		return NextResponse.json(res, {
+			status: res.statusCode,
 		});
 	} catch (er) {
 		console.log(er);
+		if (er instanceof ApiResponse)
+			return NextResponse.json(ApiResponse.error(er.message, er.statusCode), {
+				status: er.statusCode,
+			});
 		return NextResponse.json(ApiResponse.error("Internal server error", 200), {
 			status: 500,
 		});
