@@ -130,6 +130,7 @@ exports.Prisma.CompanyScalarFieldEnum = {
 
 exports.Prisma.TenantScalarFieldEnum = {
   id: 'id',
+  subdomain: 'subdomain',
   companyId: 'companyId',
   databaseName: 'databaseName',
   databaseUser: 'databaseUser',

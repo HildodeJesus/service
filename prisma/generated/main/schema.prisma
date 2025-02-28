@@ -11,7 +11,7 @@ datasource db {
 
 model Company {
   id                 String             @id @default(uuid())
-  name               String
+  name               String             @unique
   email              String             @unique
   password           String
   stripeCustomerId   String?
@@ -23,13 +23,14 @@ model Company {
 
 model Tenant {
   id               String   @id @default(uuid())
+  subdomain        String   @unique
   companyId        String
   databaseName     String
   databaseUser     String
   databasePassword String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-  company          Company  @relation(fields: [companyId], references: [id])
+  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
 
 enum SubscriptionStatus {

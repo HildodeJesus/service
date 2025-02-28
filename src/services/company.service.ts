@@ -8,14 +8,24 @@ export class CompanyService {
 	async create({ email, name, password }: CreateCompanyInput) {
 		const prisma = GetPrismaClient.main();
 
-		const alredyExists = await prisma.company.findUnique({
+		const alredyExistsEmail = prisma.company.findUnique({
 			where: { email: email },
 		});
 
-		if (alredyExists)
+		const alredyExistsName = prisma.company.findUnique({
+			where: { name: name },
+		});
+
+		const res = await Promise.all([alredyExistsEmail, alredyExistsName]);
+
+		if (res[0])
 			throw (
 				(ApiResponse.error("Email já usado anteriormente", 400),
 				{ status: 400 })
+			);
+		if (res[1])
+			throw (
+				(ApiResponse.error("Nome já usado anteriormente", 400), { status: 400 })
 			);
 
 		const hashedPassword = await bcrypt.hash(password, 8);
@@ -28,7 +38,7 @@ export class CompanyService {
 			},
 		});
 
-		await TenantDatabaseService.createTenantDatabase(company.id);
+		await TenantDatabaseService.createTenantDatabase(company.id, company.name);
 
 		return ApiResponse.success("Criado com sucesso!", null, 200);
 	}

@@ -6,11 +6,14 @@ import bcrypt from "bcryptjs";
 const prisma = GetPrismaClient.main();
 
 export class TenantDatabaseService {
-	static async createTenantDatabase(companyId: string): Promise<void> {
+	static async createTenantDatabase(
+		companyId: string,
+		companyName: string
+	): Promise<void> {
 		const databaseName = `tenant_${companyId.replace(/-/g, "_")}`;
 		const databaseUser = `user_tenant_${companyId.replace(/-/g, "_")}`;
 		const databasePassword = `${companyId}`;
-
+		const subdomain = companyName;
 		try {
 			const existingDb: any[] = await prisma.$queryRawUnsafe(
 				`SELECT datname FROM pg_database WHERE datname = '${databaseName}'`
@@ -195,9 +198,10 @@ export class TenantDatabaseService {
 
 			await prisma.tenant.create({
 				data: {
-					companyId: companyId,
-					databaseName: databaseName,
-					databaseUser: databaseUser,
+					companyId,
+					subdomain,
+					databaseName,
+					databaseUser,
 					databasePassword: hashedPassword,
 				},
 			});
@@ -211,6 +215,19 @@ export class TenantDatabaseService {
 				error
 			);
 			throw ApiResponse.error("Erro ao criar o banco de dados do tenant", 500);
+		}
+	}
+
+	static async getTenantBySubdomain(subdomain: string) {
+		try {
+			const tenant = await prisma.tenant.findUnique({
+				where: { subdomain },
+				select: { companyId: true, databaseName: true },
+			});
+
+			return tenant;
+		} catch (e) {
+			console.log(e);
 		}
 	}
 }

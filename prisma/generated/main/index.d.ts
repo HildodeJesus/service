@@ -2127,6 +2127,7 @@ export namespace Prisma {
 
   export type TenantMinAggregateOutputType = {
     id: string | null
+    subdomain: string | null
     companyId: string | null
     databaseName: string | null
     databaseUser: string | null
@@ -2137,6 +2138,7 @@ export namespace Prisma {
 
   export type TenantMaxAggregateOutputType = {
     id: string | null
+    subdomain: string | null
     companyId: string | null
     databaseName: string | null
     databaseUser: string | null
@@ -2147,6 +2149,7 @@ export namespace Prisma {
 
   export type TenantCountAggregateOutputType = {
     id: number
+    subdomain: number
     companyId: number
     databaseName: number
     databaseUser: number
@@ -2159,6 +2162,7 @@ export namespace Prisma {
 
   export type TenantMinAggregateInputType = {
     id?: true
+    subdomain?: true
     companyId?: true
     databaseName?: true
     databaseUser?: true
@@ -2169,6 +2173,7 @@ export namespace Prisma {
 
   export type TenantMaxAggregateInputType = {
     id?: true
+    subdomain?: true
     companyId?: true
     databaseName?: true
     databaseUser?: true
@@ -2179,6 +2184,7 @@ export namespace Prisma {
 
   export type TenantCountAggregateInputType = {
     id?: true
+    subdomain?: true
     companyId?: true
     databaseName?: true
     databaseUser?: true
@@ -2262,6 +2268,7 @@ export namespace Prisma {
 
   export type TenantGroupByOutputType = {
     id: string
+    subdomain: string
     companyId: string
     databaseName: string
     databaseUser: string
@@ -2289,6 +2296,7 @@ export namespace Prisma {
 
   export type TenantSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    subdomain?: boolean
     companyId?: boolean
     databaseName?: boolean
     databaseUser?: boolean
@@ -2300,6 +2308,7 @@ export namespace Prisma {
 
   export type TenantSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    subdomain?: boolean
     companyId?: boolean
     databaseName?: boolean
     databaseUser?: boolean
@@ -2311,6 +2320,7 @@ export namespace Prisma {
 
   export type TenantSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    subdomain?: boolean
     companyId?: boolean
     databaseName?: boolean
     databaseUser?: boolean
@@ -2322,6 +2332,7 @@ export namespace Prisma {
 
   export type TenantSelectScalar = {
     id?: boolean
+    subdomain?: boolean
     companyId?: boolean
     databaseName?: boolean
     databaseUser?: boolean
@@ -2330,7 +2341,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TenantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "databaseName" | "databaseUser" | "databasePassword" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
+  export type TenantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "subdomain" | "companyId" | "databaseName" | "databaseUser" | "databasePassword" | "createdAt" | "updatedAt", ExtArgs["result"]["tenant"]>
   export type TenantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
   }
@@ -2348,6 +2359,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      subdomain: string
       companyId: string
       databaseName: string
       databaseUser: string
@@ -2779,6 +2791,7 @@ export namespace Prisma {
    */ 
   interface TenantFieldRefs {
     readonly id: FieldRef<"Tenant", 'String'>
+    readonly subdomain: FieldRef<"Tenant", 'String'>
     readonly companyId: FieldRef<"Tenant", 'String'>
     readonly databaseName: FieldRef<"Tenant", 'String'>
     readonly databaseUser: FieldRef<"Tenant", 'String'>
@@ -3229,6 +3242,7 @@ export namespace Prisma {
 
   export const TenantScalarFieldEnum: {
     id: 'id',
+    subdomain: 'subdomain',
     companyId: 'companyId',
     databaseName: 'databaseName',
     databaseUser: 'databaseUser',
@@ -3357,18 +3371,18 @@ export namespace Prisma {
 
   export type CompanyWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    name?: string
     email?: string
     AND?: CompanyWhereInput | CompanyWhereInput[]
     OR?: CompanyWhereInput[]
     NOT?: CompanyWhereInput | CompanyWhereInput[]
-    name?: StringFilter<"Company"> | string
     password?: StringFilter<"Company"> | string
     stripeCustomerId?: StringNullableFilter<"Company"> | string | null
     subscriptionStatus?: EnumSubscriptionStatusFilter<"Company"> | $Enums.SubscriptionStatus
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
     tenants?: TenantListRelationFilter
-  }, "id" | "email">
+  }, "id" | "name" | "email">
 
   export type CompanyOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3403,6 +3417,7 @@ export namespace Prisma {
     OR?: TenantWhereInput[]
     NOT?: TenantWhereInput | TenantWhereInput[]
     id?: StringFilter<"Tenant"> | string
+    subdomain?: StringFilter<"Tenant"> | string
     companyId?: StringFilter<"Tenant"> | string
     databaseName?: StringFilter<"Tenant"> | string
     databaseUser?: StringFilter<"Tenant"> | string
@@ -3414,6 +3429,7 @@ export namespace Prisma {
 
   export type TenantOrderByWithRelationInput = {
     id?: SortOrder
+    subdomain?: SortOrder
     companyId?: SortOrder
     databaseName?: SortOrder
     databaseUser?: SortOrder
@@ -3425,6 +3441,7 @@ export namespace Prisma {
 
   export type TenantWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    subdomain?: string
     AND?: TenantWhereInput | TenantWhereInput[]
     OR?: TenantWhereInput[]
     NOT?: TenantWhereInput | TenantWhereInput[]
@@ -3435,10 +3452,11 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Tenant"> | Date | string
     updatedAt?: DateTimeFilter<"Tenant"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
-  }, "id">
+  }, "id" | "subdomain">
 
   export type TenantOrderByWithAggregationInput = {
     id?: SortOrder
+    subdomain?: SortOrder
     companyId?: SortOrder
     databaseName?: SortOrder
     databaseUser?: SortOrder
@@ -3455,6 +3473,7 @@ export namespace Prisma {
     OR?: TenantScalarWhereWithAggregatesInput[]
     NOT?: TenantScalarWhereWithAggregatesInput | TenantScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Tenant"> | string
+    subdomain?: StringWithAggregatesFilter<"Tenant"> | string
     companyId?: StringWithAggregatesFilter<"Tenant"> | string
     databaseName?: StringWithAggregatesFilter<"Tenant"> | string
     databaseUser?: StringWithAggregatesFilter<"Tenant"> | string
@@ -3546,6 +3565,7 @@ export namespace Prisma {
 
   export type TenantCreateInput = {
     id?: string
+    subdomain: string
     databaseName: string
     databaseUser: string
     databasePassword: string
@@ -3556,6 +3576,7 @@ export namespace Prisma {
 
   export type TenantUncheckedCreateInput = {
     id?: string
+    subdomain: string
     companyId: string
     databaseName: string
     databaseUser: string
@@ -3566,6 +3587,7 @@ export namespace Prisma {
 
   export type TenantUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     databaseName?: StringFieldUpdateOperationsInput | string
     databaseUser?: StringFieldUpdateOperationsInput | string
     databasePassword?: StringFieldUpdateOperationsInput | string
@@ -3576,6 +3598,7 @@ export namespace Prisma {
 
   export type TenantUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     companyId?: StringFieldUpdateOperationsInput | string
     databaseName?: StringFieldUpdateOperationsInput | string
     databaseUser?: StringFieldUpdateOperationsInput | string
@@ -3586,6 +3609,7 @@ export namespace Prisma {
 
   export type TenantCreateManyInput = {
     id?: string
+    subdomain: string
     companyId: string
     databaseName: string
     databaseUser: string
@@ -3596,6 +3620,7 @@ export namespace Prisma {
 
   export type TenantUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     databaseName?: StringFieldUpdateOperationsInput | string
     databaseUser?: StringFieldUpdateOperationsInput | string
     databasePassword?: StringFieldUpdateOperationsInput | string
@@ -3605,6 +3630,7 @@ export namespace Prisma {
 
   export type TenantUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     companyId?: StringFieldUpdateOperationsInput | string
     databaseName?: StringFieldUpdateOperationsInput | string
     databaseUser?: StringFieldUpdateOperationsInput | string
@@ -3776,6 +3802,7 @@ export namespace Prisma {
 
   export type TenantCountOrderByAggregateInput = {
     id?: SortOrder
+    subdomain?: SortOrder
     companyId?: SortOrder
     databaseName?: SortOrder
     databaseUser?: SortOrder
@@ -3786,6 +3813,7 @@ export namespace Prisma {
 
   export type TenantMaxOrderByAggregateInput = {
     id?: SortOrder
+    subdomain?: SortOrder
     companyId?: SortOrder
     databaseName?: SortOrder
     databaseUser?: SortOrder
@@ -3796,6 +3824,7 @@ export namespace Prisma {
 
   export type TenantMinOrderByAggregateInput = {
     id?: SortOrder
+    subdomain?: SortOrder
     companyId?: SortOrder
     databaseName?: SortOrder
     databaseUser?: SortOrder
@@ -4004,6 +4033,7 @@ export namespace Prisma {
 
   export type TenantCreateWithoutCompanyInput = {
     id?: string
+    subdomain: string
     databaseName: string
     databaseUser: string
     databasePassword: string
@@ -4013,6 +4043,7 @@ export namespace Prisma {
 
   export type TenantUncheckedCreateWithoutCompanyInput = {
     id?: string
+    subdomain: string
     databaseName: string
     databaseUser: string
     databasePassword: string
@@ -4051,6 +4082,7 @@ export namespace Prisma {
     OR?: TenantScalarWhereInput[]
     NOT?: TenantScalarWhereInput | TenantScalarWhereInput[]
     id?: StringFilter<"Tenant"> | string
+    subdomain?: StringFilter<"Tenant"> | string
     companyId?: StringFilter<"Tenant"> | string
     databaseName?: StringFilter<"Tenant"> | string
     databaseUser?: StringFilter<"Tenant"> | string
@@ -4121,6 +4153,7 @@ export namespace Prisma {
 
   export type TenantCreateManyCompanyInput = {
     id?: string
+    subdomain: string
     databaseName: string
     databaseUser: string
     databasePassword: string
@@ -4130,6 +4163,7 @@ export namespace Prisma {
 
   export type TenantUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     databaseName?: StringFieldUpdateOperationsInput | string
     databaseUser?: StringFieldUpdateOperationsInput | string
     databasePassword?: StringFieldUpdateOperationsInput | string
@@ -4139,6 +4173,7 @@ export namespace Prisma {
 
   export type TenantUncheckedUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     databaseName?: StringFieldUpdateOperationsInput | string
     databaseUser?: StringFieldUpdateOperationsInput | string
     databasePassword?: StringFieldUpdateOperationsInput | string
@@ -4148,6 +4183,7 @@ export namespace Prisma {
 
   export type TenantUncheckedUpdateManyWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    subdomain?: StringFieldUpdateOperationsInput | string
     databaseName?: StringFieldUpdateOperationsInput | string
     databaseUser?: StringFieldUpdateOperationsInput | string
     databasePassword?: StringFieldUpdateOperationsInput | string
