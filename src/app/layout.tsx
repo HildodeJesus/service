@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { Suspense } from "react";
+import AuthSessionProvider from "@/components/AuthSessionProvider";
 
 const geistSans = Inter({
 	variable: "--font-geist-sans",
@@ -37,9 +39,12 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="pt-BR">
 			<body className={`${geistSans.variable} antialiased`}>
-				{children}
+				<AuthSessionProvider>
+					<Suspense>{children}</Suspense>
+				</AuthSessionProvider>
+
 				<Toaster />
 			</body>
 		</html>

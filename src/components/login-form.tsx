@@ -14,12 +14,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { signIn } from "next-auth/react";
 
 import { ApiResponse } from "@/utils/ApiResponse";
 import { LoginCompanyInput } from "@/common/schemas/company";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function LoginForm({
 	className,
@@ -30,14 +30,16 @@ export function LoginForm({
 
 	const onSubmit: SubmitHandler<LoginCompanyInput> = async data => {
 		try {
-			await signIn("credentials", { redirect: false, ...data });
+			const res = await signIn("credentials", { redirect: false, ...data });
+
+			if (!res?.ok) throw new Error(res?.error || "");
 
 			toast("Logado com sucesso!", { duration: 5000 });
 
 			router.push("/dashboard");
 			reset();
 		} catch (e: any) {
-			toast("Algum erro desconhecido ocurreu", { duration: 5000 });
+			toast("Algum erro nas credentias ocurreu", { duration: 5000 });
 		}
 	};
 

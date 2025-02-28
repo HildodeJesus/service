@@ -1,1 +1,8 @@
-["/dashboard"]
+[
+	"/dashboard",
+	"/dashboard/produtos",
+	"/dashboard/pratos",
+	"/dashboard/pedidos",
+	"/dashboard/comandas",
+	"/api/products"
+]

@@ -19,3 +19,5 @@ export const updateProductSchema = z.object({
 	unit: z.enum(["unit", "kg", "liter"]).optional(),
 	price: z.number().positive("Preço deve ser um valor positivo").optional(),
 });
+
+export type CreateProductInput = z.infer<typeof createProductSchema>;

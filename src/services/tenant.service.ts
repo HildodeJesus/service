@@ -2,6 +2,7 @@
 import { ApiResponse } from "@/utils/ApiResponse";
 import { GetPrismaClient } from "@/utils/getPrismaClient";
 import bcrypt from "bcryptjs";
+import { CompanyService } from "./company.service";
 
 const prisma = GetPrismaClient.main();
 
@@ -218,6 +219,12 @@ export class TenantDatabaseService {
 		}
 	}
 
+	static async recreateTenantDatabase(companyId: string, companyName: string) {
+		await this.dropTenant(companyId);
+
+		await this.createTenantDatabase(companyId, companyName);
+	}
+
 	static async getTenantBySubdomain(subdomain: string) {
 		try {
 			const tenant = await prisma.tenant.findUnique({
@@ -229,5 +236,24 @@ export class TenantDatabaseService {
 		} catch (e) {
 			console.log(e);
 		}
+	}
+
+	static async dropTenant(companyId: string) {
+		const currentTenant = await new CompanyService().getTenantOfUser(companyId);
+
+		if (!currentTenant.data) {
+			throw ApiResponse.error("Tenant não encontrado, logo não deletado", 400);
+		}
+
+		if (Array.isArray(currentTenant.data))
+			await prisma.$executeRawUnsafe(
+				`DROP DATABASE IF EXISTS ${currentTenant.data[0].databaseName};`
+			);
+		else
+			await prisma.$executeRawUnsafe(
+				`DROP DATABASE IF EXISTS ${currentTenant.data.databaseName};`
+			);
+
+		return;
 	}
 }

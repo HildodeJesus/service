@@ -2,11 +2,9 @@
 import { PrismaClient as MainClient } from "../../prisma/generated/main";
 import { PrismaClient as TenantClient } from "../../prisma/generated/tenant";
 
-import { withAccelerate } from "@prisma/extension-accelerate";
-
 const prismaClientPropertyName = `__prevent-name-collision__prisma`;
 type GlobalThisWithPrismaClient = typeof globalThis & {
-	[prismaClientPropertyName]: any;
+	[prismaClientPropertyName]: MainClient;
 };
 
 const prismaClients: Record<string, TenantClient> = {};
@@ -24,7 +22,7 @@ export class GetPrismaClient {
 							url: `postgresql://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:5432/cardapiou`,
 						},
 					},
-				}).$extends(withAccelerate());
+				});
 			}
 			return newGlobalThis[prismaClientPropertyName];
 		}
