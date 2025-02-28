@@ -22,9 +22,10 @@ export async function POST(req: NextRequest) {
 				}
 			);
 
-		const body: CreateProductInput = await req.json();
+		const { name, price, quantity, unit }: CreateProductInput =
+			await req.json();
 
-		const prisma = GetPrismaClient.tenant(tenant?.databaseName);
+		// const res =
 
 		return NextResponse.json("asds");
 	} catch (error) {
