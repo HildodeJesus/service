@@ -174,8 +174,10 @@ exports.Prisma.ProductScalarFieldEnum = {
   id: 'id',
   name: 'name',
   quantity: 'quantity',
+  minimumQuantity: 'minimumQuantity',
   unit: 'unit',
   price: 'price',
+  picture: 'picture',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -253,53 +255,53 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.Role = exports.$Enums.Role = {
+exports.role = exports.$Enums.role = {
   admin: 'admin',
   waiter: 'waiter',
   kitchen: 'kitchen'
 };
 
-exports.Unit = exports.$Enums.Unit = {
+exports.unit = exports.$Enums.unit = {
   unit: 'unit',
   kg: 'kg',
   liter: 'liter'
 };
 
-exports.OrderType = exports.$Enums.OrderType = {
+exports.order_type = exports.$Enums.order_type = {
   dine_in: 'dine_in',
   takeout: 'takeout',
   delivery: 'delivery'
 };
 
-exports.OrderStatus = exports.$Enums.OrderStatus = {
+exports.order_status = exports.$Enums.order_status = {
   pending: 'pending',
   preparing: 'preparing',
   delivered: 'delivered',
   canceled: 'canceled'
 };
 
-exports.BillStatus = exports.$Enums.BillStatus = {
+exports.bill_status = exports.$Enums.bill_status = {
   open: 'open',
   closed: 'closed'
 };
 
-exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+exports.payment_method = exports.$Enums.payment_method = {
   cash: 'cash',
   card: 'card',
   pix: 'pix'
 };
 
-exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+exports.payment_status = exports.$Enums.payment_status = {
   pending: 'pending',
   paid: 'paid'
 };
 
-exports.MovementType = exports.$Enums.MovementType = {
+exports.movement_type = exports.$Enums.movement_type = {
   in: 'in',
   out: 'out'
 };
 
-exports.ReferenceType = exports.$Enums.ReferenceType = {
+exports.reference_type = exports.$Enums.reference_type = {
   order: 'order',
   manual_adjustment: 'manual_adjustment'
 };

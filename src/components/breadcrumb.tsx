@@ -29,17 +29,22 @@ export default function BreadcrumbCustom() {
 					if (i == links.length - 1)
 						return (
 							<BreadcrumbItem key={i} className="hidden md:block">
-								<BreadcrumbPage className="capitalize">{link}</BreadcrumbPage>
+								<BreadcrumbPage className="capitalize text-orange-500">
+									{link}
+								</BreadcrumbPage>
 							</BreadcrumbItem>
 						);
 					return (
 						<>
 							<BreadcrumbItem key={i} className="hidden md:block">
-								<BreadcrumbLink href={`/${link}`} className="capitalize">
+								<BreadcrumbLink
+									href={`/${link}`}
+									className="capitalize text-orange-300 hover:text-orange-500"
+								>
 									{link}
 								</BreadcrumbLink>
 							</BreadcrumbItem>
-							<BreadcrumbSeparator className="hidden md:block" />
+							<BreadcrumbSeparator className="hidden md:block text-orange-400" />
 						</>
 					);
 				})}

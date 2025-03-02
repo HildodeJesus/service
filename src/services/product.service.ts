@@ -25,8 +25,11 @@ export class ProductService {
 		return ApiResponse.success("Criado com sucesso!", product, 201);
 	}
 
-	async getProducts(pagination: IPagination) {
+	async getProducts(pagination: IPagination, search: string | null) {
 		const productsQuery = this.prisma.product.findMany({
+			...(search && {
+				where: { name: { contains: search, mode: "insensitive" } },
+			}),
 			orderBy: { createdAt: pagination.order },
 			take: pagination.take,
 			skip: (pagination.page - 1) * pagination.take,
@@ -51,7 +54,7 @@ export class ProductService {
 		};
 
 		return new PaginatedResponse<typeof products>(
-			"Criado com sucesso!",
+			"Sucesso!",
 			products,
 			201,
 			newPagination

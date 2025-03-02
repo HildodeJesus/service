@@ -1,17 +1,19 @@
-"use client";
-
 import Header from "@/components/header";
-import { useEffect } from "react";
+import ProductsTable from "./components/productTable";
 
 export default function Page() {
-	useEffect(() => {
-		fetch("/api/products", { method: "POST" });
-	}, []);
-
 	return (
 		<>
-			<Header />
-			<main>dashboard</main>
+			<Header />{" "}
+			<main className="p-3 lg:p-6 w-full h-full">
+				<div className="w-full h-full max-w-[900px] mx-auto">
+					<h1 className="text-xl lg:text-2xl font-bold">Produtos</h1>
+					<p className="text-sm text-orange-500">
+						Gerencie seus produtos em estoque
+					</p>
+					<ProductsTable />
+				</div>
+			</main>
 		</>
 	);
 }

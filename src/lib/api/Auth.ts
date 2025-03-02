@@ -1,14 +1,15 @@
 import { CreateCompanyInput } from "@/common/schemas/company";
-import { axiosInstance } from "./axios";
-import { AxiosInstance } from "axios";
+import axios, { AxiosInstance } from "axios";
 
 export class Auth {
-	private axios: AxiosInstance;
+	private axiosInstance: AxiosInstance;
 	constructor() {
-		this.axios = axiosInstance;
+		this.axiosInstance = axios.create({
+			baseURL: `http://${process.env.NEXT_PUBLIC_BASE_URL}/api`,
+		});
 	}
 	async create(data: CreateCompanyInput) {
-		const res = await this.axios.post("/auth/register", data);
+		const res = await this.axiosInstance.post("/auth/register", data);
 
 		return res.data;
 	}

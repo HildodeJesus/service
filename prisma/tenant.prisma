@@ -14,7 +14,7 @@ model User {
   name      String
   email     String
   password  String
-  role      Role     @default(waiter)
+  role      role     @default(waiter)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -76,8 +76,10 @@ model Product {
   id             String           @id @default(uuid())
   name           String
   quantity       Decimal          @db.Decimal
-  unit           Unit             @default(unit)
+  minimumQuantity   Decimal?          @db.Decimal @default(0)
+  unit           unit             @default(unit)
   price          Decimal          @db.Decimal
+  picture        String?         
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   dishItems      DishItem[]
@@ -88,8 +90,8 @@ model Order {
   id          String       @id @default(uuid())
   tableId     String?
   clientId    String?
-  orderType   OrderType    @default(dine_in)
-  status      OrderStatus  @default(pending)
+  orderType   order_type    @default(dine_in)
+  status      order_status  @default(pending)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   table       Table?       @relation(fields: [tableId], references: [id])
@@ -115,7 +117,7 @@ model Bill {
   id        String       @id @default(uuid())
   tableId   String
   clientId  String?
-  status    BillStatus   @default(open)
+  status    bill_status   @default(open)
   total     Decimal      @db.Decimal
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
@@ -139,8 +141,8 @@ model Payment {
   id            String         @id @default(uuid())
   billId        String
   amount        Decimal        @db.Decimal
-  paymentMethod PaymentMethod  @default(cash)
-  status        PaymentStatus  @default(pending)
+  paymentMethod payment_method  @default(cash)
+  status        payment_status  @default(pending)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   bill          Bill           @relation(fields: [billId], references: [id])
@@ -150,62 +152,62 @@ model StockMovement {
   id            String           @id @default(uuid())
   productId     String
   quantity      Decimal          @db.Decimal
-  movementType  MovementType     @default(in)
-  referenceId   String
-  referenceType ReferenceType    @default(order)
+  movementType  movement_type     @default(in)
+  referenceId   String?
+  referenceType reference_type    @default(order)
   createdAt     DateTime         @default(now())
   updatedAt     DateTime         @updatedAt
   product       Product          @relation(fields: [productId], references: [id])
   order         Order?           @relation(fields: [referenceId], references: [id])
 }
 
-enum Role {
+enum role {
   admin
   waiter
   kitchen
 }
 
-enum Unit {
+enum unit {
   unit
   kg
   liter
 }
 
-enum OrderType {
+enum order_type {
   dine_in
   takeout
   delivery
 }
 
-enum OrderStatus {
+enum order_status {
   pending
   preparing
   delivered
   canceled
 }
 
-enum BillStatus {
+enum bill_status {
   open
   closed
 }
 
-enum PaymentMethod {
+enum payment_method {
   cash
   card
   pix
 }
 
-enum PaymentStatus {
+enum payment_status {
   pending
   paid
 }
 
-enum MovementType {
+enum movement_type {
   in
   out
 }
 
-enum ReferenceType {
+enum reference_type {
   order
   manual_adjustment
 }

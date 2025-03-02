@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import { Suspense } from "react";
-import AuthSessionProvider from "@/components/AuthSessionProvider";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { LoadingProvider } from "@/hooks/use-loading";
 
 const geistSans = Inter({
 	variable: "--font-geist-sans",
@@ -25,14 +24,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<section className={`${geistSans.variable} antialiased`}>
-			<AuthSessionProvider>
-				<Suspense>
-					<SidebarProvider>
-						<AppSidebar />
-						<SidebarInset>{children}</SidebarInset>
-					</SidebarProvider>
-				</Suspense>
-			</AuthSessionProvider>
+			<SidebarProvider>
+				<AppSidebar />
+				<SidebarInset>
+					<LoadingProvider>{children}</LoadingProvider>
+				</SidebarInset>
+			</SidebarProvider>
 			<Toaster />
 		</section>
 	);

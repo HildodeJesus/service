@@ -128,6 +128,17 @@ exports.Prisma.CompanyScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SettingsScalarFieldEnum = {
+  id: 'id',
+  primaryColor: 'primaryColor',
+  secondaryColor: 'secondaryColor',
+  extraColor: 'extraColor',
+  logo: 'logo',
+  companyId: 'companyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.TenantScalarFieldEnum = {
   id: 'id',
   subdomain: 'subdomain',
@@ -162,6 +173,7 @@ exports.SubscriptionStatus = exports.$Enums.SubscriptionStatus = {
 
 exports.Prisma.ModelName = {
   Company: 'Company',
+  Settings: 'Settings',
   Tenant: 'Tenant'
 };
 

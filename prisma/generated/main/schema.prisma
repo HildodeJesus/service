@@ -19,6 +19,19 @@ model Company {
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
   tenants            Tenant[]
+  settings           Settings?
+}
+
+model Settings {
+  id             String   @id @default(uuid())
+  primaryColor   String
+  secondaryColor String
+  extraColor     String
+  logo           String?
+  companyId      String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
 
 model Tenant {
