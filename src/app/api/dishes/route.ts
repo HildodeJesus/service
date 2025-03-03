@@ -1,6 +1,6 @@
-import { CreateProductInput } from "@/common/schemas/product";
+import { CreateDishInput } from "@/common/schemas/dish";
 import { handleApiError } from "@/errors/handleApiError";
-import { ProductService } from "@/services/product.service";
+import { DishService } from "@/services/dish.service";
 import { TenantDatabaseService } from "@/services/tenant.service";
 import { getSubdomain } from "@/utils/getSubdomain";
 import { Pagination } from "@/utils/Pagination";
@@ -11,15 +11,22 @@ export async function POST(req: NextRequest) {
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
-		const { name, price, quantity, unit, minimumQuantity }: CreateProductInput =
-			await req.json();
-
-		const res = await new ProductService(tenant.databaseName).createProduct({
+		const {
 			name,
+			description,
 			price,
-			quantity,
-			unit,
-			minimumQuantity,
+			cost,
+			categoryId,
+			dishItems,
+		}: CreateDishInput = await req.json();
+
+		const res = await new DishService(tenant.databaseName).createDish({
+			name,
+			description,
+			price,
+			cost,
+			categoryId,
+			dishItems,
 		});
 
 		return NextResponse.json(res, { status: res.statusCode });
@@ -34,13 +41,13 @@ export async function GET(req: NextRequest) {
 
 	const order = searchParams.get("order");
 	const page = searchParams.get("page");
-	const take = searchParams.get("order");
+	const take = searchParams.get("take");
 	const search = searchParams.get("search");
 
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
-		const res = await new ProductService(tenant.databaseName).getProducts(
+		const res = await new DishService(tenant.databaseName).getDishes(
 			Pagination.formated(order, Number(page), Number(take)),
 			search
 		);

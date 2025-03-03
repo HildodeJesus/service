@@ -1,20 +1,18 @@
 import { z } from "zod";
 
-export const createDishSchema = z.object({
-	name: z.string().min(3, "Nome do prato deve ter no mínimo 3 caracteres"),
-	description: z.string().optional(),
-	price: z.number().positive("Preço deve ser um valor positivo"),
-	cost: z.number().positive("Custo deve ser um valor positivo"),
-	category_id: z.string().uuid("ID da categoria inválido"),
+export const DishItemSchema = z.object({
+	productId: z.string().uuid(),
+	quantity: z.number().positive(),
 });
 
-export const updateDishSchema = z.object({
-	name: z
-		.string()
-		.min(3, "Nome do prato deve ter no mínimo 3 caracteres")
-		.optional(),
+export const CreateDishSchema = z.object({
+	name: z.string().min(1, "O nome é obrigatório"),
 	description: z.string().optional(),
-	price: z.number().positive("Preço deve ser um valor positivo").optional(),
-	cost: z.number().positive("Custo deve ser um valor positivo").optional(),
-	category_id: z.string().uuid("ID da categoria inválido").optional(),
+	price: z.number().positive("O preço deve ser maior que 0"),
+	cost: z.number().positive("O custo deve ser maior que 0"),
+	categoryId: z.string().uuid("ID de categoria inválido"),
+	dishItems: z.array(DishItemSchema),
 });
+
+export type CreateDishInput = z.infer<typeof CreateDishSchema>;
+export type DishItemInput = z.infer<typeof DishItemSchema>;

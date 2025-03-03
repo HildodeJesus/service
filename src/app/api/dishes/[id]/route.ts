@@ -1,32 +1,21 @@
-import { UpdateProductInput } from "@/common/schemas/product";
+import { CreateDishInput } from "@/common/schemas/dish";
 import { handleApiError } from "@/errors/handleApiError";
-import { ProductService } from "@/services/product.service";
+import { DishService } from "@/services/dish.service";
 import { TenantDatabaseService } from "@/services/tenant.service";
 import { getSubdomain } from "@/utils/getSubdomain";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(
+export async function GET(
 	req: NextRequest,
-	{ params }: { params: Promise<{ id: string }> }
+	{ params }: { params: { id: string } }
 ) {
 	const subdomain = getSubdomain(req);
-	const { id } = await params;
 
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
-		const { name, price, quantity, unit, minimumQuantity }: UpdateProductInput =
-			await req.json();
-
-		const res = await new ProductService(tenant.databaseName).updateProduct(
-			id,
-			{
-				name,
-				price,
-				quantity,
-				unit,
-				minimumQuantity,
-			}
+		const res = await new DishService(tenant.databaseName).getDishById(
+			params.id
 		);
 
 		return NextResponse.json(res, { status: res.statusCode });
@@ -35,18 +24,34 @@ export async function PUT(
 	}
 }
 
-export async function GET(
+export async function PUT(
 	req: NextRequest,
-	{ params }: { params: Promise<{ id: string }> }
+	{ params }: { params: { id: string } }
 ) {
 	const subdomain = getSubdomain(req);
-	const { id } = await params;
 
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
-		const res = await new ProductService(tenant.databaseName).getProductById(
-			id
+		const {
+			name,
+			description,
+			price,
+			cost,
+			categoryId,
+			dishItems,
+		}: CreateDishInput = await req.json();
+
+		const res = await new DishService(tenant.databaseName).updateDish(
+			params.id,
+			{
+				name,
+				description,
+				price,
+				cost,
+				categoryId,
+				dishItems,
+			}
 		);
 
 		return NextResponse.json(res, { status: res.statusCode });
@@ -57,15 +62,16 @@ export async function GET(
 
 export async function DELETE(
 	req: NextRequest,
-	{ params }: { params: Promise<{ id: string }> }
+	{ params }: { params: { id: string } }
 ) {
 	const subdomain = getSubdomain(req);
-	const { id } = await params;
 
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
-		const res = await new ProductService(tenant.databaseName).deleteProduct(id);
+		const res = await new DishService(tenant.databaseName).deleteDish(
+			params.id
+		);
 
 		return NextResponse.json(res, { status: res.statusCode });
 	} catch (error) {

@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CreateProductInput } from "@/common/schemas/product";
 import { PrismaClient } from "../../prisma/generated/tenant";
 import { GetPrismaClient } from "@/utils/getPrismaClient";
 import { ApiResponse } from "@/utils/ApiResponse";
 import { IPagination } from "@/common/interfaces/Pagination";
 import { PaginatedResponse } from "@/utils/PaginatedResponse";
+import { PrismaErrorHandler } from "@/errors/prismaErrorHandler";
 
 export class ProductService {
 	private prisma: PrismaClient;
@@ -12,103 +14,167 @@ export class ProductService {
 		this.prisma = GetPrismaClient.tenant(database);
 	}
 
-	async createProduct(data: CreateProductInput) {
-		const alreadyExist = await this.getOneProductByName(data.name);
+	async createProduct(data: CreateProductInput): Promise<ApiResponse<any>> {
+		try {
+			const existingProduct = await this.prisma.product.findFirst({
+				where: { name: data.name },
+			});
 
-		if (alreadyExist.data)
-			throw ApiResponse.error("Outro produto com o mesmo nome já existe", 400);
+			if (existingProduct) {
+				return ApiResponse.error(
+					"Outro produto com o mesmo nome já existe",
+					400
+				);
+			}
 
-		const product = await this.prisma.product.create({
-			data,
-		});
+			const product = await this.prisma.product.create({
+				data,
+			});
 
-		return ApiResponse.success("Criado com sucesso!", product, 201);
-	}
-
-	async getProducts(pagination: IPagination, search: string | null) {
-		const productsQuery = this.prisma.product.findMany({
-			...(search && {
-				where: { name: { contains: search, mode: "insensitive" } },
-			}),
-			orderBy: { createdAt: pagination.order },
-			take: pagination.take,
-			skip: (pagination.page - 1) * pagination.take,
-			include: {
-				_count: true,
-			},
-		});
-
-		const productsCountQuery = this.prisma.product.count();
-
-		const [products, productsCount] = await Promise.all([
-			productsQuery,
-			productsCountQuery,
-		]);
-
-		const totalPages = Math.floor(productsCount / pagination.take);
-
-		const newPagination: IPagination = {
-			...pagination,
-			totalItems: productsCount,
-			totalPages,
-		};
-
-		return new PaginatedResponse<typeof products>(
-			"Sucesso!",
-			products,
-			201,
-			newPagination
-		);
-	}
-
-	async getOneProductById(id: string) {
-		const product = await this.prisma.product.findUnique({ where: { id } });
-
-		if (!product) throw ApiResponse.error("Produto não existe", 400);
-
-		return new ApiResponse<typeof product>("sucesso!", product, 200);
-	}
-
-	async getOneProductByName(name: string) {
-		const product = await this.prisma.product.findFirst({
-			where: { name: name },
-		});
-
-		if (!product) return ApiResponse.error("Produto não existe", 400);
-
-		return new ApiResponse<typeof product>("sucesso!", product, 200);
-	}
-
-	async updateProduct(id: string, data: Partial<CreateProductInput>) {
-		const alreadyExist = await this.getOneProductById(id);
-
-		if (!alreadyExist.data) return ApiResponse.error("Produto não existe", 400);
-
-		if (
-			!Array.isArray(alreadyExist.data) &&
-			data.name &&
-			data.name !== alreadyExist.data.name
-		) {
-			const alreadyExistName = await this.getOneProductByName(data.name);
-
-			if (alreadyExistName.data)
-				throw ApiResponse.error("Outro produto com o mesmo nome já existe");
+			return ApiResponse.success("Produto criado com sucesso!", product, 201);
+		} catch (error) {
+			return PrismaErrorHandler.handleCreateError(error, "produto");
+		} finally {
+			await this.prisma.$disconnect();
 		}
-
-		const product = await this.prisma.product.update({
-			where: { id },
-			data,
-		});
-
-		return ApiResponse.success("Criado com sucesso!", product, 201);
 	}
 
-	async deleteProduct(id: string) {
-		const alreadyExist = await this.getOneProductById(id);
-		if (!alreadyExist.data) return ApiResponse.error("Produto não existe", 400);
+	async getProducts(
+		pagination: IPagination,
+		search: string | null
+	): Promise<PaginatedResponse<any>> {
+		try {
+			const whereClause = search
+				? {
+						name: {
+							contains: search,
+							mode: "insensitive" as const,
+						},
+				  }
+				: undefined;
 
-		await this.prisma.product.delete({ where: { id } });
+			const [products, totalCount] = await Promise.all([
+				this.prisma.product.findMany({
+					where: whereClause,
+					orderBy: {
+						createdAt: pagination.order || "desc",
+					},
+					take: pagination.take,
+					skip: (pagination.page - 1) * pagination.take,
+				}),
+				this.prisma.product.count({
+					where: whereClause,
+				}),
+			]);
 
-		return ApiResponse.success("Deletado com sucesso!", null, 200);
+			const totalPages = Math.ceil(totalCount / pagination.take);
+
+			return new PaginatedResponse("Produtos encontrados", products, 200, {
+				...pagination,
+				totalItems: totalCount,
+				totalPages,
+			});
+		} catch (error) {
+			console.error("Error fetching products:", error);
+			throw PrismaErrorHandler.handle(error, "produto");
+		} finally {
+			await this.prisma.$disconnect();
+		}
+	}
+
+	async getProductById(id: string): Promise<ApiResponse<any>> {
+		try {
+			const product = await this.prisma.product.findUnique({
+				where: { id },
+			});
+
+			if (!product) {
+				return ApiResponse.error("Produto não encontrado", 404);
+			}
+
+			return ApiResponse.success("Produto encontrado", product);
+		} catch (error) {
+			return PrismaErrorHandler.handle(error, "produto");
+		} finally {
+			await this.prisma.$disconnect();
+		}
+	}
+
+	async updateProduct(
+		id: string,
+		data: Partial<CreateProductInput>
+	): Promise<ApiResponse<any>> {
+		try {
+			const existingProduct = await this.prisma.product.findUnique({
+				where: { id },
+			});
+
+			if (!existingProduct) {
+				return ApiResponse.error("Produto não encontrado", 404);
+			}
+
+			if (data.name && data.name !== existingProduct.name) {
+				const nameConflict = await this.prisma.product.findFirst({
+					where: {
+						name: data.name,
+						id: { not: id },
+					},
+				});
+
+				if (nameConflict) {
+					return ApiResponse.error(
+						"Outro produto com o mesmo nome já existe",
+						400
+					);
+				}
+			}
+
+			const updatedProduct = await this.prisma.product.update({
+				where: { id },
+				data,
+			});
+
+			return ApiResponse.success(
+				"Produto atualizado com sucesso",
+				updatedProduct
+			);
+		} catch (error) {
+			return PrismaErrorHandler.handleUpdateError(error, "produto");
+		} finally {
+			await this.prisma.$disconnect();
+		}
+	}
+
+	async deleteProduct(id: string): Promise<ApiResponse<any>> {
+		try {
+			const existingProduct = await this.prisma.product.findUnique({
+				where: { id },
+			});
+
+			if (!existingProduct) {
+				return ApiResponse.error("Produto não encontrado", 404);
+			}
+
+			const usedInDish = await this.prisma.dishItem.findFirst({
+				where: { productId: id },
+			});
+
+			if (usedInDish) {
+				return ApiResponse.error(
+					"Este produto não pode ser excluído pois está sendo usado em pratos",
+					400
+				);
+			}
+
+			await this.prisma.product.delete({
+				where: { id },
+			});
+
+			return ApiResponse.success("Produto excluído com sucesso", null);
+		} catch (error) {
+			return PrismaErrorHandler.handleDeleteError(error, "produto");
+		} finally {
+			await this.prisma.$disconnect();
+		}
 	}
 }
