@@ -174,7 +174,7 @@ const config = {
       },
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x"
+        "value": "linux-musl-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -192,6 +192,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -200,8 +201,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n  output        = \"./generated/main\"\n}\n\ndatasource db {\n  provider = \"postgresql\" // ou o seu banco de dados\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Company {\n  id                 String             @id @default(uuid())\n  name               String             @unique\n  email              String             @unique\n  password           String\n  stripeCustomerId   String?\n  subscriptionStatus SubscriptionStatus @default(inactive)\n  createdAt          DateTime           @default(now())\n  updatedAt          DateTime           @updatedAt\n  tenants            Tenant[]\n  settings           Settings?\n}\n\nmodel Settings {\n  id             String   @id @default(uuid())\n  primaryColor   String\n  secondaryColor String\n  extraColor     String\n  logo           String?\n  companyId      String   @unique\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)\n}\n\nmodel Tenant {\n  id               String   @id @default(uuid())\n  subdomain        String   @unique\n  companyId        String\n  databaseName     String\n  databaseUser     String\n  databasePassword String\n  createdAt        DateTime @default(now())\n  updatedAt        DateTime @updatedAt\n  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)\n}\n\nenum SubscriptionStatus {\n  active\n  inactive\n  trial\n  canceled\n}\n",
-  "inlineSchemaHash": "2b185becbbc4afdc3eb321c67728effad92e40f7ff723b3a9285fa4472f50862",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"linux-musl-openssl-3.0.x\"]\n  output        = \"./generated/main\"\n}\n\ndatasource db {\n  provider = \"postgresql\" // ou o seu banco de dados\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Company {\n  id                 String             @id @default(uuid())\n  name               String             @unique\n  email              String             @unique\n  password           String\n  stripeCustomerId   String?\n  subscriptionStatus SubscriptionStatus @default(inactive)\n  createdAt          DateTime           @default(now())\n  updatedAt          DateTime           @updatedAt\n  tenants            Tenant[]\n  settings           Settings?\n}\n\nmodel Settings {\n  id             String   @id @default(uuid())\n  primaryColor   String\n  secondaryColor String\n  extraColor     String\n  logo           String?\n  companyId      String   @unique\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)\n}\n\nmodel Tenant {\n  id               String   @id @default(uuid())\n  subdomain        String   @unique\n  companyId        String\n  databaseName     String\n  databaseUser     String\n  databasePassword String\n  createdAt        DateTime @default(now())\n  updatedAt        DateTime @updatedAt\n  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)\n}\n\nenum SubscriptionStatus {\n  active\n  inactive\n  trial\n  canceled\n}\n",
+  "inlineSchemaHash": "60484c267b686706da13ddfa29a523eeb0ac06ceeeb6fb509e3b01448b173db9",
   "copyEngine": true
 }
 
@@ -244,8 +245,8 @@ path.join(__dirname, "libquery_engine-debian-openssl-1.1.x.so.node");
 path.join(process.cwd(), "prisma/generated/main/libquery_engine-debian-openssl-1.1.x.so.node")
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
-path.join(process.cwd(), "prisma/generated/main/libquery_engine-debian-openssl-3.0.x.so.node")
+path.join(__dirname, "libquery_engine-linux-musl-openssl-3.0.x.so.node");
+path.join(process.cwd(), "prisma/generated/main/libquery_engine-linux-musl-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/main/schema.prisma")
