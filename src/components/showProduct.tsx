@@ -86,13 +86,8 @@ export default function ShowProduct({ selectedProduct }: ShowProductProps) {
 
 					<div className="grid grid-cols-2 gap-3">
 						<div className="col-span-2">
-							<Label htmlFor="name">Nome</Label>
-							<Input
-								id="name"
-								placeholder="Nome do produto "
-								className="mt-1"
-								autoComplete="off"
-							/>
+							<span>Nome:</span>
+							<span>{selectedProduct.name}</span>
 						</div>
 						<div>
 							<Label htmlFor="price">Preço</Label>

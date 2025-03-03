@@ -12,42 +12,43 @@ import {
 
 export default function BreadcrumbCustom() {
 	const [pathname, setPathname] = useState("");
-	const links = pathname.split("/").map(link => {
-		if (link == "") return;
-
-		return link;
-	});
 
 	useEffect(() => {
 		setPathname(window.location.pathname);
 	}, []);
 
+	const links = pathname
+		.split("/")
+		.filter(link => link !== "")
+		.map((link, i, arr) => ({
+			name: link,
+			path: `/${arr.slice(0, i + 1).join("/")}`,
+		}));
+
 	return (
 		<Breadcrumb>
 			<BreadcrumbList>
-				{links.map((link, i) => {
-					if (i == links.length - 1)
-						return (
-							<BreadcrumbItem key={i} className="hidden md:block">
+				{links.map((link, i) => (
+					<div key={i} className="flex items-center">
+						<BreadcrumbItem className="hidden md:block">
+							{i === links.length - 1 ? (
 								<BreadcrumbPage className="capitalize text-orange-500">
-									{link}
+									{link.name}
 								</BreadcrumbPage>
-							</BreadcrumbItem>
-						);
-					return (
-						<>
-							<BreadcrumbItem key={i} className="hidden md:block">
+							) : (
 								<BreadcrumbLink
-									href={`/${link}`}
+									href={link.path}
 									className="capitalize text-orange-300 hover:text-orange-500"
 								>
-									{link}
+									{link.name}
 								</BreadcrumbLink>
-							</BreadcrumbItem>
+							)}
+						</BreadcrumbItem>
+						{i !== links.length - 1 && (
 							<BreadcrumbSeparator className="hidden md:block text-orange-400" />
-						</>
-					);
-				})}
+						)}
+					</div>
+				))}
 			</BreadcrumbList>
 		</Breadcrumb>
 	);

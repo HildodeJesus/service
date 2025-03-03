@@ -2,14 +2,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { ProductUnit } from "@/common/constants/ProductUnit";
 import { IPaginationClient } from "@/common/interfaces/Pagination";
 import { IProduct } from "@/common/interfaces/Product";
 import SaveProduct from "@/components/saveProduct";
 import ShowProduct from "@/components/showProduct";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ProductsApi } from "@/lib/api/Products";
 import { ArrowDown01, ArrowUp01 } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useReducer, useState } from "react";
 import { toast } from "sonner";
 
@@ -43,7 +46,7 @@ export default function ProductsTable() {
 	const [products, setProducts] = useState<IProduct[]>([]);
 	const [state, dispatch] = useReducer(reducer, {
 		order: "desc",
-		take: 10,
+		take: 9,
 		page: 1,
 	});
 
@@ -86,9 +89,82 @@ export default function ProductsTable() {
 				</div>
 
 				<ul className="w-full flex justify-center flex-wrap gap-3">
-					{products.map(product => (
-						<ShowProduct key={product.id} selectedProduct={product} />
-					))}
+					{products && products.length > 0
+						? products.map(product => (
+								<Link
+									key={product.id}
+									href={`/dashboard/produtos/${product.id}`}
+									className="border shadow-md cursor-pointer py-3 px-4 rounded-xl w-full max-w-[290px] flex  flex-col transition-colors hover:scale-105 duration-150 gap-1 transition-none"
+								>
+									<div className="w-full h-[250px] bg-gray-100 overflow-hidden rounded-lg"></div>
+
+									<span className="">{product.name}</span>
+									<div>
+										<span className="text-lg font-bold">
+											{Number(product.price).toLocaleString("pt-BR", {
+												style: "currency",
+												currency: "BRL",
+											})}
+											<strong className="font-normal text-sm">
+												/
+												{product.unit == ProductUnit.LITER
+													? "litro"
+													: product.unit == ProductUnit.UNIT
+													? "unidade"
+													: "KG"}
+											</strong>
+										</span>
+									</div>
+									<div className="flex text-sm items-center justify-between w-full">
+										<div className="flex gap-2">
+											<span>Qtd:</span>
+											<span>
+												{product.quantity}{" "}
+												<span className="font-normal text-sm">
+													{product.unit == ProductUnit.LITER
+														? "litro"
+														: product.unit == ProductUnit.UNIT
+														? "unidade"
+														: "KG"}
+												</span>
+											</span>
+										</div>
+
+										<div className="flex gap-2">
+											<span>min:</span>
+											<span>
+												{product.minimumQuantity}{" "}
+												<span className="font-normal text-sm">
+													{product.unit == ProductUnit.LITER
+														? "litro"
+														: product.unit == ProductUnit.UNIT
+														? "unidade"
+														: "KG"}
+												</span>
+											</span>
+										</div>
+									</div>
+								</Link>
+						  ))
+						: Array.from({ length: 9 }).map((_, i) => (
+								<div
+									key={i}
+									className="border shadow-md cursor-pointer py-3 px-4 rounded-xl w-full max-w-[290px] flex  flex-col transition-colors hover:scale-105 duration-150 gap-1 transition-none"
+								>
+									<Skeleton className="w-full h-[250px]" />
+									<Skeleton className="w-[100px] h-[20px]" />
+									<Skeleton className="w-[30px] h-[20px]" />
+									<div className="flex text-sm items-center justify-between w-full">
+										<div className="flex gap-2">
+											<Skeleton className="w-[50px] h-[20px]" />
+										</div>
+
+										<div className="flex gap-2">
+											<Skeleton className="w-[50px] h-[20px]" />
+										</div>
+									</div>
+								</div>
+						  ))}
 				</ul>
 			</div>
 		</div>

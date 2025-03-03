@@ -1,6 +1,6 @@
 "use client";
 
-import { PlusCircle } from "lucide-react";
+import { Edit2, PlusCircle } from "lucide-react";
 import {
 	Dialog,
 	DialogContent,
@@ -34,7 +34,7 @@ import { IProduct } from "@/common/interfaces/Product";
 
 interface SaveProductProps {
 	defaultValue?: IProduct;
-	onAction: () => void;
+	onAction?: () => void;
 }
 
 export default function SaveProduct({
@@ -77,7 +77,7 @@ export default function SaveProduct({
 			}
 
 			reset();
-			onAction();
+			if (onAction) onAction();
 		} catch (e) {
 			console.log(e);
 			if (e instanceof ApiResponse) toast(e.message);
@@ -89,8 +89,8 @@ export default function SaveProduct({
 	return (
 		<>
 			<Dialog>
-				<DialogTrigger className="bg-orange-500 hover:bg-orange-700 flex items-center py-2 px-3 gap-3 rounded-lg text-white font-bold">
-					<PlusCircle />
+				<DialogTrigger className="bg-orange-500 hover:bg-orange-600 flex items-center py-2 text-sm px-3 gap-3 rounded-lg text-white font-bold">
+					{defaultValue ? <Edit2 className="size-4" /> : <PlusCircle />}
 					{defaultValue ? "Editar produto" : "Adicionar produto"}
 				</DialogTrigger>
 				<DialogContent>

@@ -15,23 +15,19 @@ export class ProductsApi {
 		});
 	}
 	async create(data: CreateProductInput) {
-		try {
-			const res = await this.axiosInstance.post("/products", data);
+		const res = await this.axiosInstance.post("/products", data);
 
-			if (res.status >= 200 && res.status < 400) return res.data;
-		} catch (e: any) {
-			throw e.data;
-		}
+		if (res.status >= 200 && res.status < 400) return res.data;
+
+		throw res.data;
 	}
 
 	async update(id: string, data: UpdateProductInput) {
-		try {
-			const res = await this.axiosInstance.put(`/products/${id}`, data);
+		const res = await this.axiosInstance.put(`/products/${id}`, data);
 
-			if (res.status >= 200 && res.status < 400) return res.data;
-		} catch (e: any) {
-			throw e.data;
-		}
+		if (res.status >= 200 && res.status < 400) return res.data;
+
+		throw res.data;
 	}
 
 	async getAll(pagination: IPaginationClient, search?: string) {
@@ -42,6 +38,23 @@ export class ProductsApi {
 				: `/products?${query}`;
 
 		const res = await this.axiosInstance.get(url);
+
+		if (res.status >= 200 && res.status < 400) return res.data;
+
+		throw res.data;
+	}
+
+	async delete(id: string) {
+		console.log(id);
+		const res = await this.axiosInstance.delete(`/products/${id}`);
+
+		if (res.status >= 200 && res.status < 300) return res.data;
+
+		throw res.data;
+	}
+
+	async getOne(id: string) {
+		const res = await this.axiosInstance.get(`/products/${id}`);
 
 		if (res.status >= 200 && res.status < 400) return res.data;
 
