@@ -5,7 +5,7 @@ import { PrismaErrorHandler } from "@/errors/prismaErrorHandler";
 import { ApiResponse } from "@/utils/ApiResponse";
 import { GetPrismaClient } from "@/utils/getPrismaClient";
 import { PaginatedResponse } from "@/utils/PaginatedResponse";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../prisma/generated/tenant";
 
 export class DishService {
 	private prisma: PrismaClient;
@@ -26,6 +26,7 @@ export class DishService {
 
 			const dish = await this.prisma.dish.create({
 				data: {
+					picture: data.picture,
 					name: data.name,
 					description: data.description,
 					price: data.price,
@@ -77,7 +78,7 @@ export class DishService {
 						},
 					},
 				},
-				order: { name: pagination.order || "asc" },
+				orderBy: { name: pagination.order || "asc" },
 				skip: (pagination.page - 1) * pagination.take,
 				take: pagination.take,
 			});
@@ -95,9 +96,7 @@ export class DishService {
 
 			return PaginatedResponse.success(
 				"Pratos listados com sucesso",
-				{
-					data: dishes,
-				},
+				dishes,
 				200,
 				newPagination
 			);

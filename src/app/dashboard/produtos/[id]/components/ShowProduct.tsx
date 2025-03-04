@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { IDish } from "@/common/interfaces/Dish";
 import { IProduct } from "@/common/interfaces/Product";
 import SaveProduct from "@/components/saveProduct";
 import { ProductsApi } from "@/lib/api/Products";
@@ -10,8 +9,8 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import DeleteButton from "./DeleteButton";
-import { ProductUnit } from "@/common/constants/ProductUnit";
 import { Skeleton } from "@/components/ui/skeleton";
+import { handleShowUnit } from "@/utils/handleShowUnit";
 
 export default function ShowProduct() {
 	const { data: session } = useSession();
@@ -57,12 +56,7 @@ export default function ShowProduct() {
 
 								<span className="text-xl lowercase">
 									{" "}
-									/
-									{product?.unit == ProductUnit.LITER
-										? "Litro"
-										: product?.unit == ProductUnit.UNIT
-										? "Unidade"
-										: "KG"}
+									/{handleShowUnit(product.unit)}
 								</span>
 							</div>
 
@@ -70,23 +64,14 @@ export default function ShowProduct() {
 								<div className="flex flex-col">
 									<span>Quantidade:</span>
 									<span className="text-green-400">
-										{Number(product?.quantity)}{" "}
-										{product?.unit == ProductUnit.LITER
-											? "Litro"
-											: product?.unit == ProductUnit.UNIT
-											? "Unidade"
-											: "kg"}
+										{Number(product?.quantity)} {handleShowUnit(product.unit)}
 									</span>
 								</div>
 								<div className="flex flex-col">
 									<span>Quantidade miníma:</span>
 									<span className="text-red-400">
 										{Number(product?.minimumQuantity)}{" "}
-										{product?.unit == ProductUnit.LITER
-											? "Litro"
-											: product?.unit == ProductUnit.UNIT
-											? "Unidade"
-											: "kg"}
+										{handleShowUnit(product.unit)}
 									</span>
 								</div>
 							</div>

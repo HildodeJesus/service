@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { ProductUnit } from "@/common/constants/ProductUnit";
 import { IProduct } from "@/common/interfaces/Product";
 import SaveProduct from "@/components/saveProduct";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePagination } from "@/hooks/use-pagination";
 import { ProductsApi } from "@/lib/api/Products";
+import { handleShowUnit } from "@/utils/handleShowUnit";
 import { ArrowDown01, ArrowUp01 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -101,12 +101,7 @@ export default function ProductsTable() {
 											currency: "BRL",
 										})}
 										<strong className="font-normal text-sm">
-											/
-											{product.unit == ProductUnit.LITER
-												? "litro"
-												: product.unit == ProductUnit.UNIT
-												? "unidade"
-												: "KG"}
+											/{handleShowUnit(product.unit)}
 										</strong>
 									</span>
 								</div>
@@ -116,11 +111,7 @@ export default function ProductsTable() {
 										<span>
 											{product.quantity}{" "}
 											<span className="font-normal text-sm">
-												{product.unit == ProductUnit.LITER
-													? "litro"
-													: product.unit == ProductUnit.UNIT
-													? "unidade"
-													: "KG"}
+												{handleShowUnit(product.unit)}
 											</span>
 										</span>
 									</div>
@@ -130,11 +121,7 @@ export default function ProductsTable() {
 										<span>
 											{product.minimumQuantity}{" "}
 											<span className="font-normal text-sm">
-												{product.unit == ProductUnit.LITER
-													? "litro"
-													: product.unit == ProductUnit.UNIT
-													? "unidade"
-													: "KG"}
+												{handleShowUnit(product.unit)}
 											</span>
 										</span>
 									</div>

@@ -123,6 +123,7 @@ export class TenantDatabaseService {
             "price" DECIMAL NOT NULL,
             "cost" DECIMAL NOT NULL,
             "categoryId" UUID NOT NULL,
+            "picture" VARCHAR(255),
             "createdAt" TIMESTAMP DEFAULT now(),
             "updatedAt" TIMESTAMP DEFAULT now(),
             FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE CASCADE

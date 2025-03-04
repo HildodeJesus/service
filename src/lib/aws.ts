@@ -1,11 +1,12 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import axios from "axios";
 
 export class Aws {
 	private s3: S3Client;
 	public sizeImage: number;
 	public sizeVideo: number;
-	public folder: string;
+	public subdomain: string;
 
 	/**
 	 * @param subdomain Subdomínio dos clientes. Será utilizado para gerar a pasta no s3.
@@ -19,7 +20,7 @@ export class Aws {
 			},
 		});
 
-		this.folder = subdomain;
+		this.subdomain = subdomain.toLowerCase();
 		this.sizeImage = 2 * 1024 * 1024;
 		this.sizeVideo = 10 * 1024 * 1024;
 	}
@@ -29,10 +30,44 @@ export class Aws {
 			this.s3,
 			new PutObjectCommand({
 				Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!,
-				Key: `${this.folder}/${fileName}`,
+				Key: fileName,
 				ContentType: mimeType,
+				ACL: "public-read",
 			}),
-			{ expiresIn: 60 }
+			{ expiresIn: 120 }
 		);
+	}
+
+	async uploadFile(file: File, folder?: string) {
+		try {
+			if (!this.subdomain) {
+				throw new Error("Usuário não autenticado");
+			}
+
+			const fileExtension = file.name.split(".").pop();
+
+			const fileName = `${this.subdomain}/${folder ? `${folder}/` : ""}${
+				file.name
+			}-${Date.now()}-${Math.random()
+				.toString(36)
+				.substring(2, 15)}.${fileExtension}`;
+
+			const uploadUrl = await this.getUploadUrl(fileName, file.type);
+
+			await axios.put(uploadUrl, {
+				body: file,
+				headers: {
+					"Content-Type": file.type,
+					"Access-Control-Allow-Origin": "*",
+					"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+					"Access-Control-Allow-Headers": "Content-Type",
+				},
+			});
+
+			return fileName;
+		} catch (error) {
+			console.error("Erro ao enviar imagem:", error);
+			throw error;
+		}
 	}
 }

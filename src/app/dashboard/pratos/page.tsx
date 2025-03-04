@@ -9,7 +9,7 @@ export default function Page() {
 				<div className="w-full h-full max-w-[900px] mx-auto">
 					<h1 className="text-xl lg:text-2xl font-bold">Pratos</h1>
 					<p className="text-sm text-orange-500">
-						Gerencie seus pratos em estoque
+						Gerencie seus pratos na prateleira
 					</p>
 					<DishesTable />
 				</div>

@@ -4,6 +4,7 @@ import { ApiResponse } from "./utils/ApiResponse";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { checkPublicRoute } from "./utils/checkPublicRoute";
+import { handleApiError } from "./errors/handleApiError";
 
 const secret = process.env.NEXTAUTH_SECRET;
 
@@ -12,7 +13,6 @@ export default async function middleware(req: NextRequest) {
 		const host = req.headers.get("host") || "";
 		const subdomain = host.split(".")[0];
 		const pathname = req.nextUrl.pathname;
-		console.log(pathname);
 
 		const isPublicRoute = checkPublicRoute(pathname);
 
@@ -42,21 +42,7 @@ export default async function middleware(req: NextRequest) {
 			},
 		});
 	} catch (error) {
-		if (error instanceof ApiResponse) {
-			return NextResponse.json(
-				ApiResponse.error(error.message, error.statusCode),
-				{
-					status: error.statusCode,
-				}
-			);
-		}
-
-		return NextResponse.json(
-			ApiResponse.error("Erro interno do servidor", 500),
-			{
-				status: 500,
-			}
-		);
+		return handleApiError(error);
 	}
 }
 

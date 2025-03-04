@@ -2,13 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { ProductUnit } from "@/common/constants/ProductUnit";
 import { IProduct } from "@/common/interfaces/Product";
-import SaveProduct from "@/components/saveProduct";
+import SaveDish from "@/components/saveDish/index";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePagination } from "@/hooks/use-pagination";
-import { ProductsApi } from "@/lib/api/Products";
+import { DishesApi } from "@/lib/api/Dishes";
 import { ArrowDown01, ArrowUp01 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -18,28 +17,29 @@ import { toast } from "sonner";
 export default function DishesTable() {
 	const { data } = useSession();
 	const [search, setSearch] = useState("");
-	const [products, setProducts] = useState<IProduct[]>([]);
+	const [dishes, setDishes] = useState<IProduct[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const { order, page, take, changeOrder } = usePagination();
 
-	const fetchProducts = async () => {
+	const fetchDishes = async () => {
 		try {
 			setIsLoading(true);
 			if (!data?.user.name) return;
-			const productsRes = await new ProductsApi(data?.user.name).getAll(
+			const productsRes = await new DishesApi(data?.user.name).getAll(
 				{ order, page, take },
 				search
 			);
 
-			setProducts(productsRes.data);
+			setDishes(productsRes.data);
 		} catch (error: any) {
-			setIsLoading(false);
 			toast(error.data.message);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	useEffect(() => {
-		fetchProducts();
+		fetchDishes();
 	}, [order, page, take, search]);
 
 	return (
@@ -59,7 +59,7 @@ export default function DishesTable() {
 				</div>
 
 				<div className="flex">
-					<SaveProduct onAction={fetchProducts} />
+					<SaveDish onAction={fetchDishes} />
 				</div>
 
 				<ul className="w-full flex justify-center flex-wrap gap-3">
@@ -83,60 +83,23 @@ export default function DishesTable() {
 								</div>
 							</div>
 						))
-					) : products && products.length > 0 ? (
-						products.map(product => (
+					) : dishes && dishes.length > 0 ? (
+						dishes.map(dish => (
 							<Link
-								key={product.id}
-								href={`/dashboard/produtos/${product.id}`}
+								key={dish.id}
+								href={`/dashboard/produtos/${dish.id}`}
 								className="border shadow-md cursor-pointer py-3 px-4 rounded-xl w-full max-w-[290px] flex  flex-col transition-colors hover:scale-105 duration-150 gap-1 transition-none"
 							>
 								<div className="w-full h-[250px] bg-gray-100 overflow-hidden rounded-lg"></div>
 
-								<span className="">{product.name}</span>
+								<span className="">{dish.name}</span>
 								<div>
 									<span className="text-lg font-bold">
-										{Number(product.price).toLocaleString("pt-BR", {
+										{Number(dish.price).toLocaleString("pt-BR", {
 											style: "currency",
 											currency: "BRL",
 										})}
-										<strong className="font-normal text-sm">
-											/
-											{product.unit == ProductUnit.LITER
-												? "litro"
-												: product.unit == ProductUnit.UNIT
-												? "unidade"
-												: "KG"}
-										</strong>
 									</span>
-								</div>
-								<div className="flex text-sm items-center justify-between w-full">
-									<div className="flex gap-2">
-										<span>Qtd:</span>
-										<span>
-											{product.quantity}{" "}
-											<span className="font-normal text-sm">
-												{product.unit == ProductUnit.LITER
-													? "litro"
-													: product.unit == ProductUnit.UNIT
-													? "unidade"
-													: "KG"}
-											</span>
-										</span>
-									</div>
-
-									<div className="flex gap-2">
-										<span>min:</span>
-										<span>
-											{product.minimumQuantity}{" "}
-											<span className="font-normal text-sm">
-												{product.unit == ProductUnit.LITER
-													? "litro"
-													: product.unit == ProductUnit.UNIT
-													? "unidade"
-													: "KG"}
-											</span>
-										</span>
-									</div>
 								</div>
 							</Link>
 						))
