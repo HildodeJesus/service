@@ -84,10 +84,18 @@ NEXT_PUBLIC_AWS_BUCKET_NAME=
 NEXT_PUBLIC_AWS_REGION=
 ```
 
-### Linux, Windows e macOS:
+### Executando no Linux, Windows e macOS:
 
 ```bash
-$ NODE_ENV=<development/production> docker-compose up -d
+$ NODE_ENV=<"development"/"production"> docker-compose up -d
+```
+
+### Rodando migrações:
+
+Rodar as migrações do banco de dados:
+
+```bash
+$ npx prisma migrate dev --schema=prisma/schema.prisma
 ```
 
 ## ☕ Usando Cardápiou
@@ -96,14 +104,6 @@ Para usar **Cardápiou**, acesse no navegador:
 
 ```bash
 http://localhost:3000
-```
-
-### Comandos úteis:
-
-Rodar migrações do banco de dados:
-
-```bash
-$ npx prisma migrate dev --schema=prisma/schema.prisma
 ```
 
 ## 🤝 Equipe
