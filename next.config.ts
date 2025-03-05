@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 	async headers() {
@@ -20,6 +20,18 @@ const nextConfig: NextConfig = {
 				],
 			},
 		];
+	},
+
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "cardapio-main.s3.amazonaws.com",
+				port: "",
+				pathname: "/**",
+				search: "",
+			},
+		],
 	},
 };
 

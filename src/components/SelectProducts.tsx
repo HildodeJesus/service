@@ -32,24 +32,26 @@ export default function SelectedProduct({
 	const [products, setProducts] = useState<IProduct[] | []>([]);
 	const { order, page, take } = usePagination();
 
-	const fetchProducts = async () => {
-		try {
-			if (!sessionData?.user.name) return;
-			const productsRes = await new ProductsApi(sessionData?.user.name).getAll({
-				order,
-				page,
-				take,
-			});
-
-			setProducts(productsRes.data);
-		} catch (error: any) {
-			toast(error.data.message);
-		}
-	};
-
 	useEffect(() => {
+		const fetchProducts = async () => {
+			try {
+				if (!sessionData?.user.name) return;
+				const productsRes = await new ProductsApi(
+					sessionData?.user.name
+				).getAll({
+					order,
+					page,
+					take,
+				});
+
+				setProducts(productsRes.data);
+			} catch (error: any) {
+				toast(error.data.message);
+			}
+		};
+
 		fetchProducts();
-	}, []);
+	}, [order, take, page, sessionData?.user.name]);
 
 	return (
 		<>

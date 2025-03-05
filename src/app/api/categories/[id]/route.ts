@@ -7,15 +7,16 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
 	req: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	const subdomain = getSubdomain(req);
+	const { id } = await params;
 
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
 		const res = await new CategoryService(tenant.databaseName).getCategoryById(
-			params.id
+			id
 		);
 
 		return NextResponse.json(res, { status: res.statusCode });
@@ -26,9 +27,10 @@ export async function GET(
 
 export async function PUT(
 	req: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	const subdomain = getSubdomain(req);
+	const { id } = await params;
 
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
@@ -36,7 +38,7 @@ export async function PUT(
 		const { name }: CreateCategoryInput = await req.json();
 
 		const res = await new CategoryService(tenant.databaseName).updateCategory(
-			params.id,
+			id,
 			{
 				name,
 			}
@@ -50,15 +52,17 @@ export async function PUT(
 
 export async function DELETE(
 	req: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	const subdomain = getSubdomain(req);
+
+	const { id } = await params;
 
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
 		const res = await new CategoryService(tenant.databaseName).deleteCategory(
-			params.id
+			id
 		);
 
 		return NextResponse.json(res, { status: res.statusCode });

@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { IProduct } from "@/common/interfaces/Product";
-import SaveDish from "@/components/saveDish/index";
+import { IDish } from "@/common/interfaces/Dish";
+import SaveDish from "@/components/saveDish";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePagination } from "@/hooks/use-pagination";
@@ -11,17 +10,17 @@ import { DishesApi } from "@/lib/api/Dishes";
 import { ArrowDown01, ArrowUp01 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function DishesTable() {
 	const { data } = useSession();
 	const [search, setSearch] = useState("");
-	const [dishes, setDishes] = useState<IProduct[]>([]);
+	const [dishes, setDishes] = useState<IDish[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const { order, page, take, changeOrder } = usePagination();
 
-	const fetchDishes = async () => {
+	const fetchDishes = useCallback(async () => {
 		try {
 			setIsLoading(true);
 			if (!data?.user.name) return;
@@ -36,11 +35,11 @@ export default function DishesTable() {
 		} finally {
 			setIsLoading(false);
 		}
-	};
+	}, [order, page, take, search, data?.user.name]);
 
 	useEffect(() => {
 		fetchDishes();
-	}, [order, page, take, search]);
+	}, [order, page, take, search, fetchDishes]);
 
 	return (
 		<div className="w-full h-max mt-5">
@@ -87,7 +86,7 @@ export default function DishesTable() {
 						dishes.map(dish => (
 							<Link
 								key={dish.id}
-								href={`/dashboard/produtos/${dish.id}`}
+								href={`/dashboard/pratos/${dish.id}`}
 								className="border shadow-md cursor-pointer py-3 px-4 rounded-xl w-full max-w-[290px] flex  flex-col transition-colors hover:scale-105 duration-150 gap-1 transition-none"
 							>
 								<div className="w-full h-[250px] bg-gray-100 overflow-hidden rounded-lg"></div>

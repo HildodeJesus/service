@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
 			cost,
 			categoryId,
 			dishItems,
+			picture,
 		}: CreateDishInput = await req.json();
 
 		const res = await new DishService(tenant.databaseName).createDish({
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
 			cost,
 			categoryId,
 			dishItems,
+			picture,
 		});
 
 		return NextResponse.json(res, { status: res.statusCode });

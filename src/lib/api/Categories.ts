@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IPaginationClient } from "@/common/interfaces/Pagination";
 import { Pagination } from "@/utils/Pagination";
 import { AxiosInstance } from "axios";

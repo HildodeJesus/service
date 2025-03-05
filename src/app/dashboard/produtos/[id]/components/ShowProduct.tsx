@@ -33,7 +33,7 @@ export default function ShowProduct() {
 		};
 
 		fetchData();
-	}, []);
+	}, [id, session?.user.name]);
 
 	return (
 		<>

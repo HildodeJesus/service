@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -12,7 +11,7 @@ import { handleShowUnit } from "@/utils/handleShowUnit";
 import { ArrowDown01, ArrowUp01 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function ProductsTable() {
@@ -22,7 +21,7 @@ export default function ProductsTable() {
 	const [products, setProducts] = useState<IProduct[]>([]);
 	const { order, page, take, changeOrder } = usePagination();
 
-	const fetchProducts = async () => {
+	const fetchProducts = useCallback(async () => {
 		try {
 			setIsLoading(true);
 			if (!data?.user.name) return;
@@ -37,11 +36,11 @@ export default function ProductsTable() {
 		} finally {
 			setIsLoading(false);
 		}
-	};
+	}, [order, page, take, search, data?.user.name]);
 
 	useEffect(() => {
 		fetchProducts();
-	}, [order, page, take, search]);
+	}, [order, page, take, search, fetchProducts]);
 
 	return (
 		<div className="w-full h-max mt-5">

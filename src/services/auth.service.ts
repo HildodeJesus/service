@@ -1,7 +1,7 @@
 import { ICompany } from "@/common/interfaces/Company";
 import { GetPrismaClient } from "@/utils/getPrismaClient";
 import bcrypt from "bcryptjs";
-import { DefaultSession, NextAuthOptions } from "next-auth";
+import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
 import { DefaultJWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 
@@ -95,4 +95,8 @@ export class AuthService {
 			maxAge: 60 * 60 * 3,
 		},
 	};
+
+	async getServerAuthSession() {
+		return await getServerSession(this.authOptions);
+	}
 }

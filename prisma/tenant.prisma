@@ -22,7 +22,7 @@ model User {
 model Client {
   id        String   @id @default(uuid())
   name      String?
-  phone     String
+  phone     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   orders    Order[]

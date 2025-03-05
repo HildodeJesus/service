@@ -12,7 +12,7 @@ export const CreateDishSchema = z.object({
 	picture: z.string().optional(),
 	cost: z.number().positive("O custo deve ser maior que 0"),
 	categoryId: z.string().uuid("ID de categoria inválido"),
-	dishItems: z.array(DishItemSchema),
+	dishItems: z.array(DishItemSchema).optional(),
 });
 
 export type CreateDishInput = z.infer<typeof CreateDishSchema>;

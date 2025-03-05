@@ -2,7 +2,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ProductsApi } from "@/lib/api/Products";
+import { DishesApi } from "@/lib/api/Dishes";
 import { Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
@@ -16,11 +16,11 @@ export default function DeleteButton() {
 	const handleDelete = async () => {
 		try {
 			if (!session?.user.name) return;
-			await new ProductsApi(session?.user.name).delete(id);
+			await new DishesApi(session?.user.name).delete(id);
 
 			toast("deletado com sucesso!");
 
-			return router.push("/dashboard/produtos");
+			return router.push("/dashboard/pratos");
 		} catch (e: any) {
 			console.log(e);
 			toast(e.message);

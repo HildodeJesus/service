@@ -32,7 +32,6 @@ export class Aws {
 				Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!,
 				Key: fileName,
 				ContentType: mimeType,
-				ACL: "public-read",
 			}),
 			{ expiresIn: 120 }
 		);
@@ -44,6 +43,8 @@ export class Aws {
 				throw new Error("Usuário não autenticado");
 			}
 
+			console.log(file);
+
 			const fileExtension = file.name.split(".").pop();
 
 			const fileName = `${this.subdomain}/${folder ? `${folder}/` : ""}${
@@ -54,13 +55,9 @@ export class Aws {
 
 			const uploadUrl = await this.getUploadUrl(fileName, file.type);
 
-			await axios.put(uploadUrl, {
-				body: file,
+			await axios.put(uploadUrl, file, {
 				headers: {
 					"Content-Type": file.type,
-					"Access-Control-Allow-Origin": "*",
-					"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-					"Access-Control-Allow-Headers": "Content-Type",
 				},
 			});
 
@@ -69,5 +66,9 @@ export class Aws {
 			console.error("Erro ao enviar imagem:", error);
 			throw error;
 		}
+	}
+
+	static getObjectUrl(filename: string) {
+		return `https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.amazonaws.com/${filename}`;
 	}
 }

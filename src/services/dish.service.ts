@@ -32,12 +32,14 @@ export class DishService {
 					price: data.price,
 					cost: data.cost,
 					categoryId: data.categoryId,
-					dishItems: {
-						create: data.dishItems.map((item: any) => ({
-							productId: item.productId,
-							quantity: item.quantity,
-						})),
-					},
+					...(data.dishItems && {
+						dishItems: {
+							create: data.dishItems.map((item: any) => ({
+								productId: item.productId,
+								quantity: item.quantity,
+							})),
+						},
+					}),
 				},
 				include: {
 					category: true,
@@ -117,6 +119,13 @@ export class DishService {
 						include: {
 							product: true,
 						},
+						omit: {
+							createdAt: true,
+							dishId: true,
+							id: true,
+							productId: true,
+							updatedAt: true,
+						},
 					},
 				},
 			});
@@ -164,12 +173,15 @@ export class DishService {
 						price: data.price,
 						cost: data.cost,
 						categoryId: data.categoryId,
-						dishItems: {
-							create: data.dishItems.map((item: any) => ({
-								productId: item.productId,
-								quantity: item.quantity,
-							})),
-						},
+						picture: data.picture,
+						...(data.dishItems && {
+							dishItems: {
+								create: data.dishItems.map((item: any) => ({
+									productId: item.productId,
+									quantity: item.quantity,
+								})),
+							},
+						}),
 					},
 					include: {
 						category: true,

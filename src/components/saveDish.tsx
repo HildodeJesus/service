@@ -18,7 +18,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ApiResponse } from "@/utils/ApiResponse";
 import { toast } from "sonner";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { IDish } from "@/common/interfaces/Dish";
 import { CreateDishInput, CreateDishSchema } from "@/common/schemas/dish";
@@ -40,6 +40,7 @@ import SelectedProduct from "./SelectProducts";
 import { IProduct } from "@/common/interfaces/Product";
 import { handleShowUnit } from "@/utils/handleShowUnit";
 import { Aws } from "@/lib/aws";
+import Image from "next/image";
 
 interface SaveDishProps {
 	defaultValue?: IDish & {
@@ -52,7 +53,7 @@ export default function SaveDish({ defaultValue, onAction }: SaveDishProps) {
 	const { data: sessionData } = useSession();
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [previewImage, setPreviewImage] = useState<string | null>(
-		defaultValue?.picture || null
+		defaultValue?.picture ? Aws.getObjectUrl(defaultValue?.picture) : null
 	);
 	const [isSubmiting, setIsSubmiting] = useState(false);
 	const [categories, setCategories] = useState<ICategory[] | []>([]);
@@ -99,25 +100,28 @@ export default function SaveDish({ defaultValue, onAction }: SaveDishProps) {
 			dishItems:
 				defaultValue?.dishItems?.map(item => ({
 					productId: item.product.id,
-					quantity: item.quantity,
+					quantity: Number(item.quantity),
 				})) || [],
 		},
 	});
 
 	const selectedCategoryId = watch("categoryId");
 
-	const fetchCategories = async () => {
+	const fetchCategories = useCallback(async () => {
 		try {
 			if (!sessionData?.user.name) return;
 			const productsRes = await new CategoriesApi(
 				sessionData?.user.name
 			).getAll();
-
 			setCategories(productsRes.data);
 		} catch (error: any) {
 			toast(error.data.message);
 		}
-	};
+	}, [sessionData?.user.name]);
+
+	useEffect(() => {
+		fetchCategories();
+	}, [fetchCategories]);
 
 	const handleCategoryChange = (value: string) => {
 		setValue("categoryId", value);
@@ -150,7 +154,7 @@ export default function SaveDish({ defaultValue, onAction }: SaveDishProps) {
 	useEffect(() => {
 		const formattedDishItems = dishItems.map(item => ({
 			productId: item.product.id,
-			quantity: item.quantity,
+			quantity: Number(item.quantity),
 		}));
 		setValue("dishItems", formattedDishItems);
 
@@ -202,10 +206,6 @@ export default function SaveDish({ defaultValue, onAction }: SaveDishProps) {
 		}
 	};
 
-	useEffect(() => {
-		fetchCategories();
-	}, []);
-
 	const removeProduct = (productId: string) => {
 		setDishItems(prevItems =>
 			prevItems.filter(item => item.product.id !== productId)
@@ -220,7 +220,14 @@ export default function SaveDish({ defaultValue, onAction }: SaveDishProps) {
 
 		setDishItems(prevItems =>
 			prevItems.map(item =>
-				item.product.id === productId ? { ...item, quantity } : item
+				item.product.id === productId
+					? {
+							...item,
+							quantity: isNaN(quantity)
+								? item.quantity
+								: parseFloat(quantity.toFixed(2)),
+					  }
+					: item
 			)
 		);
 	};
@@ -250,10 +257,12 @@ export default function SaveDish({ defaultValue, onAction }: SaveDishProps) {
 										className="w-[150px] cursor-pointer h-[150px] mx-auto flex items-center justify-center bg-gray-100 overflow-hidden rounded-lg"
 									>
 										{previewImage ? (
-											<img
+											<Image
 												src={previewImage}
 												alt="Preview"
 												className="w-full h-full object-cover"
+												width={150}
+												height={150}
 											/>
 										) : (
 											<Camera size={50} color="gray" />

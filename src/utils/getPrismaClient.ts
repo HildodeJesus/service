@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PrismaClient as MainClient } from "../../prisma/generated/main";
 import { PrismaClient as TenantClient } from "../../prisma/generated/tenant";
 
