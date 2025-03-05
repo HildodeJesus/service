@@ -1,6 +1,7 @@
-import { NextConfig } from "next";
+/**@type {import('next').nextConfig} */
 
-const nextConfig: NextConfig = {
+const nextConfig = {
+	output: "standalone",
 	async headers() {
 		return [
 			{

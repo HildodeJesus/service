@@ -28,7 +28,7 @@ import {
 import { CategoriesApi } from "@/lib/api/Categories";
 import clsx from "clsx";
 
-interface SaveDishProps {
+interface SaveCategoryProps {
 	defaultValue?: ICategory;
 	onAction?: () => void;
 	style?: "outline" | "solid";
@@ -44,7 +44,7 @@ export default function SaveCategory({
 	defaultValue,
 	style = "solid",
 	onAction,
-}: SaveDishProps) {
+}: SaveCategoryProps) {
 	const { data: sessionData } = useSession();
 	const [isSubmiting, setIsSubmiting] = useState(false);
 

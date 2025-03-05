@@ -5,9 +5,10 @@ import { Toaster } from "@/components/ui/sonner";
 import { Suspense } from "react";
 import AuthSessionProvider from "@/components/AuthSessionProvider";
 
-const geistSans = Inter({
+const inter = Inter({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
+	display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -40,7 +41,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="pt-BR">
-			<body className={`${geistSans.variable} antialiased`}>
+			<body className={`${inter.className} antialiased`}>
 				<AuthSessionProvider>
 					<Suspense>{children}</Suspense>
 				</AuthSessionProvider>

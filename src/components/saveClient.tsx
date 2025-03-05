@@ -20,16 +20,13 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-import { ICategory } from "@/common/interfaces/Category";
-import {
-	CreateCategoryInput,
-	CreateCategorySchema,
-} from "@/common/schemas/category";
-import { CategoriesApi } from "@/lib/api/Categories";
 import clsx from "clsx";
+import { IClient } from "@/common/interfaces/Client";
+import { CreateClientInput, CreateClientSchema } from "@/common/schemas/client";
+import { ClientsApi } from "@/lib/api/Client";
 
-interface SaveDishProps {
-	defaultValue?: ICategory;
+interface SaveClientProps {
+	defaultValue?: IClient;
 	onAction?: () => void;
 	style?: "outline" | "solid";
 }
@@ -44,7 +41,7 @@ export default function SaveCategory({
 	defaultValue,
 	style = "solid",
 	onAction,
-}: SaveDishProps) {
+}: SaveClientProps) {
 	const { data: sessionData } = useSession();
 	const [isSubmiting, setIsSubmiting] = useState(false);
 
@@ -54,25 +51,26 @@ export default function SaveCategory({
 		reset,
 		formState: { errors },
 	} = useForm({
-		resolver: zodResolver(CreateCategorySchema),
+		resolver: zodResolver(CreateClientSchema),
 		defaultValues: {
 			name: defaultValue?.name || "",
+			phone: defaultValue?.phone || "",
 		},
 	});
 
-	const onSubmit: SubmitHandler<CreateCategoryInput> = async data => {
+	const onSubmit: SubmitHandler<CreateClientInput> = async data => {
 		try {
 			setIsSubmiting(true);
 			if (!sessionData?.user.name) return;
 
-			const api = new CategoriesApi(sessionData?.user.name);
+			const api = new ClientsApi(sessionData?.user.name);
 
 			if (defaultValue) {
 				await api.update(defaultValue.id, { ...data });
-				toast("Categoria atualizada com sucesso!");
+				toast("Cliente atualizado com sucesso!");
 			} else {
 				await api.create({ ...data });
-				toast("Categoria criada com sucesso!");
+				toast("Cliente criado com sucesso!");
 			}
 
 			reset();
@@ -95,12 +93,12 @@ export default function SaveCategory({
 					)}
 				>
 					{defaultValue ? <Edit2 className="size-4" /> : <PlusCircle />}
-					{defaultValue ? "Editar categoria" : "Adicionar categoria"}
+					{defaultValue ? "Editar cliente" : "Adicionar cliente"}
 				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle>
-							{defaultValue ? "Editar categoria" : "Criar categoria"}
+							{defaultValue ? "Editar cliente" : "Criar cliente"}
 						</DialogTitle>
 					</DialogHeader>
 
@@ -113,13 +111,28 @@ export default function SaveCategory({
 							<Input
 								id="name"
 								{...register("name")}
-								placeholder="Nome do produto "
+								placeholder="Nome do cliente"
 								className="mt-1"
 								autoComplete="off"
 							/>
 							{errors.name && (
 								<span className="text-red-500 text-sm">
 									{errors.name.message}
+								</span>
+							)}
+						</div>
+						<div className="col-span-2">
+							<Label htmlFor="name">Celular</Label>
+							<Input
+								id="phone"
+								{...register("phone")}
+								placeholder="Telefone do cliente"
+								className="mt-1"
+								autoComplete="off"
+							/>
+							{errors.phone && (
+								<span className="text-red-500 text-sm">
+									{errors.phone.message}
 								</span>
 							)}
 						</div>
