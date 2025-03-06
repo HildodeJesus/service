@@ -45,7 +45,7 @@ export class TenantDatabaseService {
           CREATE TYPE order_status AS ENUM ('pending', 'preparing', 'delivered', 'canceled');
         `);
 				await tx.$executeRawUnsafe(`
-          CREATE TYPE bill_status AS ENUM ('open', 'closed');
+          CREATE TYPE bill_status AS ENUM ('open', 'closed', 'paid');
         `);
 				await tx.$executeRawUnsafe(`
           CREATE TYPE payment_method AS ENUM ('cash', 'card', 'pix');
@@ -261,8 +261,6 @@ export class TenantDatabaseService {
 			where: { subdomain },
 			select: { companyId: true, databaseName: true },
 		});
-
-		console.log(tenant);
 
 		if (!tenant) throw ApiResponse.error("Banco tenant não criado!", 400);
 

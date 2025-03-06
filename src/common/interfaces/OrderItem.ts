@@ -1,10 +1,10 @@
-import { IBill } from "./Bill";
+import { IDish } from "./Dish";
 import { IOrder } from "./Order";
 
 export interface IOrderItem {
 	id?: string;
 	orderId?: string;
-	billId?: string;
-	bill?: IBill;
+	dishId?: string;
+	dish?: IDish;
 	order?: IOrder;
 }

@@ -272,20 +272,8 @@ export class BillService {
 			const updatedBill = await this.prisma.bill.update({
 				where: { id },
 				data: {
+					...billExists,
 					status: data.status,
-				},
-				include: {
-					table: true,
-					client: true,
-					billItems: {
-						omit: {
-							createdAt: true,
-							updatedAt: true,
-							id: true,
-							orderId: true,
-							billId: true,
-						},
-					},
 				},
 			});
 

@@ -39,7 +39,6 @@ import { handleShowOrderType } from "@/utils/handleShowOrderTypes";
 import { handleShowOrderStatus } from "@/utils/handleShowOrderStatus";
 import { IOrderWithItems } from "@/common/interfaces/OrderWithItems";
 import SelectDishes from "./SelectDishes";
-import { IOrderItem } from "@/common/interfaces/OrderItem";
 import SaveClient from "./saveClient";
 
 interface SaveOrderProps {
@@ -51,7 +50,7 @@ export default function SaveOrder({ defaultValue, onAction }: SaveOrderProps) {
 	const { data: sessionData } = useSession();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [clients, setClients] = useState<IClient[]>([]);
-	const [orderItems, setOrderItems] = useState<IOrderItem[]>(
+	const [orderItems, setOrderItems] = useState<IOrderWithItems["orderItems"]>(
 		defaultValue?.orderItems || []
 	);
 
@@ -64,7 +63,7 @@ export default function SaveOrder({ defaultValue, onAction }: SaveOrderProps) {
 	} = useForm<CreateOrderInput>({
 		resolver: zodResolver(CreateOrderSchema),
 		defaultValues: {
-			clientId: defaultValue?.clientId || "",
+			clientId: defaultValue?.client.id || "",
 			orderType: (defaultValue?.orderType as OrderType) || "dine-in",
 			status: (defaultValue?.status as OrderStatus) || "pending",
 			orderItems:

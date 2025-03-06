@@ -1,7 +1,7 @@
-// OrderList.tsx
 import { format } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
 import { IBillWithItems } from "@/common/interfaces/BillWithItems";
+import { ArrowRightCircle } from "lucide-react";
 
 interface BillListProps {
 	bills: IBillWithItems[];
@@ -72,17 +72,19 @@ function BillItem({ bill, isSelected, onSelect }: BillItemProps) {
 		>
 			<div className="flex flex-col">
 				<span>
-					Comanda{" "}
-					{bill.client
-						? `de ${bill.client.name}`
-						: `da mesa ${bill.table?.number}`}
+					Comanda {bill.client ? `de ${bill.client.name}` : "de desconhecido"}
 				</span>
 				<span className="text-black/60 text-sm">
 					{format(bill.createdAt, "dd 'de' MMMM 'às' HH:mm")}
 				</span>
 			</div>
-			{/* <div className="flex items-center gap-3">
-				<span className="font-bold">{totalPrice}</span>
+			<div className="flex items-center gap-3">
+				<span className="font-bold">
+					{Number(bill.total).toLocaleString("pt-BR", {
+						style: "currency",
+						currency: "BRL",
+					})}
+				</span>
 				<span
 					className={`font-bold ${
 						isSelected ? "text-orange-500" : "text-black/60"
@@ -90,7 +92,7 @@ function BillItem({ bill, isSelected, onSelect }: BillItemProps) {
 				>
 					<ArrowRightCircle />
 				</span>
-			</div> */}
+			</div>
 		</li>
 	);
 }

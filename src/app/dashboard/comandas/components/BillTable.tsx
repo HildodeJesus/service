@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// BillTable.tsx (Main Component)
 "use client";
 
 import { useCallback, useEffect, useState } from "react";

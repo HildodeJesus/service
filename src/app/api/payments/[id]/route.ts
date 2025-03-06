@@ -1,6 +1,7 @@
-import { CreateBillInput } from "@/common/schemas/bill";
+import { PaymentStatus } from "@/common/constants/PaymentStatus";
+import { CreatePaymentInput } from "@/common/schemas/payment";
 import { handleApiError } from "@/errors/handleApiError";
-import { BillService } from "@/services/bill.service";
+import PaymentService from "@/services/payment.service";
 import { TenantDatabaseService } from "@/services/tenant.service";
 import { getSubdomain } from "@/utils/getSubdomain";
 import { NextRequest, NextResponse } from "next/server";
@@ -15,7 +16,9 @@ export async function GET(
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
-		const res = await new BillService(tenant.databaseName).getBillById(id);
+		const res = await new PaymentService(tenant.databaseName).getPaymentById(
+			id
+		);
 
 		return NextResponse.json(res, { status: res.statusCode });
 	} catch (error) {
@@ -33,13 +36,11 @@ export async function PUT(
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
-		const { status }: CreateBillInput = await req.json();
+		const { status }: CreatePaymentInput = await req.json();
 
-		const res = await new BillService(tenant.databaseName).updateBillStatus(
+		const res = await new PaymentService(tenant.databaseName).updateStatus(
 			id,
-			{
-				status,
-			}
+			status as PaymentStatus
 		);
 
 		return NextResponse.json(res, { status: res.statusCode });
@@ -59,7 +60,7 @@ export async function DELETE(
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
-		const res = await new BillService(tenant.databaseName).deleteOrder(id);
+		const res = await new PaymentService(tenant.databaseName).deletePayment(id);
 
 		return NextResponse.json(res, { status: res.statusCode });
 	} catch (error) {

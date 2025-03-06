@@ -1,7 +1,7 @@
-import { BillStatus } from "@/common/constants/BillStatus";
-import { CreateBillInput } from "@/common/schemas/bill";
+import { PaymentStatus } from "@/common/constants/PaymentStatus";
+import { CreatePaymentInput } from "@/common/schemas/payment";
 import { handleApiError } from "@/errors/handleApiError";
-import { BillService } from "@/services/bill.service";
+import PaymentService from "@/services/payment.service";
 import { TenantDatabaseService } from "@/services/tenant.service";
 import { getSubdomain } from "@/utils/getSubdomain";
 import { Pagination } from "@/utils/Pagination";
@@ -12,20 +12,14 @@ export async function POST(req: NextRequest) {
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
-		const {
-			clientId,
-			status = "open",
-			total,
-			billItems,
-			tableId,
-		}: CreateBillInput = await req.json();
+		const { amount, billId, paymentMethod, status }: CreatePaymentInput =
+			await req.json();
 
-		const res = await new BillService(tenant.databaseName).createBill({
-			clientId,
+		const res = await new PaymentService(tenant.databaseName).createPayment({
+			amount,
+			billId,
+			paymentMethod,
 			status,
-			total,
-			billItems,
-			tableId,
 		});
 
 		return NextResponse.json(res, { status: res.statusCode });
@@ -41,20 +35,16 @@ export async function GET(req: NextRequest) {
 	const order = searchParams.get("order");
 	const page = searchParams.get("page");
 	const take = searchParams.get("take");
-	const clientId = searchParams.get("clientId");
 	const status = searchParams.get("status");
-	const tableId = searchParams.get("tableId");
 
 	try {
 		const tenant = await TenantDatabaseService.getTenantBySubdomain(subdomain);
 
 		const pagination = Pagination.formated(order, Number(page), Number(take));
 
-		const res = await new BillService(tenant.databaseName).getBills(
+		const res = await new PaymentService(tenant.databaseName).getPayments(
 			pagination,
-			status as BillStatus,
-			tableId,
-			clientId
+			status as PaymentStatus
 		);
 
 		return NextResponse.json(res, { status: res.statusCode });

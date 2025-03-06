@@ -3,54 +3,41 @@
 
 import { OrderStatus } from "@/common/constants/OrderStatus";
 import { IBillWithItems } from "@/common/interfaces/BillWithItems";
+import SavePayment from "@/components/savePayment";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { BillService } from "@/services/bill.service";
+import { BillsApi } from "@/lib/api/Bills";
 import { handleShowOrderStatus } from "@/utils/handleShowOrderStatus";
 import { format } from "date-fns";
-import { Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
 interface SelectedOrderProps {
 	selected?: IBillWithItems;
 }
+
 export default function SelectedBill({ selected }: SelectedOrderProps) {
 	const isMobile = useIsMobile();
 	const { data: session } = useSession();
 
-	const handleCancel = async () => {
+	const handleClose = async () => {
 		try {
 			if (!selected?.id || !session?.user.name) {
-				toast("Inválido ordem");
+				toast("Comanda inválida");
 				return;
 			}
-			await new BillService(session?.user.name).deleteOrder(selected?.id);
 
-			toast("deletado com sucesso!");
+			await new BillsApi(session.user.name).update(selected.id, {
+				status: "closed",
+			});
+
+			toast("Comanda fechada!");
 			toast("Recarregue a página!");
 		} catch (error: any) {
 			toast(error.message);
 		}
 	};
-
-	// const handlePayment = async () => {
-	// 	try {
-	// 		if (!selected?.id || !session?.user.name) {
-	// 			toast("Inválido ordem");
-	// 			return;
-	// 		}
-	// 		await new BillService(session?.user.name).updateBillStatus(selected?.id, {
-	// 			status: BillStatus.CLOSED,
-	// 		});
-
-	// 		toast("deletado com sucesso!");
-	// 		toast("Recarregue a página!");
-	// 	} catch (error: any) {
-	// 		toast(error.message);
-	// 	}
-	// };
 
 	return (
 		<div
@@ -131,9 +118,18 @@ export default function SelectedBill({ selected }: SelectedOrderProps) {
 				</div>
 				<div className="w-full py-3 flex items-center justify-end gap-2">
 					{selected?.status == "open" && (
-						<Button variant="destructive" onClick={() => handleCancel()}>
-							<Trash2 />
+						<Button
+							variant="default"
+							className="bg-green-600"
+							onClick={() => handleClose()}
+						>
+							Fechar conta
 						</Button>
+					)}
+					{selected?.status == "closed" && (
+						<SavePayment
+							defaultValue={{ amount: selected.total, billId: selected.id }}
+						/>
 					)}
 				</div>
 			</div>

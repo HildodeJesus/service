@@ -4,5 +4,10 @@
 	"/dashboard/pratos",
 	"/dashboard/pedidos",
 	"/dashboard/comandas",
-	"/api/products"
+	"/api/products",
+	"/api/bills",
+	"/api/categories",
+	"/api/clients",
+	"/api/orders",
+	"/api/dishes"
 ]

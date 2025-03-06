@@ -17,10 +17,10 @@ import { useSession } from "next-auth/react";
 import { usePagination } from "@/hooks/use-pagination";
 import { IDish } from "@/common/interfaces/Dish";
 import { DishesApi } from "@/lib/api/Dishes";
-import { IOrderItem } from "@/common/interfaces/OrderItem";
+import { IOrderWithItems } from "@/common/interfaces/OrderWithItems";
 
 interface SaveDishProps {
-	selectedDishes: Partial<IOrderItem>[];
+	selectedDishes: IOrderWithItems["orderItems"];
 	handleSelected: (dish: IDish) => void;
 }
 
@@ -85,7 +85,7 @@ export default function SelectDishes({
 								<div className="flex gap-2">
 									<div className="flex text-sm gap-1">
 										<span>
-											{selectedDishes.find(dis => dis.id == dish.id)
+											{selectedDishes.find(dis => dis.dish.id == dish.id)
 												?.quantity ?? 0}
 										</span>
 									</div>
