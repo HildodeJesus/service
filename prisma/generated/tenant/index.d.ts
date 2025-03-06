@@ -2304,37 +2304,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type OrderItemCountOutputType
-   */
-
-  export type OrderItemCountOutputType = {
-    billItems: number
-  }
-
-  export type OrderItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    billItems?: boolean | OrderItemCountOutputTypeCountBillItemsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * OrderItemCountOutputType without action
-   */
-  export type OrderItemCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OrderItemCountOutputType
-     */
-    select?: OrderItemCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * OrderItemCountOutputType without action
-   */
-  export type OrderItemCountOutputTypeCountBillItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BillItemWhereInput
-  }
-
-
-  /**
    * Count Type BillCountOutputType
    */
 
@@ -10380,6 +10349,7 @@ export namespace Prisma {
     table?: boolean | Order$tableArgs<ExtArgs>
     client?: boolean | Order$clientArgs<ExtArgs>
     orderItems?: boolean | Order$orderItemsArgs<ExtArgs>
+    bill?: boolean | Order$billArgs<ExtArgs>
     stockMovements?: boolean | Order$stockMovementsArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
@@ -10423,6 +10393,7 @@ export namespace Prisma {
     table?: boolean | Order$tableArgs<ExtArgs>
     client?: boolean | Order$clientArgs<ExtArgs>
     orderItems?: boolean | Order$orderItemsArgs<ExtArgs>
+    bill?: boolean | Order$billArgs<ExtArgs>
     stockMovements?: boolean | Order$stockMovementsArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -10441,6 +10412,7 @@ export namespace Prisma {
       table: Prisma.$TablePayload<ExtArgs> | null
       client: Prisma.$ClientPayload<ExtArgs> | null
       orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
+      bill: Prisma.$BillItemPayload<ExtArgs> | null
       stockMovements: Prisma.$StockMovementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -10848,6 +10820,7 @@ export namespace Prisma {
     table<T extends Order$tableArgs<ExtArgs> = {}>(args?: Subset<T, Order$tableArgs<ExtArgs>>): Prisma__TableClient<$Result.GetResult<Prisma.$TablePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     client<T extends Order$clientArgs<ExtArgs> = {}>(args?: Subset<T, Order$clientArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     orderItems<T extends Order$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Order$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    bill<T extends Order$billArgs<ExtArgs> = {}>(args?: Subset<T, Order$billArgs<ExtArgs>>): Prisma__BillItemClient<$Result.GetResult<Prisma.$BillItemPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     stockMovements<T extends Order$stockMovementsArgs<ExtArgs> = {}>(args?: Subset<T, Order$stockMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -11343,6 +11316,25 @@ export namespace Prisma {
   }
 
   /**
+   * Order.bill
+   */
+  export type Order$billArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BillItem
+     */
+    select?: BillItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BillItem
+     */
+    omit?: BillItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BillItemInclude<ExtArgs> | null
+    where?: BillItemWhereInput
+  }
+
+  /**
    * Order.stockMovements
    */
   export type Order$stockMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11399,12 +11391,10 @@ export namespace Prisma {
 
   export type OrderItemAvgAggregateOutputType = {
     quantity: number | null
-    price: Decimal | null
   }
 
   export type OrderItemSumAggregateOutputType = {
     quantity: number | null
-    price: Decimal | null
   }
 
   export type OrderItemMinAggregateOutputType = {
@@ -11412,7 +11402,6 @@ export namespace Prisma {
     orderId: string | null
     dishId: string | null
     quantity: number | null
-    price: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -11422,7 +11411,6 @@ export namespace Prisma {
     orderId: string | null
     dishId: string | null
     quantity: number | null
-    price: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -11432,7 +11420,6 @@ export namespace Prisma {
     orderId: number
     dishId: number
     quantity: number
-    price: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -11441,12 +11428,10 @@ export namespace Prisma {
 
   export type OrderItemAvgAggregateInputType = {
     quantity?: true
-    price?: true
   }
 
   export type OrderItemSumAggregateInputType = {
     quantity?: true
-    price?: true
   }
 
   export type OrderItemMinAggregateInputType = {
@@ -11454,7 +11439,6 @@ export namespace Prisma {
     orderId?: true
     dishId?: true
     quantity?: true
-    price?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -11464,7 +11448,6 @@ export namespace Prisma {
     orderId?: true
     dishId?: true
     quantity?: true
-    price?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -11474,7 +11457,6 @@ export namespace Prisma {
     orderId?: true
     dishId?: true
     quantity?: true
-    price?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -11571,7 +11553,6 @@ export namespace Prisma {
     orderId: string
     dishId: string
     quantity: number
-    price: Decimal
     createdAt: Date
     updatedAt: Date
     _count: OrderItemCountAggregateOutputType | null
@@ -11600,13 +11581,10 @@ export namespace Prisma {
     orderId?: boolean
     dishId?: boolean
     quantity?: boolean
-    price?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
     dish?: boolean | DishDefaultArgs<ExtArgs>
-    billItems?: boolean | OrderItem$billItemsArgs<ExtArgs>
-    _count?: boolean | OrderItemCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["orderItem"]>
 
   export type OrderItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11614,7 +11592,6 @@ export namespace Prisma {
     orderId?: boolean
     dishId?: boolean
     quantity?: boolean
-    price?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
@@ -11626,7 +11603,6 @@ export namespace Prisma {
     orderId?: boolean
     dishId?: boolean
     quantity?: boolean
-    price?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
@@ -11638,17 +11614,14 @@ export namespace Prisma {
     orderId?: boolean
     dishId?: boolean
     quantity?: boolean
-    price?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "dishId" | "quantity" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
+  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "dishId" | "quantity" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
   export type OrderItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     order?: boolean | OrderDefaultArgs<ExtArgs>
     dish?: boolean | DishDefaultArgs<ExtArgs>
-    billItems?: boolean | OrderItem$billItemsArgs<ExtArgs>
-    _count?: boolean | OrderItemCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrderItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     order?: boolean | OrderDefaultArgs<ExtArgs>
@@ -11664,14 +11637,12 @@ export namespace Prisma {
     objects: {
       order: Prisma.$OrderPayload<ExtArgs>
       dish: Prisma.$DishPayload<ExtArgs>
-      billItems: Prisma.$BillItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       orderId: string
       dishId: string
       quantity: number
-      price: Prisma.Decimal
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["orderItem"]>
@@ -12070,7 +12041,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     dish<T extends DishDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DishDefaultArgs<ExtArgs>>): Prisma__DishClient<$Result.GetResult<Prisma.$DishPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
-    billItems<T extends OrderItem$billItemsArgs<ExtArgs> = {}>(args?: Subset<T, OrderItem$billItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BillItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12104,7 +12074,6 @@ export namespace Prisma {
     readonly orderId: FieldRef<"OrderItem", 'String'>
     readonly dishId: FieldRef<"OrderItem", 'String'>
     readonly quantity: FieldRef<"OrderItem", 'Int'>
-    readonly price: FieldRef<"OrderItem", 'Decimal'>
     readonly createdAt: FieldRef<"OrderItem", 'DateTime'>
     readonly updatedAt: FieldRef<"OrderItem", 'DateTime'>
   }
@@ -12503,30 +12472,6 @@ export namespace Prisma {
   }
 
   /**
-   * OrderItem.billItems
-   */
-  export type OrderItem$billItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BillItem
-     */
-    select?: BillItemSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BillItem
-     */
-    omit?: BillItemOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BillItemInclude<ExtArgs> | null
-    where?: BillItemWhereInput
-    orderBy?: BillItemOrderByWithRelationInput | BillItemOrderByWithRelationInput[]
-    cursor?: BillItemWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: BillItemScalarFieldEnum | BillItemScalarFieldEnum[]
-  }
-
-  /**
    * OrderItem without action
    */
   export type OrderItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12724,8 +12669,8 @@ export namespace Prisma {
 
   export type BillGroupByOutputType = {
     id: string
-    tableId: string
-    clientId: string | null
+    tableId: string | null
+    clientId: string
     status: $Enums.bill_status
     total: Decimal
     createdAt: Date
@@ -12759,7 +12704,7 @@ export namespace Prisma {
     total?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    table?: boolean | TableDefaultArgs<ExtArgs>
+    table?: boolean | Bill$tableArgs<ExtArgs>
     client?: boolean | Bill$clientArgs<ExtArgs>
     billItems?: boolean | Bill$billItemsArgs<ExtArgs>
     payments?: boolean | Bill$paymentsArgs<ExtArgs>
@@ -12774,7 +12719,7 @@ export namespace Prisma {
     total?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    table?: boolean | TableDefaultArgs<ExtArgs>
+    table?: boolean | Bill$tableArgs<ExtArgs>
     client?: boolean | Bill$clientArgs<ExtArgs>
   }, ExtArgs["result"]["bill"]>
 
@@ -12786,7 +12731,7 @@ export namespace Prisma {
     total?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    table?: boolean | TableDefaultArgs<ExtArgs>
+    table?: boolean | Bill$tableArgs<ExtArgs>
     client?: boolean | Bill$clientArgs<ExtArgs>
   }, ExtArgs["result"]["bill"]>
 
@@ -12802,33 +12747,33 @@ export namespace Prisma {
 
   export type BillOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tableId" | "clientId" | "status" | "total" | "createdAt" | "updatedAt", ExtArgs["result"]["bill"]>
   export type BillInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    table?: boolean | TableDefaultArgs<ExtArgs>
+    table?: boolean | Bill$tableArgs<ExtArgs>
     client?: boolean | Bill$clientArgs<ExtArgs>
     billItems?: boolean | Bill$billItemsArgs<ExtArgs>
     payments?: boolean | Bill$paymentsArgs<ExtArgs>
     _count?: boolean | BillCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BillIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    table?: boolean | TableDefaultArgs<ExtArgs>
+    table?: boolean | Bill$tableArgs<ExtArgs>
     client?: boolean | Bill$clientArgs<ExtArgs>
   }
   export type BillIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    table?: boolean | TableDefaultArgs<ExtArgs>
+    table?: boolean | Bill$tableArgs<ExtArgs>
     client?: boolean | Bill$clientArgs<ExtArgs>
   }
 
   export type $BillPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Bill"
     objects: {
-      table: Prisma.$TablePayload<ExtArgs>
+      table: Prisma.$TablePayload<ExtArgs> | null
       client: Prisma.$ClientPayload<ExtArgs> | null
       billItems: Prisma.$BillItemPayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      tableId: string
-      clientId: string | null
+      tableId: string | null
+      clientId: string
       status: $Enums.bill_status
       total: Prisma.Decimal
       createdAt: Date
@@ -13227,7 +13172,7 @@ export namespace Prisma {
    */
   export interface Prisma__BillClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    table<T extends TableDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TableDefaultArgs<ExtArgs>>): Prisma__TableClient<$Result.GetResult<Prisma.$TablePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    table<T extends Bill$tableArgs<ExtArgs> = {}>(args?: Subset<T, Bill$tableArgs<ExtArgs>>): Prisma__TableClient<$Result.GetResult<Prisma.$TablePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     client<T extends Bill$clientArgs<ExtArgs> = {}>(args?: Subset<T, Bill$clientArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     billItems<T extends Bill$billItemsArgs<ExtArgs> = {}>(args?: Subset<T, Bill$billItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BillItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     payments<T extends Bill$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Bill$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
@@ -13663,6 +13608,25 @@ export namespace Prisma {
   }
 
   /**
+   * Bill.table
+   */
+  export type Bill$tableArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Table
+     */
+    select?: TableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Table
+     */
+    omit?: TableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TableInclude<ExtArgs> | null
+    where?: TableWhereInput
+  }
+
+  /**
    * Bill.client
    */
   export type Bill$clientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13913,7 +13877,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     bill?: boolean | BillDefaultArgs<ExtArgs>
-    orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    order?: boolean | OrderDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["billItem"]>
 
   export type BillItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13923,7 +13887,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     bill?: boolean | BillDefaultArgs<ExtArgs>
-    orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    order?: boolean | OrderDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["billItem"]>
 
   export type BillItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13933,7 +13897,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     bill?: boolean | BillDefaultArgs<ExtArgs>
-    orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    order?: boolean | OrderDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["billItem"]>
 
   export type BillItemSelectScalar = {
@@ -13947,22 +13911,22 @@ export namespace Prisma {
   export type BillItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "billId" | "orderId" | "createdAt" | "updatedAt", ExtArgs["result"]["billItem"]>
   export type BillItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bill?: boolean | BillDefaultArgs<ExtArgs>
-    orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    order?: boolean | OrderDefaultArgs<ExtArgs>
   }
   export type BillItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bill?: boolean | BillDefaultArgs<ExtArgs>
-    orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    order?: boolean | OrderDefaultArgs<ExtArgs>
   }
   export type BillItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bill?: boolean | BillDefaultArgs<ExtArgs>
-    orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    order?: boolean | OrderDefaultArgs<ExtArgs>
   }
 
   export type $BillItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "BillItem"
     objects: {
       bill: Prisma.$BillPayload<ExtArgs>
-      orderItem: Prisma.$OrderItemPayload<ExtArgs>
+      order: Prisma.$OrderPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -14365,7 +14329,7 @@ export namespace Prisma {
   export interface Prisma__BillItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     bill<T extends BillDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BillDefaultArgs<ExtArgs>>): Prisma__BillClient<$Result.GetResult<Prisma.$BillPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
-    orderItem<T extends OrderItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderItemDefaultArgs<ExtArgs>>): Prisma__OrderItemClient<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17209,7 +17173,6 @@ export namespace Prisma {
     orderId: 'orderId',
     dishId: 'dishId',
     quantity: 'quantity',
-    price: 'price',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -17583,16 +17546,16 @@ export namespace Prisma {
 
   export type ClientWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    phone?: string
     AND?: ClientWhereInput | ClientWhereInput[]
     OR?: ClientWhereInput[]
     NOT?: ClientWhereInput | ClientWhereInput[]
     name?: StringNullableFilter<"Client"> | string | null
-    phone?: StringFilter<"Client"> | string
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
     orders?: OrderListRelationFilter
     bills?: BillListRelationFilter
-  }, "id">
+  }, "id" | "phone">
 
   export type ClientOrderByWithAggregationInput = {
     id?: SortOrder
@@ -17968,6 +17931,7 @@ export namespace Prisma {
     table?: XOR<TableNullableScalarRelationFilter, TableWhereInput> | null
     client?: XOR<ClientNullableScalarRelationFilter, ClientWhereInput> | null
     orderItems?: OrderItemListRelationFilter
+    bill?: XOR<BillItemNullableScalarRelationFilter, BillItemWhereInput> | null
     stockMovements?: StockMovementListRelationFilter
   }
 
@@ -17982,6 +17946,7 @@ export namespace Prisma {
     table?: TableOrderByWithRelationInput
     client?: ClientOrderByWithRelationInput
     orderItems?: OrderItemOrderByRelationAggregateInput
+    bill?: BillItemOrderByWithRelationInput
     stockMovements?: StockMovementOrderByRelationAggregateInput
   }
 
@@ -17999,6 +17964,7 @@ export namespace Prisma {
     table?: XOR<TableNullableScalarRelationFilter, TableWhereInput> | null
     client?: XOR<ClientNullableScalarRelationFilter, ClientWhereInput> | null
     orderItems?: OrderItemListRelationFilter
+    bill?: XOR<BillItemNullableScalarRelationFilter, BillItemWhereInput> | null
     stockMovements?: StockMovementListRelationFilter
   }, "id">
 
@@ -18036,12 +18002,10 @@ export namespace Prisma {
     orderId?: StringFilter<"OrderItem"> | string
     dishId?: StringFilter<"OrderItem"> | string
     quantity?: IntFilter<"OrderItem"> | number
-    price?: DecimalFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     dish?: XOR<DishScalarRelationFilter, DishWhereInput>
-    billItems?: BillItemListRelationFilter
   }
 
   export type OrderItemOrderByWithRelationInput = {
@@ -18049,12 +18013,10 @@ export namespace Prisma {
     orderId?: SortOrder
     dishId?: SortOrder
     quantity?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     order?: OrderOrderByWithRelationInput
     dish?: DishOrderByWithRelationInput
-    billItems?: BillItemOrderByRelationAggregateInput
   }
 
   export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
@@ -18065,12 +18027,10 @@ export namespace Prisma {
     orderId?: StringFilter<"OrderItem"> | string
     dishId?: StringFilter<"OrderItem"> | string
     quantity?: IntFilter<"OrderItem"> | number
-    price?: DecimalFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     dish?: XOR<DishScalarRelationFilter, DishWhereInput>
-    billItems?: BillItemListRelationFilter
   }, "id">
 
   export type OrderItemOrderByWithAggregationInput = {
@@ -18078,7 +18038,6 @@ export namespace Prisma {
     orderId?: SortOrder
     dishId?: SortOrder
     quantity?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: OrderItemCountOrderByAggregateInput
@@ -18096,7 +18055,6 @@ export namespace Prisma {
     orderId?: StringWithAggregatesFilter<"OrderItem"> | string
     dishId?: StringWithAggregatesFilter<"OrderItem"> | string
     quantity?: IntWithAggregatesFilter<"OrderItem"> | number
-    price?: DecimalWithAggregatesFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
   }
@@ -18106,13 +18064,13 @@ export namespace Prisma {
     OR?: BillWhereInput[]
     NOT?: BillWhereInput | BillWhereInput[]
     id?: StringFilter<"Bill"> | string
-    tableId?: StringFilter<"Bill"> | string
-    clientId?: StringNullableFilter<"Bill"> | string | null
+    tableId?: StringNullableFilter<"Bill"> | string | null
+    clientId?: StringFilter<"Bill"> | string
     status?: Enumbill_statusFilter<"Bill"> | $Enums.bill_status
     total?: DecimalFilter<"Bill"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"Bill"> | Date | string
     updatedAt?: DateTimeFilter<"Bill"> | Date | string
-    table?: XOR<TableScalarRelationFilter, TableWhereInput>
+    table?: XOR<TableNullableScalarRelationFilter, TableWhereInput> | null
     client?: XOR<ClientNullableScalarRelationFilter, ClientWhereInput> | null
     billItems?: BillItemListRelationFilter
     payments?: PaymentListRelationFilter
@@ -18120,8 +18078,8 @@ export namespace Prisma {
 
   export type BillOrderByWithRelationInput = {
     id?: SortOrder
-    tableId?: SortOrder
-    clientId?: SortOrderInput | SortOrder
+    tableId?: SortOrderInput | SortOrder
+    clientId?: SortOrder
     status?: SortOrder
     total?: SortOrder
     createdAt?: SortOrder
@@ -18137,13 +18095,13 @@ export namespace Prisma {
     AND?: BillWhereInput | BillWhereInput[]
     OR?: BillWhereInput[]
     NOT?: BillWhereInput | BillWhereInput[]
-    tableId?: StringFilter<"Bill"> | string
-    clientId?: StringNullableFilter<"Bill"> | string | null
+    tableId?: StringNullableFilter<"Bill"> | string | null
+    clientId?: StringFilter<"Bill"> | string
     status?: Enumbill_statusFilter<"Bill"> | $Enums.bill_status
     total?: DecimalFilter<"Bill"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"Bill"> | Date | string
     updatedAt?: DateTimeFilter<"Bill"> | Date | string
-    table?: XOR<TableScalarRelationFilter, TableWhereInput>
+    table?: XOR<TableNullableScalarRelationFilter, TableWhereInput> | null
     client?: XOR<ClientNullableScalarRelationFilter, ClientWhereInput> | null
     billItems?: BillItemListRelationFilter
     payments?: PaymentListRelationFilter
@@ -18151,8 +18109,8 @@ export namespace Prisma {
 
   export type BillOrderByWithAggregationInput = {
     id?: SortOrder
-    tableId?: SortOrder
-    clientId?: SortOrderInput | SortOrder
+    tableId?: SortOrderInput | SortOrder
+    clientId?: SortOrder
     status?: SortOrder
     total?: SortOrder
     createdAt?: SortOrder
@@ -18169,8 +18127,8 @@ export namespace Prisma {
     OR?: BillScalarWhereWithAggregatesInput[]
     NOT?: BillScalarWhereWithAggregatesInput | BillScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Bill"> | string
-    tableId?: StringWithAggregatesFilter<"Bill"> | string
-    clientId?: StringNullableWithAggregatesFilter<"Bill"> | string | null
+    tableId?: StringNullableWithAggregatesFilter<"Bill"> | string | null
+    clientId?: StringWithAggregatesFilter<"Bill"> | string
     status?: Enumbill_statusWithAggregatesFilter<"Bill"> | $Enums.bill_status
     total?: DecimalWithAggregatesFilter<"Bill"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeWithAggregatesFilter<"Bill"> | Date | string
@@ -18187,7 +18145,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"BillItem"> | Date | string
     updatedAt?: DateTimeFilter<"BillItem"> | Date | string
     bill?: XOR<BillScalarRelationFilter, BillWhereInput>
-    orderItem?: XOR<OrderItemScalarRelationFilter, OrderItemWhereInput>
+    order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
   }
 
   export type BillItemOrderByWithRelationInput = {
@@ -18197,21 +18155,21 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     bill?: BillOrderByWithRelationInput
-    orderItem?: OrderItemOrderByWithRelationInput
+    order?: OrderOrderByWithRelationInput
   }
 
   export type BillItemWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    orderId?: string
     AND?: BillItemWhereInput | BillItemWhereInput[]
     OR?: BillItemWhereInput[]
     NOT?: BillItemWhereInput | BillItemWhereInput[]
     billId?: StringFilter<"BillItem"> | string
-    orderId?: StringFilter<"BillItem"> | string
     createdAt?: DateTimeFilter<"BillItem"> | Date | string
     updatedAt?: DateTimeFilter<"BillItem"> | Date | string
     bill?: XOR<BillScalarRelationFilter, BillWhereInput>
-    orderItem?: XOR<OrderItemScalarRelationFilter, OrderItemWhereInput>
-  }, "id">
+    order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+  }, "id" | "orderId">
 
   export type BillItemOrderByWithAggregationInput = {
     id?: SortOrder
@@ -18881,6 +18839,7 @@ export namespace Prisma {
     table?: TableCreateNestedOneWithoutOrdersInput
     client?: ClientCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
+    bill?: BillItemCreateNestedOneWithoutOrderInput
     stockMovements?: StockMovementCreateNestedManyWithoutOrderInput
   }
 
@@ -18893,6 +18852,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    bill?: BillItemUncheckedCreateNestedOneWithoutOrderInput
     stockMovements?: StockMovementUncheckedCreateNestedManyWithoutOrderInput
   }
 
@@ -18905,6 +18865,7 @@ export namespace Prisma {
     table?: TableUpdateOneWithoutOrdersNestedInput
     client?: ClientUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
+    bill?: BillItemUpdateOneWithoutOrderNestedInput
     stockMovements?: StockMovementUpdateManyWithoutOrderNestedInput
   }
 
@@ -18917,6 +18878,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    bill?: BillItemUncheckedUpdateOneWithoutOrderNestedInput
     stockMovements?: StockMovementUncheckedUpdateManyWithoutOrderNestedInput
   }
 
@@ -18951,12 +18913,10 @@ export namespace Prisma {
   export type OrderItemCreateInput = {
     id?: string
     quantity: number
-    price: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     order: OrderCreateNestedOneWithoutOrderItemsInput
     dish: DishCreateNestedOneWithoutOrderItemsInput
-    billItems?: BillItemCreateNestedManyWithoutOrderItemInput
   }
 
   export type OrderItemUncheckedCreateInput = {
@@ -18964,21 +18924,17 @@ export namespace Prisma {
     orderId: string
     dishId: string
     quantity: number
-    price: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    billItems?: BillItemUncheckedCreateNestedManyWithoutOrderItemInput
   }
 
   export type OrderItemUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: OrderUpdateOneRequiredWithoutOrderItemsNestedInput
     dish?: DishUpdateOneRequiredWithoutOrderItemsNestedInput
-    billItems?: BillItemUpdateManyWithoutOrderItemNestedInput
   }
 
   export type OrderItemUncheckedUpdateInput = {
@@ -18986,10 +18942,8 @@ export namespace Prisma {
     orderId?: StringFieldUpdateOperationsInput | string
     dishId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    billItems?: BillItemUncheckedUpdateManyWithoutOrderItemNestedInput
   }
 
   export type OrderItemCreateManyInput = {
@@ -18997,7 +18951,6 @@ export namespace Prisma {
     orderId: string
     dishId: string
     quantity: number
-    price: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19005,7 +18958,6 @@ export namespace Prisma {
   export type OrderItemUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19015,7 +18967,6 @@ export namespace Prisma {
     orderId?: StringFieldUpdateOperationsInput | string
     dishId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19026,7 +18977,7 @@ export namespace Prisma {
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    table: TableCreateNestedOneWithoutBillsInput
+    table?: TableCreateNestedOneWithoutBillsInput
     client?: ClientCreateNestedOneWithoutBillsInput
     billItems?: BillItemCreateNestedManyWithoutBillInput
     payments?: PaymentCreateNestedManyWithoutBillInput
@@ -19034,8 +18985,8 @@ export namespace Prisma {
 
   export type BillUncheckedCreateInput = {
     id?: string
-    tableId: string
-    clientId?: string | null
+    tableId?: string | null
+    clientId: string
     status?: $Enums.bill_status
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
@@ -19050,7 +19001,7 @@ export namespace Prisma {
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    table?: TableUpdateOneRequiredWithoutBillsNestedInput
+    table?: TableUpdateOneWithoutBillsNestedInput
     client?: ClientUpdateOneWithoutBillsNestedInput
     billItems?: BillItemUpdateManyWithoutBillNestedInput
     payments?: PaymentUpdateManyWithoutBillNestedInput
@@ -19058,8 +19009,8 @@ export namespace Prisma {
 
   export type BillUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tableId?: StringFieldUpdateOperationsInput | string
-    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    tableId?: NullableStringFieldUpdateOperationsInput | string | null
+    clientId?: StringFieldUpdateOperationsInput | string
     status?: Enumbill_statusFieldUpdateOperationsInput | $Enums.bill_status
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19070,8 +19021,8 @@ export namespace Prisma {
 
   export type BillCreateManyInput = {
     id?: string
-    tableId: string
-    clientId?: string | null
+    tableId?: string | null
+    clientId: string
     status?: $Enums.bill_status
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
@@ -19088,8 +19039,8 @@ export namespace Prisma {
 
   export type BillUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tableId?: StringFieldUpdateOperationsInput | string
-    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    tableId?: NullableStringFieldUpdateOperationsInput | string | null
+    clientId?: StringFieldUpdateOperationsInput | string
     status?: Enumbill_statusFieldUpdateOperationsInput | $Enums.bill_status
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19101,7 +19052,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     bill: BillCreateNestedOneWithoutBillItemsInput
-    orderItem: OrderItemCreateNestedOneWithoutBillItemsInput
+    order: OrderCreateNestedOneWithoutBillInput
   }
 
   export type BillItemUncheckedCreateInput = {
@@ -19117,7 +19068,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bill?: BillUpdateOneRequiredWithoutBillItemsNestedInput
-    orderItem?: OrderItemUpdateOneRequiredWithoutBillItemsNestedInput
+    order?: OrderUpdateOneRequiredWithoutBillNestedInput
   }
 
   export type BillItemUncheckedUpdateInput = {
@@ -19840,6 +19791,11 @@ export namespace Prisma {
     isNot?: ClientWhereInput | null
   }
 
+  export type BillItemNullableScalarRelationFilter = {
+    is?: BillItemWhereInput | null
+    isNot?: BillItemWhereInput | null
+  }
+
   export type OrderCountOrderByAggregateInput = {
     id?: SortOrder
     tableId?: SortOrder
@@ -19895,29 +19851,17 @@ export namespace Prisma {
     isNot?: OrderWhereInput
   }
 
-  export type BillItemListRelationFilter = {
-    every?: BillItemWhereInput
-    some?: BillItemWhereInput
-    none?: BillItemWhereInput
-  }
-
-  export type BillItemOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type OrderItemCountOrderByAggregateInput = {
     id?: SortOrder
     orderId?: SortOrder
     dishId?: SortOrder
     quantity?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type OrderItemAvgOrderByAggregateInput = {
     quantity?: SortOrder
-    price?: SortOrder
   }
 
   export type OrderItemMaxOrderByAggregateInput = {
@@ -19925,7 +19869,6 @@ export namespace Prisma {
     orderId?: SortOrder
     dishId?: SortOrder
     quantity?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19935,14 +19878,12 @@ export namespace Prisma {
     orderId?: SortOrder
     dishId?: SortOrder
     quantity?: SortOrder
-    price?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type OrderItemSumOrderByAggregateInput = {
     quantity?: SortOrder
-    price?: SortOrder
   }
 
   export type Enumbill_statusFilter<$PrismaModel = never> = {
@@ -19952,15 +19893,20 @@ export namespace Prisma {
     not?: NestedEnumbill_statusFilter<$PrismaModel> | $Enums.bill_status
   }
 
-  export type TableScalarRelationFilter = {
-    is?: TableWhereInput
-    isNot?: TableWhereInput
+  export type BillItemListRelationFilter = {
+    every?: BillItemWhereInput
+    some?: BillItemWhereInput
+    none?: BillItemWhereInput
   }
 
   export type PaymentListRelationFilter = {
     every?: PaymentWhereInput
     some?: PaymentWhereInput
     none?: PaymentWhereInput
+  }
+
+  export type BillItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type PaymentOrderByRelationAggregateInput = {
@@ -20018,11 +19964,6 @@ export namespace Prisma {
   export type BillScalarRelationFilter = {
     is?: BillWhereInput
     isNot?: BillWhereInput
-  }
-
-  export type OrderItemScalarRelationFilter = {
-    is?: OrderItemWhereInput
-    isNot?: OrderItemWhereInput
   }
 
   export type BillItemCountOrderByAggregateInput = {
@@ -20684,6 +20625,12 @@ export namespace Prisma {
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
   }
 
+  export type BillItemCreateNestedOneWithoutOrderInput = {
+    create?: XOR<BillItemCreateWithoutOrderInput, BillItemUncheckedCreateWithoutOrderInput>
+    connectOrCreate?: BillItemCreateOrConnectWithoutOrderInput
+    connect?: BillItemWhereUniqueInput
+  }
+
   export type StockMovementCreateNestedManyWithoutOrderInput = {
     create?: XOR<StockMovementCreateWithoutOrderInput, StockMovementUncheckedCreateWithoutOrderInput> | StockMovementCreateWithoutOrderInput[] | StockMovementUncheckedCreateWithoutOrderInput[]
     connectOrCreate?: StockMovementCreateOrConnectWithoutOrderInput | StockMovementCreateOrConnectWithoutOrderInput[]
@@ -20696,6 +20643,12 @@ export namespace Prisma {
     connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
     createMany?: OrderItemCreateManyOrderInputEnvelope
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+  }
+
+  export type BillItemUncheckedCreateNestedOneWithoutOrderInput = {
+    create?: XOR<BillItemCreateWithoutOrderInput, BillItemUncheckedCreateWithoutOrderInput>
+    connectOrCreate?: BillItemCreateOrConnectWithoutOrderInput
+    connect?: BillItemWhereUniqueInput
   }
 
   export type StockMovementUncheckedCreateNestedManyWithoutOrderInput = {
@@ -20747,6 +20700,16 @@ export namespace Prisma {
     deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
   }
 
+  export type BillItemUpdateOneWithoutOrderNestedInput = {
+    create?: XOR<BillItemCreateWithoutOrderInput, BillItemUncheckedCreateWithoutOrderInput>
+    connectOrCreate?: BillItemCreateOrConnectWithoutOrderInput
+    upsert?: BillItemUpsertWithoutOrderInput
+    disconnect?: BillItemWhereInput | boolean
+    delete?: BillItemWhereInput | boolean
+    connect?: BillItemWhereUniqueInput
+    update?: XOR<XOR<BillItemUpdateToOneWithWhereWithoutOrderInput, BillItemUpdateWithoutOrderInput>, BillItemUncheckedUpdateWithoutOrderInput>
+  }
+
   export type StockMovementUpdateManyWithoutOrderNestedInput = {
     create?: XOR<StockMovementCreateWithoutOrderInput, StockMovementUncheckedCreateWithoutOrderInput> | StockMovementCreateWithoutOrderInput[] | StockMovementUncheckedCreateWithoutOrderInput[]
     connectOrCreate?: StockMovementCreateOrConnectWithoutOrderInput | StockMovementCreateOrConnectWithoutOrderInput[]
@@ -20775,6 +20738,16 @@ export namespace Prisma {
     deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
   }
 
+  export type BillItemUncheckedUpdateOneWithoutOrderNestedInput = {
+    create?: XOR<BillItemCreateWithoutOrderInput, BillItemUncheckedCreateWithoutOrderInput>
+    connectOrCreate?: BillItemCreateOrConnectWithoutOrderInput
+    upsert?: BillItemUpsertWithoutOrderInput
+    disconnect?: BillItemWhereInput | boolean
+    delete?: BillItemWhereInput | boolean
+    connect?: BillItemWhereUniqueInput
+    update?: XOR<XOR<BillItemUpdateToOneWithWhereWithoutOrderInput, BillItemUpdateWithoutOrderInput>, BillItemUncheckedUpdateWithoutOrderInput>
+  }
+
   export type StockMovementUncheckedUpdateManyWithoutOrderNestedInput = {
     create?: XOR<StockMovementCreateWithoutOrderInput, StockMovementUncheckedCreateWithoutOrderInput> | StockMovementCreateWithoutOrderInput[] | StockMovementUncheckedCreateWithoutOrderInput[]
     connectOrCreate?: StockMovementCreateOrConnectWithoutOrderInput | StockMovementCreateOrConnectWithoutOrderInput[]
@@ -20801,20 +20774,6 @@ export namespace Prisma {
     connect?: DishWhereUniqueInput
   }
 
-  export type BillItemCreateNestedManyWithoutOrderItemInput = {
-    create?: XOR<BillItemCreateWithoutOrderItemInput, BillItemUncheckedCreateWithoutOrderItemInput> | BillItemCreateWithoutOrderItemInput[] | BillItemUncheckedCreateWithoutOrderItemInput[]
-    connectOrCreate?: BillItemCreateOrConnectWithoutOrderItemInput | BillItemCreateOrConnectWithoutOrderItemInput[]
-    createMany?: BillItemCreateManyOrderItemInputEnvelope
-    connect?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-  }
-
-  export type BillItemUncheckedCreateNestedManyWithoutOrderItemInput = {
-    create?: XOR<BillItemCreateWithoutOrderItemInput, BillItemUncheckedCreateWithoutOrderItemInput> | BillItemCreateWithoutOrderItemInput[] | BillItemUncheckedCreateWithoutOrderItemInput[]
-    connectOrCreate?: BillItemCreateOrConnectWithoutOrderItemInput | BillItemCreateOrConnectWithoutOrderItemInput[]
-    createMany?: BillItemCreateManyOrderItemInputEnvelope
-    connect?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-  }
-
   export type OrderUpdateOneRequiredWithoutOrderItemsNestedInput = {
     create?: XOR<OrderCreateWithoutOrderItemsInput, OrderUncheckedCreateWithoutOrderItemsInput>
     connectOrCreate?: OrderCreateOrConnectWithoutOrderItemsInput
@@ -20829,34 +20788,6 @@ export namespace Prisma {
     upsert?: DishUpsertWithoutOrderItemsInput
     connect?: DishWhereUniqueInput
     update?: XOR<XOR<DishUpdateToOneWithWhereWithoutOrderItemsInput, DishUpdateWithoutOrderItemsInput>, DishUncheckedUpdateWithoutOrderItemsInput>
-  }
-
-  export type BillItemUpdateManyWithoutOrderItemNestedInput = {
-    create?: XOR<BillItemCreateWithoutOrderItemInput, BillItemUncheckedCreateWithoutOrderItemInput> | BillItemCreateWithoutOrderItemInput[] | BillItemUncheckedCreateWithoutOrderItemInput[]
-    connectOrCreate?: BillItemCreateOrConnectWithoutOrderItemInput | BillItemCreateOrConnectWithoutOrderItemInput[]
-    upsert?: BillItemUpsertWithWhereUniqueWithoutOrderItemInput | BillItemUpsertWithWhereUniqueWithoutOrderItemInput[]
-    createMany?: BillItemCreateManyOrderItemInputEnvelope
-    set?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-    disconnect?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-    delete?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-    connect?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-    update?: BillItemUpdateWithWhereUniqueWithoutOrderItemInput | BillItemUpdateWithWhereUniqueWithoutOrderItemInput[]
-    updateMany?: BillItemUpdateManyWithWhereWithoutOrderItemInput | BillItemUpdateManyWithWhereWithoutOrderItemInput[]
-    deleteMany?: BillItemScalarWhereInput | BillItemScalarWhereInput[]
-  }
-
-  export type BillItemUncheckedUpdateManyWithoutOrderItemNestedInput = {
-    create?: XOR<BillItemCreateWithoutOrderItemInput, BillItemUncheckedCreateWithoutOrderItemInput> | BillItemCreateWithoutOrderItemInput[] | BillItemUncheckedCreateWithoutOrderItemInput[]
-    connectOrCreate?: BillItemCreateOrConnectWithoutOrderItemInput | BillItemCreateOrConnectWithoutOrderItemInput[]
-    upsert?: BillItemUpsertWithWhereUniqueWithoutOrderItemInput | BillItemUpsertWithWhereUniqueWithoutOrderItemInput[]
-    createMany?: BillItemCreateManyOrderItemInputEnvelope
-    set?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-    disconnect?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-    delete?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-    connect?: BillItemWhereUniqueInput | BillItemWhereUniqueInput[]
-    update?: BillItemUpdateWithWhereUniqueWithoutOrderItemInput | BillItemUpdateWithWhereUniqueWithoutOrderItemInput[]
-    updateMany?: BillItemUpdateManyWithWhereWithoutOrderItemInput | BillItemUpdateManyWithWhereWithoutOrderItemInput[]
-    deleteMany?: BillItemScalarWhereInput | BillItemScalarWhereInput[]
   }
 
   export type TableCreateNestedOneWithoutBillsInput = {
@@ -20903,10 +20834,12 @@ export namespace Prisma {
     set?: $Enums.bill_status
   }
 
-  export type TableUpdateOneRequiredWithoutBillsNestedInput = {
+  export type TableUpdateOneWithoutBillsNestedInput = {
     create?: XOR<TableCreateWithoutBillsInput, TableUncheckedCreateWithoutBillsInput>
     connectOrCreate?: TableCreateOrConnectWithoutBillsInput
     upsert?: TableUpsertWithoutBillsInput
+    disconnect?: TableWhereInput | boolean
+    delete?: TableWhereInput | boolean
     connect?: TableWhereUniqueInput
     update?: XOR<XOR<TableUpdateToOneWithWhereWithoutBillsInput, TableUpdateWithoutBillsInput>, TableUncheckedUpdateWithoutBillsInput>
   }
@@ -20983,10 +20916,10 @@ export namespace Prisma {
     connect?: BillWhereUniqueInput
   }
 
-  export type OrderItemCreateNestedOneWithoutBillItemsInput = {
-    create?: XOR<OrderItemCreateWithoutBillItemsInput, OrderItemUncheckedCreateWithoutBillItemsInput>
-    connectOrCreate?: OrderItemCreateOrConnectWithoutBillItemsInput
-    connect?: OrderItemWhereUniqueInput
+  export type OrderCreateNestedOneWithoutBillInput = {
+    create?: XOR<OrderCreateWithoutBillInput, OrderUncheckedCreateWithoutBillInput>
+    connectOrCreate?: OrderCreateOrConnectWithoutBillInput
+    connect?: OrderWhereUniqueInput
   }
 
   export type BillUpdateOneRequiredWithoutBillItemsNestedInput = {
@@ -20997,12 +20930,12 @@ export namespace Prisma {
     update?: XOR<XOR<BillUpdateToOneWithWhereWithoutBillItemsInput, BillUpdateWithoutBillItemsInput>, BillUncheckedUpdateWithoutBillItemsInput>
   }
 
-  export type OrderItemUpdateOneRequiredWithoutBillItemsNestedInput = {
-    create?: XOR<OrderItemCreateWithoutBillItemsInput, OrderItemUncheckedCreateWithoutBillItemsInput>
-    connectOrCreate?: OrderItemCreateOrConnectWithoutBillItemsInput
-    upsert?: OrderItemUpsertWithoutBillItemsInput
-    connect?: OrderItemWhereUniqueInput
-    update?: XOR<XOR<OrderItemUpdateToOneWithWhereWithoutBillItemsInput, OrderItemUpdateWithoutBillItemsInput>, OrderItemUncheckedUpdateWithoutBillItemsInput>
+  export type OrderUpdateOneRequiredWithoutBillNestedInput = {
+    create?: XOR<OrderCreateWithoutBillInput, OrderUncheckedCreateWithoutBillInput>
+    connectOrCreate?: OrderCreateOrConnectWithoutBillInput
+    upsert?: OrderUpsertWithoutBillInput
+    connect?: OrderWhereUniqueInput
+    update?: XOR<XOR<OrderUpdateToOneWithWhereWithoutBillInput, OrderUpdateWithoutBillInput>, OrderUncheckedUpdateWithoutBillInput>
   }
 
   export type BillCreateNestedOneWithoutPaymentsInput = {
@@ -21416,6 +21349,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     table?: TableCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
+    bill?: BillItemCreateNestedOneWithoutOrderInput
     stockMovements?: StockMovementCreateNestedManyWithoutOrderInput
   }
 
@@ -21427,6 +21361,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    bill?: BillItemUncheckedCreateNestedOneWithoutOrderInput
     stockMovements?: StockMovementUncheckedCreateNestedManyWithoutOrderInput
   }
 
@@ -21446,14 +21381,14 @@ export namespace Prisma {
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    table: TableCreateNestedOneWithoutBillsInput
+    table?: TableCreateNestedOneWithoutBillsInput
     billItems?: BillItemCreateNestedManyWithoutBillInput
     payments?: PaymentCreateNestedManyWithoutBillInput
   }
 
   export type BillUncheckedCreateWithoutClientInput = {
     id?: string
-    tableId: string
+    tableId?: string | null
     status?: $Enums.bill_status
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
@@ -21522,8 +21457,8 @@ export namespace Prisma {
     OR?: BillScalarWhereInput[]
     NOT?: BillScalarWhereInput | BillScalarWhereInput[]
     id?: StringFilter<"Bill"> | string
-    tableId?: StringFilter<"Bill"> | string
-    clientId?: StringNullableFilter<"Bill"> | string | null
+    tableId?: StringNullableFilter<"Bill"> | string | null
+    clientId?: StringFilter<"Bill"> | string
     status?: Enumbill_statusFilter<"Bill"> | $Enums.bill_status
     total?: DecimalFilter<"Bill"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"Bill"> | Date | string
@@ -21538,6 +21473,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     client?: ClientCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
+    bill?: BillItemCreateNestedOneWithoutOrderInput
     stockMovements?: StockMovementCreateNestedManyWithoutOrderInput
   }
 
@@ -21549,6 +21485,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    bill?: BillItemUncheckedCreateNestedOneWithoutOrderInput
     stockMovements?: StockMovementUncheckedCreateNestedManyWithoutOrderInput
   }
 
@@ -21575,7 +21512,7 @@ export namespace Prisma {
 
   export type BillUncheckedCreateWithoutTableInput = {
     id?: string
-    clientId?: string | null
+    clientId: string
     status?: $Enums.bill_status
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
@@ -21741,21 +21678,17 @@ export namespace Prisma {
   export type OrderItemCreateWithoutDishInput = {
     id?: string
     quantity: number
-    price: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     order: OrderCreateNestedOneWithoutOrderItemsInput
-    billItems?: BillItemCreateNestedManyWithoutOrderItemInput
   }
 
   export type OrderItemUncheckedCreateWithoutDishInput = {
     id?: string
     orderId: string
     quantity: number
-    price: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    billItems?: BillItemUncheckedCreateNestedManyWithoutOrderItemInput
   }
 
   export type OrderItemCreateOrConnectWithoutDishInput = {
@@ -21845,7 +21778,6 @@ export namespace Prisma {
     orderId?: StringFilter<"OrderItem"> | string
     dishId?: StringFilter<"OrderItem"> | string
     quantity?: IntFilter<"OrderItem"> | number
-    price?: DecimalFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
   }
@@ -22137,21 +22069,17 @@ export namespace Prisma {
   export type OrderItemCreateWithoutOrderInput = {
     id?: string
     quantity: number
-    price: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     dish: DishCreateNestedOneWithoutOrderItemsInput
-    billItems?: BillItemCreateNestedManyWithoutOrderItemInput
   }
 
   export type OrderItemUncheckedCreateWithoutOrderInput = {
     id?: string
     dishId: string
     quantity: number
-    price: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    billItems?: BillItemUncheckedCreateNestedManyWithoutOrderItemInput
   }
 
   export type OrderItemCreateOrConnectWithoutOrderInput = {
@@ -22162,6 +22090,25 @@ export namespace Prisma {
   export type OrderItemCreateManyOrderInputEnvelope = {
     data: OrderItemCreateManyOrderInput | OrderItemCreateManyOrderInput[]
     skipDuplicates?: boolean
+  }
+
+  export type BillItemCreateWithoutOrderInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bill: BillCreateNestedOneWithoutBillItemsInput
+  }
+
+  export type BillItemUncheckedCreateWithoutOrderInput = {
+    id?: string
+    billId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BillItemCreateOrConnectWithoutOrderInput = {
+    where: BillItemWhereUniqueInput
+    create: XOR<BillItemCreateWithoutOrderInput, BillItemUncheckedCreateWithoutOrderInput>
   }
 
   export type StockMovementCreateWithoutOrderInput = {
@@ -22268,6 +22215,31 @@ export namespace Prisma {
     data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutOrderInput>
   }
 
+  export type BillItemUpsertWithoutOrderInput = {
+    update: XOR<BillItemUpdateWithoutOrderInput, BillItemUncheckedUpdateWithoutOrderInput>
+    create: XOR<BillItemCreateWithoutOrderInput, BillItemUncheckedCreateWithoutOrderInput>
+    where?: BillItemWhereInput
+  }
+
+  export type BillItemUpdateToOneWithWhereWithoutOrderInput = {
+    where?: BillItemWhereInput
+    data: XOR<BillItemUpdateWithoutOrderInput, BillItemUncheckedUpdateWithoutOrderInput>
+  }
+
+  export type BillItemUpdateWithoutOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bill?: BillUpdateOneRequiredWithoutBillItemsNestedInput
+  }
+
+  export type BillItemUncheckedUpdateWithoutOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    billId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StockMovementUpsertWithWhereUniqueWithoutOrderInput = {
     where: StockMovementWhereUniqueInput
     update: XOR<StockMovementUpdateWithoutOrderInput, StockMovementUncheckedUpdateWithoutOrderInput>
@@ -22292,6 +22264,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     table?: TableCreateNestedOneWithoutOrdersInput
     client?: ClientCreateNestedOneWithoutOrdersInput
+    bill?: BillItemCreateNestedOneWithoutOrderInput
     stockMovements?: StockMovementCreateNestedManyWithoutOrderInput
   }
 
@@ -22303,6 +22276,7 @@ export namespace Prisma {
     status?: $Enums.order_status
     createdAt?: Date | string
     updatedAt?: Date | string
+    bill?: BillItemUncheckedCreateNestedOneWithoutOrderInput
     stockMovements?: StockMovementUncheckedCreateNestedManyWithoutOrderInput
   }
 
@@ -22342,30 +22316,6 @@ export namespace Prisma {
     create: XOR<DishCreateWithoutOrderItemsInput, DishUncheckedCreateWithoutOrderItemsInput>
   }
 
-  export type BillItemCreateWithoutOrderItemInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    bill: BillCreateNestedOneWithoutBillItemsInput
-  }
-
-  export type BillItemUncheckedCreateWithoutOrderItemInput = {
-    id?: string
-    billId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type BillItemCreateOrConnectWithoutOrderItemInput = {
-    where: BillItemWhereUniqueInput
-    create: XOR<BillItemCreateWithoutOrderItemInput, BillItemUncheckedCreateWithoutOrderItemInput>
-  }
-
-  export type BillItemCreateManyOrderItemInputEnvelope = {
-    data: BillItemCreateManyOrderItemInput | BillItemCreateManyOrderItemInput[]
-    skipDuplicates?: boolean
-  }
-
   export type OrderUpsertWithoutOrderItemsInput = {
     update: XOR<OrderUpdateWithoutOrderItemsInput, OrderUncheckedUpdateWithoutOrderItemsInput>
     create: XOR<OrderCreateWithoutOrderItemsInput, OrderUncheckedCreateWithoutOrderItemsInput>
@@ -22385,6 +22335,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     table?: TableUpdateOneWithoutOrdersNestedInput
     client?: ClientUpdateOneWithoutOrdersNestedInput
+    bill?: BillItemUpdateOneWithoutOrderNestedInput
     stockMovements?: StockMovementUpdateManyWithoutOrderNestedInput
   }
 
@@ -22396,6 +22347,7 @@ export namespace Prisma {
     status?: Enumorder_statusFieldUpdateOperationsInput | $Enums.order_status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bill?: BillItemUncheckedUpdateOneWithoutOrderNestedInput
     stockMovements?: StockMovementUncheckedUpdateManyWithoutOrderNestedInput
   }
 
@@ -22434,33 +22386,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dishItems?: DishItemUncheckedUpdateManyWithoutDishNestedInput
-  }
-
-  export type BillItemUpsertWithWhereUniqueWithoutOrderItemInput = {
-    where: BillItemWhereUniqueInput
-    update: XOR<BillItemUpdateWithoutOrderItemInput, BillItemUncheckedUpdateWithoutOrderItemInput>
-    create: XOR<BillItemCreateWithoutOrderItemInput, BillItemUncheckedCreateWithoutOrderItemInput>
-  }
-
-  export type BillItemUpdateWithWhereUniqueWithoutOrderItemInput = {
-    where: BillItemWhereUniqueInput
-    data: XOR<BillItemUpdateWithoutOrderItemInput, BillItemUncheckedUpdateWithoutOrderItemInput>
-  }
-
-  export type BillItemUpdateManyWithWhereWithoutOrderItemInput = {
-    where: BillItemScalarWhereInput
-    data: XOR<BillItemUpdateManyMutationInput, BillItemUncheckedUpdateManyWithoutOrderItemInput>
-  }
-
-  export type BillItemScalarWhereInput = {
-    AND?: BillItemScalarWhereInput | BillItemScalarWhereInput[]
-    OR?: BillItemScalarWhereInput[]
-    NOT?: BillItemScalarWhereInput | BillItemScalarWhereInput[]
-    id?: StringFilter<"BillItem"> | string
-    billId?: StringFilter<"BillItem"> | string
-    orderId?: StringFilter<"BillItem"> | string
-    createdAt?: DateTimeFilter<"BillItem"> | Date | string
-    updatedAt?: DateTimeFilter<"BillItem"> | Date | string
   }
 
   export type TableCreateWithoutBillsInput = {
@@ -22513,7 +22438,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    orderItem: OrderItemCreateNestedOneWithoutBillItemsInput
+    order: OrderCreateNestedOneWithoutBillInput
   }
 
   export type BillItemUncheckedCreateWithoutBillInput = {
@@ -22635,6 +22560,17 @@ export namespace Prisma {
     data: XOR<BillItemUpdateManyMutationInput, BillItemUncheckedUpdateManyWithoutBillInput>
   }
 
+  export type BillItemScalarWhereInput = {
+    AND?: BillItemScalarWhereInput | BillItemScalarWhereInput[]
+    OR?: BillItemScalarWhereInput[]
+    NOT?: BillItemScalarWhereInput | BillItemScalarWhereInput[]
+    id?: StringFilter<"BillItem"> | string
+    billId?: StringFilter<"BillItem"> | string
+    orderId?: StringFilter<"BillItem"> | string
+    createdAt?: DateTimeFilter<"BillItem"> | Date | string
+    updatedAt?: DateTimeFilter<"BillItem"> | Date | string
+  }
+
   export type PaymentUpsertWithWhereUniqueWithoutBillInput = {
     where: PaymentWhereUniqueInput
     update: XOR<PaymentUpdateWithoutBillInput, PaymentUncheckedUpdateWithoutBillInput>
@@ -22670,15 +22606,15 @@ export namespace Prisma {
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    table: TableCreateNestedOneWithoutBillsInput
+    table?: TableCreateNestedOneWithoutBillsInput
     client?: ClientCreateNestedOneWithoutBillsInput
     payments?: PaymentCreateNestedManyWithoutBillInput
   }
 
   export type BillUncheckedCreateWithoutBillItemsInput = {
     id?: string
-    tableId: string
-    clientId?: string | null
+    tableId?: string | null
+    clientId: string
     status?: $Enums.bill_status
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
@@ -22691,29 +22627,33 @@ export namespace Prisma {
     create: XOR<BillCreateWithoutBillItemsInput, BillUncheckedCreateWithoutBillItemsInput>
   }
 
-  export type OrderItemCreateWithoutBillItemsInput = {
+  export type OrderCreateWithoutBillInput = {
     id?: string
-    quantity: number
-    price: Decimal | DecimalJsLike | number | string
+    orderType?: $Enums.order_type
+    status?: $Enums.order_status
     createdAt?: Date | string
     updatedAt?: Date | string
-    order: OrderCreateNestedOneWithoutOrderItemsInput
-    dish: DishCreateNestedOneWithoutOrderItemsInput
+    table?: TableCreateNestedOneWithoutOrdersInput
+    client?: ClientCreateNestedOneWithoutOrdersInput
+    orderItems?: OrderItemCreateNestedManyWithoutOrderInput
+    stockMovements?: StockMovementCreateNestedManyWithoutOrderInput
   }
 
-  export type OrderItemUncheckedCreateWithoutBillItemsInput = {
+  export type OrderUncheckedCreateWithoutBillInput = {
     id?: string
-    orderId: string
-    dishId: string
-    quantity: number
-    price: Decimal | DecimalJsLike | number | string
+    tableId?: string | null
+    clientId?: string | null
+    orderType?: $Enums.order_type
+    status?: $Enums.order_status
     createdAt?: Date | string
     updatedAt?: Date | string
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    stockMovements?: StockMovementUncheckedCreateNestedManyWithoutOrderInput
   }
 
-  export type OrderItemCreateOrConnectWithoutBillItemsInput = {
-    where: OrderItemWhereUniqueInput
-    create: XOR<OrderItemCreateWithoutBillItemsInput, OrderItemUncheckedCreateWithoutBillItemsInput>
+  export type OrderCreateOrConnectWithoutBillInput = {
+    where: OrderWhereUniqueInput
+    create: XOR<OrderCreateWithoutBillInput, OrderUncheckedCreateWithoutBillInput>
   }
 
   export type BillUpsertWithoutBillItemsInput = {
@@ -22733,15 +22673,15 @@ export namespace Prisma {
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    table?: TableUpdateOneRequiredWithoutBillsNestedInput
+    table?: TableUpdateOneWithoutBillsNestedInput
     client?: ClientUpdateOneWithoutBillsNestedInput
     payments?: PaymentUpdateManyWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateWithoutBillItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tableId?: StringFieldUpdateOperationsInput | string
-    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    tableId?: NullableStringFieldUpdateOperationsInput | string | null
+    clientId?: StringFieldUpdateOperationsInput | string
     status?: Enumbill_statusFieldUpdateOperationsInput | $Enums.bill_status
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22749,35 +22689,39 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutBillNestedInput
   }
 
-  export type OrderItemUpsertWithoutBillItemsInput = {
-    update: XOR<OrderItemUpdateWithoutBillItemsInput, OrderItemUncheckedUpdateWithoutBillItemsInput>
-    create: XOR<OrderItemCreateWithoutBillItemsInput, OrderItemUncheckedCreateWithoutBillItemsInput>
-    where?: OrderItemWhereInput
+  export type OrderUpsertWithoutBillInput = {
+    update: XOR<OrderUpdateWithoutBillInput, OrderUncheckedUpdateWithoutBillInput>
+    create: XOR<OrderCreateWithoutBillInput, OrderUncheckedCreateWithoutBillInput>
+    where?: OrderWhereInput
   }
 
-  export type OrderItemUpdateToOneWithWhereWithoutBillItemsInput = {
-    where?: OrderItemWhereInput
-    data: XOR<OrderItemUpdateWithoutBillItemsInput, OrderItemUncheckedUpdateWithoutBillItemsInput>
+  export type OrderUpdateToOneWithWhereWithoutBillInput = {
+    where?: OrderWhereInput
+    data: XOR<OrderUpdateWithoutBillInput, OrderUncheckedUpdateWithoutBillInput>
   }
 
-  export type OrderItemUpdateWithoutBillItemsInput = {
+  export type OrderUpdateWithoutBillInput = {
     id?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    orderType?: Enumorder_typeFieldUpdateOperationsInput | $Enums.order_type
+    status?: Enumorder_statusFieldUpdateOperationsInput | $Enums.order_status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    order?: OrderUpdateOneRequiredWithoutOrderItemsNestedInput
-    dish?: DishUpdateOneRequiredWithoutOrderItemsNestedInput
+    table?: TableUpdateOneWithoutOrdersNestedInput
+    client?: ClientUpdateOneWithoutOrdersNestedInput
+    orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
+    stockMovements?: StockMovementUpdateManyWithoutOrderNestedInput
   }
 
-  export type OrderItemUncheckedUpdateWithoutBillItemsInput = {
+  export type OrderUncheckedUpdateWithoutBillInput = {
     id?: StringFieldUpdateOperationsInput | string
-    orderId?: StringFieldUpdateOperationsInput | string
-    dishId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tableId?: NullableStringFieldUpdateOperationsInput | string | null
+    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderType?: Enumorder_typeFieldUpdateOperationsInput | $Enums.order_type
+    status?: Enumorder_statusFieldUpdateOperationsInput | $Enums.order_status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    stockMovements?: StockMovementUncheckedUpdateManyWithoutOrderNestedInput
   }
 
   export type BillCreateWithoutPaymentsInput = {
@@ -22786,15 +22730,15 @@ export namespace Prisma {
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    table: TableCreateNestedOneWithoutBillsInput
+    table?: TableCreateNestedOneWithoutBillsInput
     client?: ClientCreateNestedOneWithoutBillsInput
     billItems?: BillItemCreateNestedManyWithoutBillInput
   }
 
   export type BillUncheckedCreateWithoutPaymentsInput = {
     id?: string
-    tableId: string
-    clientId?: string | null
+    tableId?: string | null
+    clientId: string
     status?: $Enums.bill_status
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
@@ -22824,15 +22768,15 @@ export namespace Prisma {
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    table?: TableUpdateOneRequiredWithoutBillsNestedInput
+    table?: TableUpdateOneWithoutBillsNestedInput
     client?: ClientUpdateOneWithoutBillsNestedInput
     billItems?: BillItemUpdateManyWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tableId?: StringFieldUpdateOperationsInput | string
-    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    tableId?: NullableStringFieldUpdateOperationsInput | string | null
+    clientId?: StringFieldUpdateOperationsInput | string
     status?: Enumbill_statusFieldUpdateOperationsInput | $Enums.bill_status
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22880,6 +22824,7 @@ export namespace Prisma {
     table?: TableCreateNestedOneWithoutOrdersInput
     client?: ClientCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
+    bill?: BillItemCreateNestedOneWithoutOrderInput
   }
 
   export type OrderUncheckedCreateWithoutStockMovementsInput = {
@@ -22891,6 +22836,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    bill?: BillItemUncheckedCreateNestedOneWithoutOrderInput
   }
 
   export type OrderCreateOrConnectWithoutStockMovementsInput = {
@@ -22955,6 +22901,7 @@ export namespace Prisma {
     table?: TableUpdateOneWithoutOrdersNestedInput
     client?: ClientUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
+    bill?: BillItemUpdateOneWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutStockMovementsInput = {
@@ -22966,6 +22913,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    bill?: BillItemUncheckedUpdateOneWithoutOrderNestedInput
   }
 
   export type OrderCreateManyClientInput = {
@@ -22979,7 +22927,7 @@ export namespace Prisma {
 
   export type BillCreateManyClientInput = {
     id?: string
-    tableId: string
+    tableId?: string | null
     status?: $Enums.bill_status
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
@@ -22994,6 +22942,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     table?: TableUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
+    bill?: BillItemUpdateOneWithoutOrderNestedInput
     stockMovements?: StockMovementUpdateManyWithoutOrderNestedInput
   }
 
@@ -23005,6 +22954,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    bill?: BillItemUncheckedUpdateOneWithoutOrderNestedInput
     stockMovements?: StockMovementUncheckedUpdateManyWithoutOrderNestedInput
   }
 
@@ -23023,14 +22973,14 @@ export namespace Prisma {
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    table?: TableUpdateOneRequiredWithoutBillsNestedInput
+    table?: TableUpdateOneWithoutBillsNestedInput
     billItems?: BillItemUpdateManyWithoutBillNestedInput
     payments?: PaymentUpdateManyWithoutBillNestedInput
   }
 
   export type BillUncheckedUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tableId?: StringFieldUpdateOperationsInput | string
+    tableId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: Enumbill_statusFieldUpdateOperationsInput | $Enums.bill_status
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23041,7 +22991,7 @@ export namespace Prisma {
 
   export type BillUncheckedUpdateManyWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tableId?: StringFieldUpdateOperationsInput | string
+    tableId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: Enumbill_statusFieldUpdateOperationsInput | $Enums.bill_status
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23059,7 +23009,7 @@ export namespace Prisma {
 
   export type BillCreateManyTableInput = {
     id?: string
-    clientId?: string | null
+    clientId: string
     status?: $Enums.bill_status
     total: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
@@ -23074,6 +23024,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: ClientUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
+    bill?: BillItemUpdateOneWithoutOrderNestedInput
     stockMovements?: StockMovementUpdateManyWithoutOrderNestedInput
   }
 
@@ -23085,6 +23036,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    bill?: BillItemUncheckedUpdateOneWithoutOrderNestedInput
     stockMovements?: StockMovementUncheckedUpdateManyWithoutOrderNestedInput
   }
 
@@ -23110,7 +23062,7 @@ export namespace Prisma {
 
   export type BillUncheckedUpdateWithoutTableInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    clientId?: StringFieldUpdateOperationsInput | string
     status?: Enumbill_statusFieldUpdateOperationsInput | $Enums.bill_status
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23121,7 +23073,7 @@ export namespace Prisma {
 
   export type BillUncheckedUpdateManyWithoutTableInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    clientId?: StringFieldUpdateOperationsInput | string
     status?: Enumbill_statusFieldUpdateOperationsInput | $Enums.bill_status
     total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23188,7 +23140,6 @@ export namespace Prisma {
     id?: string
     orderId: string
     quantity: number
-    price: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23220,28 +23171,23 @@ export namespace Prisma {
   export type OrderItemUpdateWithoutDishInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: OrderUpdateOneRequiredWithoutOrderItemsNestedInput
-    billItems?: BillItemUpdateManyWithoutOrderItemNestedInput
   }
 
   export type OrderItemUncheckedUpdateWithoutDishInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    billItems?: BillItemUncheckedUpdateManyWithoutOrderItemNestedInput
   }
 
   export type OrderItemUncheckedUpdateManyWithoutDishInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23322,7 +23268,6 @@ export namespace Prisma {
     id?: string
     dishId: string
     quantity: number
-    price: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23340,28 +23285,23 @@ export namespace Prisma {
   export type OrderItemUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dish?: DishUpdateOneRequiredWithoutOrderItemsNestedInput
-    billItems?: BillItemUpdateManyWithoutOrderItemNestedInput
   }
 
   export type OrderItemUncheckedUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
     dishId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    billItems?: BillItemUncheckedUpdateManyWithoutOrderItemNestedInput
   }
 
   export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
     dishId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
-    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23396,34 +23336,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BillItemCreateManyOrderItemInput = {
-    id?: string
-    billId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type BillItemUpdateWithoutOrderItemInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bill?: BillUpdateOneRequiredWithoutBillItemsNestedInput
-  }
-
-  export type BillItemUncheckedUpdateWithoutOrderItemInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    billId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BillItemUncheckedUpdateManyWithoutOrderItemInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    billId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type BillItemCreateManyBillInput = {
     id?: string
     orderId: string
@@ -23444,7 +23356,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    orderItem?: OrderItemUpdateOneRequiredWithoutBillItemsNestedInput
+    order?: OrderUpdateOneRequiredWithoutBillNestedInput
   }
 
   export type BillItemUncheckedUpdateWithoutBillInput = {

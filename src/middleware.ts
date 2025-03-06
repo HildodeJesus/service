@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ApiResponse } from "./utils/ApiResponse";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { checkPublicRoute } from "./utils/checkPublicRoute";
@@ -18,7 +17,7 @@ export default async function middleware(req: NextRequest) {
 		if (!isPublicRoute) {
 			const token = await getToken({ req, secret });
 
-			if (!token || new Date(Number(token.exp) * 1000) < new Date()) {
+			if (!token || Number(token.exp) * 1000 < Date.now()) {
 				return NextResponse.redirect(new URL("/login", req.url));
 			} else if (token.name?.toLowerCase() !== subdomain.toLowerCase()) {
 				if (subdomain == process.env.BASE_URL) {

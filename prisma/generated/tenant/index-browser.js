@@ -198,7 +198,6 @@ exports.Prisma.OrderItemScalarFieldEnum = {
   orderId: 'orderId',
   dishId: 'dishId',
   quantity: 'quantity',
-  price: 'price',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

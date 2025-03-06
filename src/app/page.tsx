@@ -1,11 +1,13 @@
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+	const dashboardUrl = `/dashboard`;
+
 	return (
 		<div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
 			<main className="flex flex-col items-center justify-center">
-				<h1>Seja bem vindo ao Cardápiou</h1>
-				<Link href={"/dashboard"} className="text-orange-600">
+				<h1>Seja bem-vindo ao Cardápiou</h1>
+				<Link href={dashboardUrl} className="text-orange-600">
 					Acessar sistema
 				</Link>
 			</main>

@@ -34,7 +34,7 @@ import { IProduct } from "@/common/interfaces/Product";
 
 interface SaveProductProps {
 	defaultValue?: IProduct;
-	onAction?: () => void;
+	onAction?: () => Promise<void>;
 }
 
 export default function SaveProduct({
@@ -77,7 +77,7 @@ export default function SaveProduct({
 			}
 
 			reset();
-			if (onAction) onAction();
+			if (onAction) await onAction();
 		} catch (e) {
 			console.log(e);
 			if (e instanceof ApiResponse) toast(e.message);

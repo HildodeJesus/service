@@ -22,7 +22,7 @@ model User {
 model Client {
   id        String   @id @default(uuid())
   name      String?
-  phone     String
+  phone     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   orders    Order[]
@@ -98,44 +98,43 @@ model Order {
   table          Table?          @relation(fields: [tableId], references: [id])
   client         Client?         @relation(fields: [clientId], references: [id])
   orderItems     OrderItem[]
+  bill           BillItem?
   stockMovements StockMovement[]
 }
 
 model OrderItem {
-  id        String     @id @default(uuid())
+  id        String   @id @default(uuid())
   orderId   String
   dishId    String
   quantity  Int
-  price     Decimal    @db.Decimal
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  order     Order      @relation(fields: [orderId], references: [id])
-  dish      Dish       @relation(fields: [dishId], references: [id])
-  billItems BillItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id])
+  dish      Dish     @relation(fields: [dishId], references: [id])
 }
 
 model Bill {
   id        String      @id @default(uuid())
-  tableId   String
-  clientId  String?
+  tableId   String?
+  clientId  String
   status    bill_status @default(open)
   total     Decimal     @db.Decimal
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-  table     Table       @relation(fields: [tableId], references: [id])
+  table     Table?      @relation(fields: [tableId], references: [id])
   client    Client?     @relation(fields: [clientId], references: [id])
   billItems BillItem[]
   payments  Payment[]
 }
 
 model BillItem {
-  id        String    @id @default(uuid())
+  id        String   @id @default(uuid())
   billId    String
-  orderId   String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  bill      Bill      @relation(fields: [billId], references: [id])
-  orderItem OrderItem @relation(fields: [orderId], references: [id])
+  orderId   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bill      Bill     @relation(fields: [billId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
 }
 
 model Payment {

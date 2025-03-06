@@ -38,6 +38,8 @@ export class AuthService {
 						where: { email: credentials?.email },
 					});
 
+					console.log(user);
+
 					if (!user) return null;
 
 					if (
@@ -68,10 +70,15 @@ export class AuthService {
 					},
 				});
 
-				if (!user) return {};
+				if (!user) return {}; // Retorne o token original, não um objeto vazio
 
-				token = user;
-				return token;
+				return {
+					...token,
+					id: user.id,
+					name: user.name,
+					email: user.email,
+					subscriptionStatus: user.subscriptionStatus,
+				};
 			},
 			async session({ session, token }) {
 				return {

@@ -6,9 +6,9 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
-COPY next.config.js ./
+COPY next.config.mjs ./
 
-RUN npm ci
+RUN npm install
 
 COPY . .
 
@@ -36,7 +36,6 @@ COPY --from=builder /app/next.config.js ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./.next/standalone
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app ./
 
 USER nextjs
 
@@ -62,7 +61,7 @@ RUN npx prisma generate --schema=prisma/tenant.prisma
 RUN npx prisma generate --schema=prisma/schema.prisma
 
 ENV NODE_ENV=development
-ENV PORT 3005
+ENV PORT 3000
 ENV BASE_URL "localhost:3000"
 
 EXPOSE 3000

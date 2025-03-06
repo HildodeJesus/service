@@ -63,10 +63,10 @@ export class TenantDatabaseService {
 				await tx.$executeRawUnsafe(`
           CREATE TABLE IF NOT EXISTS "User" (
             "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            "name" TEXT NOT NULL,
-            "email" TEXT NOT NULL,
-            "password" TEXT NOT NULL,
-            "role" TEXT NOT NULL DEFAULT 'waiter',
+            "name" VARCHAR(255) NOT NULL,
+            "email" VARCHAR(255) NOT NULL,
+            "password" VARCHAR(255) NOT NULL,
+            "role" role DEFAULT 'waiter',
             "createdAt" TIMESTAMP DEFAULT now(),
             "updatedAt" TIMESTAMP DEFAULT now()
           );
@@ -75,8 +75,8 @@ export class TenantDatabaseService {
 				await tx.$executeRawUnsafe(`
           CREATE TABLE IF NOT EXISTS "Client" (
             "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            "name" TEXT,
-            "phone" TEXT NOT NULL,
+            "name" VARCHAR(255),
+            "phone" VARCHAR(255) NOT NULL,
             "createdAt" TIMESTAMP DEFAULT now(),
             "updatedAt" TIMESTAMP DEFAULT now()
           );
@@ -86,7 +86,7 @@ export class TenantDatabaseService {
           CREATE TABLE IF NOT EXISTS "Table" (
             "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             "number" INT NOT NULL,
-            "qrcode" TEXT NOT NULL,
+            "qrcode" VARCHAR(255) NOT NULL,
             "createdAt" TIMESTAMP DEFAULT now(),
             "updatedAt" TIMESTAMP DEFAULT now()
           );
@@ -149,7 +149,7 @@ export class TenantDatabaseService {
             "tableId" UUID,
             "clientId" UUID,
             "orderType" order_type NOT NULL DEFAULT 'dine_in',
-            "status" TEXT NOT NULL DEFAULT 'pending',
+            "status" order_status NOT NULL DEFAULT 'pending',
             "createdAt" TIMESTAMP DEFAULT now(),
             "updatedAt" TIMESTAMP DEFAULT now(),
             FOREIGN KEY ("tableId") REFERENCES "Table"("id") ON DELETE SET NULL,
@@ -163,7 +163,6 @@ export class TenantDatabaseService {
             "orderId" UUID NOT NULL,
             "dishId" UUID NOT NULL,
             "quantity" INT NOT NULL,
-            "price" DECIMAL NOT NULL,
             "createdAt" TIMESTAMP DEFAULT now(),
             "updatedAt" TIMESTAMP DEFAULT now(),
             FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE CASCADE,
@@ -174,8 +173,8 @@ export class TenantDatabaseService {
 				await tx.$executeRawUnsafe(`
           CREATE TABLE IF NOT EXISTS "Bill" (
             "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            "tableId" UUID NOT NULL,
-            "clientId" UUID,
+            "tableId" UUID,
+            "clientId" UUID NOT NULL,
             "status" bill_status NOT NULL DEFAULT 'open',
             "total" DECIMAL NOT NULL,
             "createdAt" TIMESTAMP DEFAULT now(),
@@ -193,7 +192,7 @@ export class TenantDatabaseService {
             "createdAt" TIMESTAMP DEFAULT now(),
             "updatedAt" TIMESTAMP DEFAULT now(),
             FOREIGN KEY ("billId") REFERENCES "Bill"("id") ON DELETE CASCADE,
-            FOREIGN KEY ("orderId") REFERENCES "OrderItem"("id") ON DELETE CASCADE
+            FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE CASCADE
           );
         `);
 

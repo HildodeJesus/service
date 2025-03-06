@@ -30,7 +30,7 @@ import clsx from "clsx";
 
 interface SaveCategoryProps {
 	defaultValue?: ICategory;
-	onAction?: () => void;
+	onAction?: () => Promise<void>;
 	style?: "outline" | "solid";
 }
 
@@ -76,7 +76,7 @@ export default function SaveCategory({
 			}
 
 			reset();
-			if (onAction) onAction();
+			if (onAction) await onAction();
 		} catch (e) {
 			console.log(e);
 			if (e instanceof ApiResponse) toast(e.message);

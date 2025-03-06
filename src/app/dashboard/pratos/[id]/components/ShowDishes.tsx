@@ -41,13 +41,18 @@ export default function ShowDish() {
 			<div className="flex w-full gap-5">
 				{dish ? (
 					<>
-						<div className="w-[250px] h-[250px] bg-gray-100 overflow-hidden rounded-lg flex items-center justify-center">
+						<div
+							className={`w-[250px] h-[250px] ${
+								!dish.picture && "bg-gray-100"
+							} overflow-hidden rounded-lg flex items-center justify-center`}
+						>
 							{dish.picture ? (
 								<Image
 									src={Aws.getObjectUrl(dish.picture)}
 									width={250}
 									height={250}
 									alt=""
+									className="rounded-xl h-full"
 								/>
 							) : (
 								<span className="text-gray-400">

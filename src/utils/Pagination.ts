@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IPaginationClient } from "@/common/interfaces/Pagination";
 
 export class Pagination {
-	static getQuery(pagination: Partial<IPaginationClient>) {
+	static getQuery(pagination: any) {
 		if (!pagination) return "";
 
 		const keys = Object.keys(pagination) as Array<keyof IPaginationClient>;

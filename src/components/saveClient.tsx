@@ -27,7 +27,7 @@ import { ClientsApi } from "@/lib/api/Client";
 
 interface SaveClientProps {
 	defaultValue?: IClient;
-	onAction?: () => void;
+	onAction?: () => Promise<void>;
 	style?: "outline" | "solid";
 }
 
@@ -37,7 +37,7 @@ const triggerStyle = {
 	solid: "bg-orange-500 hover:bg-orange-600 text-white",
 };
 
-export default function SaveCategory({
+export default function SaveClient({
 	defaultValue,
 	style = "solid",
 	onAction,
@@ -74,7 +74,7 @@ export default function SaveCategory({
 			}
 
 			reset();
-			if (onAction) onAction();
+			if (onAction) await onAction();
 		} catch (e) {
 			console.log(e);
 			if (e instanceof ApiResponse) toast(e.message);

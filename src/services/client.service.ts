@@ -16,7 +16,7 @@ export class ClientService {
 
 	async createClient(data: CreateClientInput) {
 		try {
-			const existingClient = await this.prisma.client.findUnique({
+			const existingClient = await this.prisma.client.findFirst({
 				where: { phone: data.phone },
 			});
 

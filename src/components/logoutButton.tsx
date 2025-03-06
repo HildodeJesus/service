@@ -8,7 +8,7 @@ export default function LogoutButton({ children }: LogoutButtonProps) {
 	return (
 		<button
 			className="flex items-center [&>svg]:size-4 gap-2"
-			onClick={() => signOut()}
+			onClick={() => signOut({ callbackUrl: process.env.NEXTAUTH_URL })}
 		>
 			{children}
 		</button>

@@ -20,7 +20,6 @@ import { ApiResponse } from "@/utils/ApiResponse";
 import { toast } from "sonner";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
-import { IDish } from "@/common/interfaces/Dish";
 import { CreateDishInput, CreateDishSchema } from "@/common/schemas/dish";
 import { DishesApi } from "@/lib/api/Dishes";
 import { ICategory } from "@/common/interfaces/Category";
@@ -41,12 +40,11 @@ import { IProduct } from "@/common/interfaces/Product";
 import { handleShowUnit } from "@/utils/handleShowUnit";
 import { Aws } from "@/lib/aws";
 import Image from "next/image";
+import { IDishWithItems } from "@/common/interfaces/DishWithItems";
 
 interface SaveDishProps {
-	defaultValue?: IDish & {
-		dishItems: { product: IProduct; quantity: number }[];
-	};
-	onAction?: () => void;
+	defaultValue?: IDishWithItems;
+	onAction?: () => Promise<void>;
 }
 
 export default function SaveDish({ defaultValue, onAction }: SaveDishProps) {
@@ -196,7 +194,7 @@ export default function SaveDish({ defaultValue, onAction }: SaveDishProps) {
 				fileInputRef.current.value = "";
 			}
 
-			if (onAction) onAction();
+			if (onAction) await onAction();
 		} catch (e) {
 			console.log(e);
 			if (e instanceof ApiResponse) toast(e.message);
