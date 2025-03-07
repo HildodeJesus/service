@@ -59,14 +59,17 @@ preferir, utilize arquivo `.env.sample` como referência:
 ```env
 NEXT_PUBLIC_BASE_URL=
 
-BASE_URL=
+BASE_URL=http://localhost:3000
+BASE_DOMAIN=localhost:3000
 
 NODE_ENV=development
 
 NEXTAUTH_URL=
 NEXTAUTH_SECRET=
 
+
 ALLOWED_ORIGIN=
+
 
 DATABASE_HOST=
 DATABASE_PORT=
@@ -84,10 +87,16 @@ NEXT_PUBLIC_AWS_BUCKET_NAME=
 NEXT_PUBLIC_AWS_REGION=
 ```
 
-### Executando no Linux, Windows e macOS:
+### Executando no Linux, Windows e macOS em produção:
 
 ```bash
-$ NODE_ENV=<"development"/"production"> docker-compose up -d
+$ NODE_ENV=production docker-compose up -d
+```
+
+### Executando no Linux, Windows e macOS em produção:
+
+```bash
+$ NODE_ENV=development docker-compose up --build
 ```
 
 ### Rodando migrações:

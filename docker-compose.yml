@@ -8,10 +8,6 @@ services:
       target: ${NODE_ENV:-development} 
     container_name: nextjs-app
     restart: always
-    volumes:
-      - ./:/app
-    ports:
-      - "3000:3000"
     env_file:
       - .env
     depends_on:
@@ -26,7 +22,6 @@ services:
     restart: always
     env_file:
       - docker.env
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -37,10 +32,12 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
-    ports:
-      - "5050:80"
+    expose:
+      - "80"
     env_file:
       - docker.env
+    environment:
+      - PGADMIN_SCRIPT_NAME=/pgadmin
     depends_on:
       - postgres
     networks:
@@ -54,8 +51,30 @@ services:
     networks:
       - app-network
 
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - nextjs
+      - pgadmin
+    networks:
+      - app-network
+
 volumes:
   postgres_data:
+    driver: local
+  next_data:
+    driver: local
+  nginx_logs:
     driver: local
 
 networks:

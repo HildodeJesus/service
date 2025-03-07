@@ -228,7 +228,7 @@ export class SubscriptionService {
 
 		if (!company.stripeCustomerId) {
 			return {
-				status: company.subscriptionStatus,
+				status: company.subscriptionStatus as SubscriptionStatus,
 				details: null,
 			};
 		}
@@ -239,7 +239,7 @@ export class SubscriptionService {
 		});
 
 		return {
-			status: company.subscriptionStatus,
+			status: company.subscriptionStatus as SubscriptionStatus,
 			details: subscriptions.data[0] || null,
 		};
 	}

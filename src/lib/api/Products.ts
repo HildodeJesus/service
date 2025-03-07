@@ -1,17 +1,16 @@
-import axios, { AxiosInstance } from "axios";
+import { AxiosInstance } from "axios";
 import {
 	CreateProductInput,
 	UpdateProductInput,
 } from "@/common/schemas/product";
 import { IPaginationClient } from "@/common/interfaces/Pagination";
 import { Pagination } from "@/utils/Pagination";
+import { axiosInstance } from "./axios";
 
 export class ProductsApi {
 	private axiosInstance: AxiosInstance;
 	constructor(subdomain: string) {
-		this.axiosInstance = axios.create({
-			baseURL: `http://${subdomain}.${process.env.NEXT_PUBLIC_BASE_URL}/api`,
-		});
+		this.axiosInstance = axiosInstance(subdomain);
 	}
 	async create(data: CreateProductInput) {
 		const res = await this.axiosInstance.post("/products", data);

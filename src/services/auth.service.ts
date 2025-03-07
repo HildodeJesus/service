@@ -7,6 +7,7 @@ import Credentials from "next-auth/providers/credentials";
 
 const prisma = GetPrismaClient.main();
 
+const isProduction = process.env.NODE_ENV === "production";
 declare module "next-auth" {
 	interface Session extends DefaultSession {
 		user: Omit<
@@ -56,6 +57,19 @@ export class AuthService {
 
 		pages: {
 			signIn: "/login",
+		},
+
+		cookies: {
+			sessionToken: {
+				name: "next-auth.session-token",
+				options: {
+					httpOnly: true,
+					secure: isProduction,
+					sameSite: "lax",
+					domain: isProduction ? `.${process.env.BASE_DOMAIN}` : undefined,
+					path: "/",
+				},
+			},
 		},
 
 		callbacks: {

@@ -5,7 +5,7 @@ export class Auth {
 	private axiosInstance: AxiosInstance;
 	constructor() {
 		this.axiosInstance = axios.create({
-			baseURL: `http://${process.env.NEXT_PUBLIC_BASE_URL}/api`,
+			baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api`,
 		});
 	}
 	async create(data: CreateCompanyInput) {

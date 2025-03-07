@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export function axiosInstance(subdomain?: string) {
-	const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+	const baseURL = process.env.BASE_DOMAIN;
 	const url = subdomain
 		? `http://${subdomain}.${baseURL}/api`
 		: `http://${baseURL}/api`;

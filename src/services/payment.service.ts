@@ -29,7 +29,7 @@ export default class PaymentService {
 				data: {
 					amount: data.amount,
 					billId: data.billId,
-					paymentMethod: data.payment_method,
+					paymentMethod: data.paymentMethod,
 					status: data.status,
 				},
 			});

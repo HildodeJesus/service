@@ -1,13 +1,12 @@
-import { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
 	async headers() {
 		return [
 			{
 				source: "/:path*",
 				headers: [
 					{ key: "Access-Control-Allow-Credentials", value: "true" },
-					{ key: "Access-Control-Allow-Origin", value: "*" }, // Ou um domínio específico
+					{ key: "Access-Control-Allow-Origin", value: "localhost" },
 					{
 						key: "Access-Control-Allow-Methods",
 						value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
@@ -29,7 +28,6 @@ const nextConfig: NextConfig = {
 				hostname: "cardapio-main.s3.amazonaws.com",
 				port: "",
 				pathname: "/**",
-				search: "",
 			},
 		],
 	},

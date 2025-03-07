@@ -90,7 +90,13 @@ export class BillService {
 						status: "open",
 						total: data.total,
 						billItems: {
-							createMany: { data: data.billItems },
+							createMany: {
+								data: data.billItems
+									? data.billItems
+											.filter(item => item.orderId)
+											.map(item => ({ orderId: item.orderId }))
+									: [],
+							},
 						},
 					},
 				});
@@ -105,7 +111,6 @@ export class BillService {
 			await this.prisma.$disconnect();
 		}
 	}
-
 	async addOrderToBill(data: CreateBillInput) {
 		try {
 			console.log(data.clientId);
