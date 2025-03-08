@@ -8,7 +8,7 @@ import { ApiResponse } from "./ApiResponse";
  */
 
 export function getSubdomain(req: NextRequest) {
-	const subdomain = req.headers.get("xs-slug");
+	const subdomain = req.headers.get("x-slug");
 	if (!subdomain) throw ApiResponse.error("Ação não permitida!", 403);
 
 	console.log(subdomain);

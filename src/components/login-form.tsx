@@ -19,6 +19,7 @@ import { signIn } from "next-auth/react";
 import { LoginCompanyInput } from "@/common/schemas/company";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export function LoginForm({
 	className,
@@ -70,12 +71,12 @@ export function LoginForm({
 							<div className="grid gap-2">
 								<div className="flex items-center">
 									<Label htmlFor="password">Password</Label>
-									<a
+									<Link
 										href="/forgot-password"
 										className="ml-auto text-orange-600 inline-block text-sm underline-offset-4 hover:underline"
 									>
 										Esqueceu a senha?
-									</a>
+									</Link>
 								</div>
 								<Input
 									id="password"
@@ -89,12 +90,12 @@ export function LoginForm({
 						</div>
 						<div className="mt-4 text-center text-sm">
 							Não tem uma conta?{" "}
-							<a
+							<Link
 								href="/register"
 								className="underline underline-offset-4 text-orange-600"
 							>
 								Crie
-							</a>
+							</Link>
 						</div>
 					</form>
 				</CardContent>

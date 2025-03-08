@@ -87,7 +87,7 @@ export default function ProductsTable() {
 						products.map(product => (
 							<Link
 								key={product.id}
-								href={`/dashboard/produtos/${product.id}`}
+								href={`produtos/${product.id}`}
 								className="border shadow-md cursor-pointer py-3 px-4 rounded-xl w-full max-w-[290px] flex  flex-col transition-colors hover:scale-105 duration-150 gap-1 transition-none"
 							>
 								<div className="w-full h-[250px] bg-gray-100 overflow-hidden rounded-lg"></div>

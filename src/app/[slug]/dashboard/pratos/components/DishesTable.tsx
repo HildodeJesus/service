@@ -87,7 +87,7 @@ export default function DishesTable() {
 						dishes.map(dish => (
 							<Link
 								key={dish.id}
-								href={`/dashboard/pratos/${dish.id}`}
+								href={`pratos/${dish.id}`}
 								className="border shadow-md cursor-pointer py-3 px-4 rounded-xl w-full max-w-[290px] flex  flex-col transition-colors hover:scale-105 duration-150 gap-1 transition-none"
 							>
 								<div className="w-full h-[250px] bg-gray-100 overflow-hidden rounded-lg"></div>
