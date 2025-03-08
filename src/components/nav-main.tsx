@@ -18,11 +18,14 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 export function NavMain({
 	items,
 	title,
+	slug,
 }: {
+	slug?: string;
 	title: string;
 	items: {
 		title: string;
@@ -43,10 +46,13 @@ export function NavMain({
 					<Collapsible key={item.title} asChild defaultOpen={item.isActive}>
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild tooltip={item.title}>
-								<a href={item.url} className="[&>svg]:size-6">
+								<Link
+									href={`${slug ? "/" + slug : ""}${item.url}`}
+									className="[&>svg]:size-6"
+								>
 									<item.icon />
 									<span className="text-sm">{item.title}</span>
-								</a>
+								</Link>
 							</SidebarMenuButton>
 							{item.items?.length ? (
 								<>
@@ -61,9 +67,13 @@ export function NavMain({
 											{item.items?.map(subItem => (
 												<SidebarMenuSubItem key={subItem.title}>
 													<SidebarMenuSubButton asChild>
-														<a href={subItem.url}>
-															<span>{subItem.title}</span>
-														</a>
+														<Link
+															href={`${slug ? "/" + slug : ""}${subItem.url}`}
+															className="[&>svg]:size-6"
+														>
+															<item.icon />
+															<span className="text-sm">{subItem.title}</span>
+														</Link>
 													</SidebarMenuSubButton>
 												</SidebarMenuSubItem>
 											))}

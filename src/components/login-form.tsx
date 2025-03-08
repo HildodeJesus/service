@@ -16,7 +16,6 @@ import { Label } from "@/components/ui/label";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 
-import { ApiResponse } from "@/utils/ApiResponse";
 import { LoginCompanyInput } from "@/common/schemas/company";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

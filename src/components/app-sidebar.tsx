@@ -71,6 +71,7 @@ const navInfo = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { data } = useSession();
+
 	return (
 		<Sidebar variant="inset" {...props}>
 			<SidebarHeader>
@@ -92,8 +93,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				</SidebarMenu>
 			</SidebarHeader>
 			<SidebarContent>
-				<NavMain items={navInfo.navMain} title="Geral" />
-				<NavMain items={navInfo.projects} title="Gerenciamento" />
+				<NavMain items={navInfo.navMain} title="Geral" slug={data?.user.name} />
+				<NavMain
+					items={navInfo.projects}
+					title="Gerenciamento"
+					slug={data?.user.name}
+				/>
 				{/* <NavSecondary items={navInfo.navSecondary} className="mt-auto" /> */}
 			</SidebarContent>
 			<SidebarFooter>

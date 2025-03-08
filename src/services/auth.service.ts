@@ -7,6 +7,8 @@ import Credentials from "next-auth/providers/credentials";
 
 const prisma = GetPrismaClient.main();
 
+const isProduction = process.env.NODE_ENV === "production";
+
 declare module "next-auth" {
 	interface Session extends DefaultSession {
 		user: Omit<
@@ -80,6 +82,7 @@ export class AuthService {
 					subscriptionStatus: user.subscriptionStatus,
 				};
 			},
+
 			async session({ session, token }) {
 				return {
 					...session,
@@ -90,6 +93,17 @@ export class AuthService {
 						name: token.name,
 					},
 				};
+			},
+		},
+
+		cookies: {
+			sessionToken: {
+				name: `__Secure-next-auth.session-token`,
+				options: {
+					httpOnly: true,
+					sameSite: "lax",
+					secure: isProduction,
+				},
 			},
 		},
 

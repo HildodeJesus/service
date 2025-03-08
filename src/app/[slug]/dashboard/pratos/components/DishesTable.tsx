@@ -31,6 +31,7 @@ export default function DishesTable() {
 
 			setDishes(productsRes.data);
 		} catch (error: any) {
+			console.log(error);
 			toast(error.data.message);
 		} finally {
 			setIsLoading(false);
