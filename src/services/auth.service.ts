@@ -7,7 +7,6 @@ import Credentials from "next-auth/providers/credentials";
 
 const prisma = GetPrismaClient.main();
 
-const isProduction = process.env.NODE_ENV === "production";
 declare module "next-auth" {
 	interface Session extends DefaultSession {
 		user: Omit<
@@ -59,19 +58,6 @@ export class AuthService {
 			signIn: "/login",
 		},
 
-		cookies: {
-			sessionToken: {
-				name: "next-auth.session-token",
-				options: {
-					httpOnly: true,
-					secure: isProduction,
-					sameSite: "lax",
-					domain: isProduction ? `.${process.env.BASE_DOMAIN}` : undefined,
-					path: "/",
-				},
-			},
-		},
-
 		callbacks: {
 			async jwt({ token }) {
 				const user = await prisma.company.findUnique({
@@ -84,7 +70,7 @@ export class AuthService {
 					},
 				});
 
-				if (!user) return {}; // Retorne o token original, não um objeto vazio
+				if (!user) return {};
 
 				return {
 					...token,

@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM nginx:alpine as production
 
 RUN apk add --no-cache curl ca-certificates
 

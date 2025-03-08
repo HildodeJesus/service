@@ -57,7 +57,10 @@ CMD ["npm", "start"]
 ## DEVELOPMENT
 FROM node:20-slim AS development
 
+RUN apt-get update && apt-get install -y --no-install-recommends dumb-init openssl
+
 WORKDIR /app
+
 
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/

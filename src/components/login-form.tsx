@@ -30,7 +30,11 @@ export function LoginForm({
 
 	const onSubmit: SubmitHandler<LoginCompanyInput> = async data => {
 		try {
-			const res = await signIn("credentials", { redirect: false, ...data });
+			const res = await signIn("credentials", {
+				redirect: false,
+				...data,
+				callbackUrl: "/dashboard",
+			});
 
 			if (!res?.ok) throw new Error(res?.error || "");
 
